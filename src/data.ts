@@ -1,5 +1,5 @@
 const MockData = {
-  PlacesCount: 127,
+  PlacesCount: 5,
 };
 
 export default MockData;

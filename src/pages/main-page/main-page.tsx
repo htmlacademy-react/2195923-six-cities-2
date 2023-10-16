@@ -1,7 +1,11 @@
-import CitiCard from '../../components/citi-card/citi-card';
+import PlaceCard from '../../components/place-card/place-card';
 
 type MainPageProps = {
   placesCount : number;
+}
+
+function getPlaceCards(cardCount : number) {
+  return Array.from({length: cardCount}, (_, index : number) => <PlaceCard key={index}/>);
 }
 
 function MainPage({placesCount} : MainPageProps) : React.JSX.Element {
@@ -95,11 +99,7 @@ function MainPage({placesCount} : MainPageProps) : React.JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <CitiCard />
-                <CitiCard />
-                <CitiCard />
-                <CitiCard />
-                <CitiCard />
+                {getPlaceCards(placesCount)}
               </div>
             </section>
             <div className="cities__right-section">

@@ -1,4 +1,4 @@
-function CitiCard(): React.JSX.Element {
+function PlaceCard(): React.JSX.Element {
   return (
     <article className="cities__card place-card">
       <div className="place-card__mark">
@@ -37,5 +37,5 @@ function CitiCard(): React.JSX.Element {
   );
 }
 
-export default CitiCard;
+export default PlaceCard;
 
