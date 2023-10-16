@@ -1,10 +1,10 @@
-import MainPage from '../../pages/main-page';
+import MainPage from '../../pages/main-page/main-page';
 
-type AppScreenProps = {
+type AppProps = {
   placesCount: number;
 }
 
-function App({placesCount} : AppScreenProps) : React.JSX.Element {
+function App({placesCount} : AppProps) : React.JSX.Element {
   return (
     <MainPage placesCount={placesCount}/>
   );

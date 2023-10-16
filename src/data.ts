@@ -1,6 +1,6 @@
-const NetworkData = {
+const MockData = {
   PlacesCount: 127,
 };
 
-export default NetworkData;
+export default MockData;
 

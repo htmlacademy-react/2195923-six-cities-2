@@ -1,10 +1,10 @@
-import CitiCard from '../components/citi-card/citi-card';
+import CitiCard from '../../components/citi-card/citi-card';
 
-type MainScreenProps = {
+type MainPageProps = {
   placesCount : number;
 }
 
-function MainPage({placesCount} : MainScreenProps) : React.JSX.Element {
+function MainPage({placesCount} : MainPageProps) : React.JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
