@@ -4,7 +4,7 @@ type AppScreenProps = {
   placesCount: number;
 }
 
-function App({placesCount} : AppScreenProps) : JSX.Element {
+function App({placesCount} : AppScreenProps) : React.JSX.Element {
   return (
     <MainPage placesCount={placesCount}/>
   );

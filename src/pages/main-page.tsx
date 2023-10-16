@@ -4,7 +4,7 @@ type MainScreenProps = {
   placesCount : number;
 }
 
-function MainPage({placesCount} : MainScreenProps) : JSX.Element {
+function MainPage({placesCount} : MainScreenProps) : React.JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
