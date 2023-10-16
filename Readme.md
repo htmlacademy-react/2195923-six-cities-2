@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
-* Студент: [Dmitriy Lutsishin](https://up.htmlacademy.ru/react-individual/2/user/2195923).
-* Наставник: `Неизвестно`.
+* Студент: [Дмитрий Луцишин](https://up.htmlacademy.ru/react-individual/2/user/2195923).
+* Наставник: [Евгений Казаков](https://htmlacademy.ru/profile/id343981).
 
 ---
 
