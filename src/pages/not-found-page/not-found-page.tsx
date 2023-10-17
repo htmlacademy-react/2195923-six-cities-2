@@ -1,4 +1,4 @@
-function NotFoundPage() {
+function NotFoundPage() : React.JSX.Element {
   return (
     <div>
       <p>404 Not Found</p>
