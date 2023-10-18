@@ -15,8 +15,8 @@ function App({placesCount} : AppProps) : React.JSX.Element {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<MainPage placesCount={placesCount}/>} />
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/favorites' element={<PrivateRoute><FavoritesPage /></PrivateRoute>} />
+        <Route path='/login' element={<PrivateRoute navigateTo='/'><LoginPage /></PrivateRoute>} />
+        <Route path='/favorites' element={<PrivateRoute navigateTo='/login'><FavoritesPage /></PrivateRoute>} />
         <Route path='/offer/:id' element={<OfferPage />} />
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
