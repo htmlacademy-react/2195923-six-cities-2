@@ -6,7 +6,7 @@ type PrivateRouteProps = {
 };
 
 function PrivateRoute({children, navigateTo}: PrivateRouteProps): React.JSX.Element {
-  const hasAccess = false;
+  const hasAccess = true;
 
   return hasAccess ? children : <Navigate to={navigateTo} />;
 }

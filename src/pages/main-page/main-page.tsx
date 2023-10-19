@@ -2,6 +2,7 @@ import PlaceCard from '../../components/place-card/place-card';
 import Header from '../../components/header/header';
 import {Link} from 'react-router-dom';
 import { AppRoute } from '../../data';
+import { Helmet } from 'react-helmet-async';
 
 type MainPageProps = {
   placesCount : number;
@@ -14,6 +15,9 @@ function getPlaceCards(cardCount : number) {
 function MainPage({placesCount} : MainPageProps) : React.JSX.Element {
   return (
     <div className="page page--gray page--main">
+      <Helmet>
+        <title>6 Cities</title>
+      </Helmet>
       <Header isNavRequired isAuth={false}/>
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>

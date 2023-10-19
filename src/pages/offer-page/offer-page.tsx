@@ -1,8 +1,12 @@
 import Header from '../../components/header/header';
+import { Helmet } from 'react-helmet-async';
 
 function OfferPage() : React.JSX.Element {
   return (
     <div className="page">
+      <Helmet>
+        <title>6 Cities: Offer</title>
+      </Helmet>
       <Header isNavRequired isAuth={false}/>
       <main className="page__main page__main--offer">
         <section className="offer">

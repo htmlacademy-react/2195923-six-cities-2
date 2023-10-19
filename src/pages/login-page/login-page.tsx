@@ -1,10 +1,14 @@
 import { Link } from 'react-router-dom';
 import Header from '../../components/header/header';
+import { Helmet } from 'react-helmet-async';
 import { AppRoute } from '../../data';
 
 function LoginPage() : React.JSX.Element {
   return (
     <div className="page page--gray page--login">
+      <Helmet>
+        <title>6 Cities: Login</title>
+      </Helmet>
       <Header isNavRequired={false} isAuth={false}/>
       <main className="page__main page__main--login">
         <div className="page__login-container container">

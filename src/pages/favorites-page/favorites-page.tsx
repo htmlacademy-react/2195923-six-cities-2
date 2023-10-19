@@ -1,8 +1,12 @@
 import Header from '../../components/header/header';
+import { Helmet } from 'react-helmet-async';
 
 function FavoritesPage() : React.JSX.Element {
   return (
     <div className="page">
+      <Helmet>
+        <title>6 Cities: Favorites places</title>
+      </Helmet>
       <Header isNavRequired isAuth={false}/>
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
