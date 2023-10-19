@@ -1,8 +1,11 @@
+import styles from './not-found-page.module.css';
+import {Link} from 'react-router-dom';
+
 function NotFoundPage() : React.JSX.Element {
   return (
     <div>
-      <p>404 Not Found</p>
-      <a href="">Вернуться на главную страницу</a>
+      <p className={`${styles.statusText}`}>404 Not Found</p>
+      <p className={`${styles.actionText}`}>Return to the <Link className={`${styles.link}`} to="/">main page</Link></p>
     </div>
   );
 }
