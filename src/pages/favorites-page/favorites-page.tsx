@@ -1,5 +1,4 @@
 import Header from '../../components/header/header';
-import { Link } from 'react-router-dom';
 
 function FavoritesPage() : React.JSX.Element {
   return (

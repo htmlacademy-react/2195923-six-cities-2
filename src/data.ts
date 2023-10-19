@@ -2,5 +2,13 @@ const MockData = {
   PlacesCount: 5,
 };
 
-export default MockData;
+const AppRoute = {
+  Main: '/',
+  Favorite: '/favorites',
+  Login: '/login',
+  Offer: '/offer',
+  Error: '*'
+};
+
+export {MockData, AppRoute};
 

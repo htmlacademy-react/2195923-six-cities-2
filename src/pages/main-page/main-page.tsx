@@ -1,6 +1,7 @@
 import PlaceCard from '../../components/place-card/place-card';
 import Header from '../../components/header/header';
 import {Link} from 'react-router-dom';
+import { AppRoute } from '../../data';
 
 type MainPageProps = {
   placesCount : number;
@@ -20,34 +21,34 @@ function MainPage({placesCount} : MainPageProps) : React.JSX.Element {
           <section className="locations container">
             <ul className="locations__list tabs__list">
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
+                <Link className="locations__item-link tabs__item" to={AppRoute.Main}>
                   <span>Paris</span>
-                </a>
+                </Link>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
+                <Link className="locations__item-link tabs__item" to={AppRoute.Main}>
                   <span>Cologne</span>
-                </a>
+                </Link>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
+                <Link className="locations__item-link tabs__item" to={AppRoute.Main}>
                   <span>Brussels</span>
-                </a>
+                </Link>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
+                <Link className="locations__item-link tabs__item tabs__item--active" to={AppRoute.Main}>
                   <span>Amsterdam</span>
-                </a>
+                </Link>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
+                <Link className="locations__item-link tabs__item" to={AppRoute.Main}>
                   <span>Hamburg</span>
-                </a>
+                </Link>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
+                <Link className="locations__item-link tabs__item" to={AppRoute.Main}>
                   <span>Dusseldorf</span>
-                </a>
+                </Link>
               </li>
             </ul>
           </section>
