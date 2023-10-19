@@ -3,7 +3,7 @@ import Header from '../../components/header/header';
 function OfferPage() : React.JSX.Element {
   return (
     <div className="page">
-      <Header />
+      <Header isNavRequired isAuth={false}/>
       <main className="page__main page__main--offer">
         <section className="offer">
           <div className="offer__gallery-container container">
