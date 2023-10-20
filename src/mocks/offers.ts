@@ -72,8 +72,8 @@ const offers: Offer[] = [
       isPro: false,
     },
     images: [
-      'https://media.admagazine.ru/photos/61408b2f4311246f36873963/16:9/w_1280,c_limit/w2000%20-%202020-07-14T164056.159.jpeg',
       'https://www.atorus.ru/sites/default/files/styles/head_carousel/public/2021-09/fd1c3f.jpg.webp?itok=KQVu0gUC',
+      'https://media.admagazine.ru/photos/61408b2f4311246f36873963/16:9/w_1280,c_limit/w2000%20-%202020-07-14T164056.159.jpeg'
     ],
     maxAdults: 1
   },

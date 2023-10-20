@@ -7,17 +7,18 @@ import PrivateRoute from '../private/private-route';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../data';
 import { HelmetProvider } from 'react-helmet-async';
+import { Offer } from '../../types/offer';
 
 type AppProps = {
-  placesCount: number;
+  offers: Offer[];
 }
 
-function App({placesCount} : AppProps) : React.JSX.Element {
+function App({offers} : AppProps) : React.JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
-          <Route path={AppRoute.Main} element={<MainPage placesCount={placesCount}/>} />
+          <Route path={AppRoute.Main} element={<MainPage offers={offers}/>} />
           <Route path={AppRoute.Login} element={<PrivateRoute navigateTo={AppRoute.Main}><LoginPage /></PrivateRoute>} />
           <Route path={AppRoute.Favorite} element={<PrivateRoute navigateTo={AppRoute.Login}><FavoritesPage /></PrivateRoute>} />
           <Route path={`${AppRoute.Offer}/:id`} element={<OfferPage />} />
