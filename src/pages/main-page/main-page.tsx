@@ -1,5 +1,5 @@
-import PlaceCard from '../../components/place-card/place-card';
 import Header from '../../components/header/header';
+import PlaceCardList from '../../components/place-card-list/place-card-list';
 import {Link} from 'react-router-dom';
 import { AppRoute } from '../../data';
 import { Helmet } from 'react-helmet-async';
@@ -7,10 +7,6 @@ import { Offer } from '../../types/offer';
 
 type MainPageProps = {
   offers: Offer[];
-}
-
-function getPlaceCards(offers: Offer[]) {
-  return Array.from({length: offers.length}, (_, index : number) => <PlaceCard offer={offers[index]} key={offers[index].id}/>);
 }
 
 function MainPage({offers} : MainPageProps) : React.JSX.Element {
@@ -78,9 +74,7 @@ function MainPage({offers} : MainPageProps) : React.JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                {getPlaceCards(offers)}
-              </div>
+              <PlaceCardList offers={offers} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
