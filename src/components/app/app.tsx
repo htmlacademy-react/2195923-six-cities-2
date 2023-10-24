@@ -8,12 +8,14 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../data';
 import { HelmetProvider } from 'react-helmet-async';
 import { Offer } from '../../types/offer';
+import { Review } from '../../types/review';
 
 type AppProps = {
   offers: Offer[];
+  reviews: Review[];
 }
 
-function App({offers} : AppProps) : React.JSX.Element {
+function App({offers, reviews} : AppProps) : React.JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -21,7 +23,7 @@ function App({offers} : AppProps) : React.JSX.Element {
           <Route path={AppRoute.Main} element={<MainPage offers={offers}/>} />
           <Route path={AppRoute.Login} element={<PrivateRoute navigateTo={AppRoute.Main}><LoginPage /></PrivateRoute>} />
           <Route path={AppRoute.Favorite} element={<PrivateRoute navigateTo={AppRoute.Login}><FavoritesPage offers={offers.filter((offer : Offer) => offer.isFavorite)}/></PrivateRoute>} />
-          <Route path={`${AppRoute.Offer}/:id`} element={<OfferPage offer={offers[0]} />} />
+          <Route path={`${AppRoute.Offer}/:id`} element={<OfferPage offer={offers[0]} reviews={reviews} />} />
           <Route path={AppRoute.Error} element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
