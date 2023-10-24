@@ -15,5 +15,7 @@ const PlaceCardType = {
   City: 'cities'
 };
 
-export {MockData, AppRoute, PlaceCardType};
+const NUMBER_PERCENT_IN_ONE_STAR = 20;
+
+export {MockData, AppRoute, PlaceCardType, NUMBER_PERCENT_IN_ONE_STAR};
 

@@ -31,7 +31,7 @@ const offers: Offer[] = [
     ],
     host: {
       name: 'Oliver Conner',
-      avatarUrl: `https://ui-avatars.com/api/?background=${crypto.randomUUID()}`,
+      avatarUrl: `https://i.pravatar.cc/128?rnd=${Math.random()}`,
       isPro: true,
     },
     images: [

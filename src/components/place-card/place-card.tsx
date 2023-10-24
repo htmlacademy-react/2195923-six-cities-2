@@ -2,13 +2,12 @@ import {Link} from 'react-router-dom';
 import { AppRoute } from '../../data';
 import { Offer } from '../../types/offer';
 import { PlaceCardType } from '../../data';
+import { NUMBER_PERCENT_IN_ONE_STAR } from '../../data';
 
 type OfferProps = {
   offer: Offer;
   type: string;
 };
-
-const NUMBER_PERCENT_IN_ONE_STAR = 20;
 
 function PlaceCard({offer, type} : OfferProps): React.JSX.Element {
   return (
