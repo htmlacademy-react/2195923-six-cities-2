@@ -10,5 +10,10 @@ const AppRoute = {
   Error: '*'
 };
 
-export {MockData, AppRoute};
+const PlaceCardType = {
+  Favorite: 'favorites',
+  City: 'cities'
+};
+
+export {MockData, AppRoute, PlaceCardType};
 

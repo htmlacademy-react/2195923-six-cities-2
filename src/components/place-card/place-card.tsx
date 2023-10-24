@@ -1,26 +1,28 @@
 import {Link} from 'react-router-dom';
 import { AppRoute } from '../../data';
 import { Offer } from '../../types/offer';
+import { PlaceCardType } from '../../data';
 
 type OfferProps = {
   offer: Offer;
+  type: string;
 };
 
 const NUMBER_PERCENT_IN_ONE_STAR = 20;
 
-function PlaceCard({offer} : OfferProps): React.JSX.Element {
+function PlaceCard({offer, type} : OfferProps): React.JSX.Element {
   return (
-    <article className="cities__card place-card">
+    <article className={`${type}__card place-card`}>
       {offer.isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
         </div>}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${type}__image-wrapper place-card__image-wrapper`}>
         <Link to={`${AppRoute.Offer}/id`}>
-          <img className="place-card__image" src={offer.images[0]} width="260" height="200" alt="Place image" />
+          <img className="place-card__image" src={offer.images[0]} width={type === PlaceCardType.City ? '260' : '150'} height={type === PlaceCardType.City ? '200' : '110'} alt="Place image" />
         </Link>
       </div>
-      <div className="place-card__info">
+      <div className={`${type === PlaceCardType.Favorite ? 'favorites__card-info' : ''} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{offer.price}</b>

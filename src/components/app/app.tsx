@@ -20,7 +20,7 @@ function App({offers} : AppProps) : React.JSX.Element {
         <Routes>
           <Route path={AppRoute.Main} element={<MainPage offers={offers}/>} />
           <Route path={AppRoute.Login} element={<PrivateRoute navigateTo={AppRoute.Main}><LoginPage /></PrivateRoute>} />
-          <Route path={AppRoute.Favorite} element={<PrivateRoute navigateTo={AppRoute.Login}><FavoritesPage /></PrivateRoute>} />
+          <Route path={AppRoute.Favorite} element={<PrivateRoute navigateTo={AppRoute.Login}><FavoritesPage offers={offers.filter((offer : Offer) => offer.isFavorite)}/></PrivateRoute>} />
           <Route path={`${AppRoute.Offer}/:id`} element={<OfferPage />} />
           <Route path={AppRoute.Error} element={<NotFoundPage />} />
         </Routes>

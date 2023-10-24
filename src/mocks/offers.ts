@@ -59,6 +59,7 @@ const offers: Offer[] = [
       zoom: 8
     },
     isPremium: true,
+    isFavorite: true,
     rating: 4.87,
     description: 'Very cool room',
     bedrooms: 1,
