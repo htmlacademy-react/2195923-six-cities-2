@@ -1,11 +1,11 @@
 import {Link} from 'react-router-dom';
 import { AppRoute } from '../../data';
-import { Offer } from '../../types/offer';
+import { PreviewOffer } from '../../types/offer';
 import { PlaceCardType } from '../../data';
 import { NUMBER_PERCENT_IN_ONE_STAR } from '../../data';
 
 type OfferProps = {
-  offer: Offer;
+  offer: PreviewOffer;
   type: string;
 };
 
@@ -18,7 +18,7 @@ function PlaceCard({offer, type} : OfferProps): React.JSX.Element {
         </div>}
       <div className={`${type}__image-wrapper place-card__image-wrapper`}>
         <Link to={`${AppRoute.Offer}/${offer.id}`}>
-          <img className="place-card__image" src={offer.images[0]} width={(type === PlaceCardType.City || type === PlaceCardType.Near) ? '260' : '150'} height={(type === PlaceCardType.City || type === PlaceCardType.Near) ? '200' : '110'} alt="Place image" />
+          <img className="place-card__image" src={offer.previewImage} width={(type === PlaceCardType.City || type === PlaceCardType.Near) ? '260' : '150'} height={(type === PlaceCardType.City || type === PlaceCardType.Near) ? '200' : '110'} alt="Place image" />
         </Link>
       </div>
       <div className={`${type === PlaceCardType.Favorite ? 'favorites__card-info' : ''} place-card__info`}>

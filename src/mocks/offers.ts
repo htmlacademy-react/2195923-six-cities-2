@@ -1,8 +1,104 @@
-import { Offer } from '../types/offer';
+import { FullOffer } from '../types/offer';
+import { PreviewOffer } from '../types/offer';
 
-const offers: Offer[] = [
+const previewOffers: PreviewOffer[] = [
   {
     id: crypto.randomUUID(),
+    title: 'Beautiful & luxurious apartment at great location',
+    type: 'apartment',
+    price: 120,
+    city: {
+      name: 'Amsterdam',
+      location: {
+        latitude: 52.35514938496378,
+        longitude: 4.673877537499948,
+        zoom: 8
+      }
+    },
+    location: {
+      latitude: 52.35514938496378,
+      longitude: 4.673877537499948,
+      zoom: 8
+    },
+    isFavorite: true,
+    isPremium: false,
+    rating: 4.25,
+    previewImage: 'https://www.atorus.ru/sites/default/files/styles/head_carousel/public/2021-09/fd1c3f.jpg.webp?itok=KQVu0gUC'
+  },
+  {
+    id: crypto.randomUUID(),
+    title: 'Wood and stone place',
+    type: 'room',
+    price: 80,
+    city: {
+      name: 'Hamburg',
+      location: {
+        latitude: 52.35514938496378,
+        longitude: 34.673877537499948,
+        zoom: 8
+      }
+    },
+    location: {
+      latitude: 52.35514938496378,
+      longitude: 34.673877537499948,
+      zoom: 8
+    },
+    isPremium: true,
+    isFavorite: true,
+    rating: 4.87,
+    previewImage: 'https://media.admagazine.ru/photos/61408b2f4311246f36873963/16:9/w_1280,c_limit/w2000%20-%202020-07-14T164056.159.jpeg'
+  },
+  {
+    id: crypto.randomUUID(),
+    title: 'Canal View Prinsengracht',
+    type: 'hotel',
+    price: 132,
+    city: {
+      name: 'Amsterdam',
+      location: {
+        latitude: 52.35514938496378,
+        longitude: 4.673877537499948,
+        zoom: 8
+      }
+    },
+    location: {
+      latitude: 52.35514938496380,
+      longitude: 4.673877537499999,
+      zoom: 8
+    },
+    isFavorite: true,
+    isPremium: false,
+    rating: 3.25,
+    previewImage: 'https://www.atorus.ru/sites/default/files/styles/head_carousel/public/2021-09/fd1c3f.jpg.webp?itok=KQVu0gUC'
+  },
+  {
+    id: crypto.randomUUID(),
+    title: 'Nice, cozy, warm big bed apartment',
+    type: 'hotel',
+    price: 180,
+    city: {
+      name: 'Amsterdam',
+      location: {
+        latitude: 52.35514938496378,
+        longitude: 4.673877537499948,
+        zoom: 8
+      }
+    },
+    location: {
+      latitude: 52.35514938498888,
+      longitude: 4.6738775378888,
+      zoom: 8
+    },
+    isFavorite: true,
+    isPremium: false,
+    rating: 2.25,
+    previewImage: 'https://media.admagazine.ru/photos/61408b2f4311246f36873963/16:9/w_1280,c_limit/w2000%20-%202020-07-14T164056.159.jpeg'
+  },
+];
+
+const fullOffers: FullOffer[] = [
+  {
+    id: previewOffers[0].id,
     title: 'Beautiful & luxurious apartment at great location',
     type: 'apartment',
     price: 120,
@@ -41,7 +137,7 @@ const offers: Offer[] = [
     maxAdults: 6
   },
   {
-    id: crypto.randomUUID(),
+    id: previewOffers[1].id,
     title: 'Wood and stone place',
     type: 'room',
     price: 80,
@@ -69,7 +165,7 @@ const offers: Offer[] = [
     ],
     host: {
       name: 'Boris Nikolaev',
-      avatarUrl: `https://ui-avatars.com/api/?background=${crypto.randomUUID()}`,
+      avatarUrl: `https://i.pravatar.cc/128?rnd=${Math.random()}`,
       isPro: false,
     },
     images: [
@@ -79,7 +175,7 @@ const offers: Offer[] = [
     maxAdults: 1
   },
   {
-    id: crypto.randomUUID(),
+    id: previewOffers[2].id,
     title: 'Canal View Prinsengracht',
     type: 'hotel',
     price: 132,
@@ -106,7 +202,7 @@ const offers: Offer[] = [
     ],
     host: {
       name: 'Ludvig',
-      avatarUrl: `https://ui-avatars.com/api/?background=${crypto.randomUUID()}`,
+      avatarUrl: `https://i.pravatar.cc/128?rnd=${Math.random()}`,
       isPro: false,
     },
     images: [
@@ -116,7 +212,7 @@ const offers: Offer[] = [
     maxAdults: 1
   },
   {
-    id: crypto.randomUUID(),
+    id: previewOffers[3].id,
     title: 'Nice, cozy, warm big bed apartment',
     type: 'hotel',
     price: 180,
@@ -147,7 +243,7 @@ const offers: Offer[] = [
     ],
     host: {
       name: 'Great Gatsby',
-      avatarUrl: `https://ui-avatars.com/api/?background=${crypto.randomUUID()}`,
+      avatarUrl: `https://i.pravatar.cc/128?rnd=${Math.random()}`,
       isPro: false,
     },
     images: [
@@ -158,4 +254,4 @@ const offers: Offer[] = [
   },
 ];
 
-export {offers};
+export {fullOffers, previewOffers};

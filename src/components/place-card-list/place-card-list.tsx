@@ -1,20 +1,20 @@
-import { Offer } from '../../types/offer';
+import { PreviewOffer } from '../../types/offer';
 import {useState} from 'react';
 import PlaceCard from '../place-card/place-card';
 import { PlaceCardType } from '../../data';
 
 type PlaceCardListProps = {
-  offers: Offer[];
+  offers: PreviewOffer[];
 }
 
 function PlaceCardList({offers} : PlaceCardListProps) {
   const [activeCard, setActiveCard] = useState('');
 
   const handlePlaceCardMouseOver = (evt : React.MouseEvent) => {
-    console.log(evt);
+    console.log(evt.currentTarget);
   };
 
-  function getPlaceCards(offersArray: Offer[]) {
+  function getPlaceCards(offersArray: PreviewOffer[]) {
     return Array.from({length: offers.length}, (_, index : number) => <PlaceCard offer={offersArray[index]} type={PlaceCardType.City} key={offersArray[index].id}/>);
   }
 

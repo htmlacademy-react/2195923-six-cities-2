@@ -1,6 +1,6 @@
 import Header from '../../components/header/header';
 import { Helmet } from 'react-helmet-async';
-import { Offer } from '../../types/offer';
+import { FullOffer, PreviewOffer } from '../../types/offer';
 import { Review } from '../../types/review';
 import { NUMBER_PERCENT_IN_ONE_STAR, PlaceCardType } from '../../data';
 import ReviewList from '../../components/review-list/review-list';
@@ -10,11 +10,12 @@ import {useParams, Navigate} from 'react-router-dom';
 import { AppRoute } from '../../data';
 
 type OfferPageProps = {
-  offers: Offer[];
+  offers: FullOffer[];
+  nearOffers: PreviewOffer[];
   reviews: Review[];
 }
 
-function OfferPage({offers, reviews} : OfferPageProps) : React.JSX.Element {
+function OfferPage({offers, nearOffers, reviews} : OfferPageProps) : React.JSX.Element {
   const {id} = useParams();
 
   function generatePhotos(images: string[]) {
@@ -35,9 +36,11 @@ function OfferPage({offers, reviews} : OfferPageProps) : React.JSX.Element {
   }
 
   const offer = offers.find((currentOffer) => currentOffer.id === id);
+
   if (offer === undefined) {
     return <Navigate to={AppRoute.Error} />;
   }
+
   return (
     <div className="page">
       <Helmet>
@@ -132,9 +135,9 @@ function OfferPage({offers, reviews} : OfferPageProps) : React.JSX.Element {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <PlaceCard type={PlaceCardType.Near} offer={offer}/>
-              <PlaceCard type={PlaceCardType.Near} offer={offer}/>
-              <PlaceCard type={PlaceCardType.Near} offer={offer}/>
+              <PlaceCard type={PlaceCardType.Near} offer={nearOffers[0]}/>
+              <PlaceCard type={PlaceCardType.Near} offer={nearOffers[0]}/>
+              <PlaceCard type={PlaceCardType.Near} offer={nearOffers[0]}/>
             </div>
           </section>
         </div>

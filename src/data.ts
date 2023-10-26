@@ -12,7 +12,8 @@ const AppRoute = {
 
 const PlaceCardType = {
   Favorite: 'favorites',
-  City: 'cities'
+  City: 'cities',
+  Near: 'near-places'
 };
 
 const NUMBER_PERCENT_IN_ONE_STAR = 20;

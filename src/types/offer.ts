@@ -17,7 +17,7 @@ export type Host = {
   isPro: boolean;
 }
 
-export type Offer = {
+export type PreviewOffer = {
   id: string;
   title: string;
   type: OfferType;
@@ -27,6 +27,10 @@ export type Offer = {
   isFavorite?: boolean;
   isPremium: boolean;
   rating: number;
+  previewImage: string;
+};
+
+export type FullOffer = Omit<PreviewOffer, 'previewImage'> & {
   description: string;
   bedrooms: number;
   goods: string[];
