@@ -17,8 +17,8 @@ function PlaceCard({offer, type} : OfferProps): React.JSX.Element {
           <span>Premium</span>
         </div>}
       <div className={`${type}__image-wrapper place-card__image-wrapper`}>
-        <Link to={`${AppRoute.Offer}/id`}>
-          <img className="place-card__image" src={offer.images[0]} width={type === PlaceCardType.City ? '260' : '150'} height={type === PlaceCardType.City ? '200' : '110'} alt="Place image" />
+        <Link to={`${AppRoute.Offer}/${offer.id}`}>
+          <img className="place-card__image" src={offer.images[0]} width={(type === PlaceCardType.City || type === PlaceCardType.Near) ? '260' : '150'} height={(type === PlaceCardType.City || type === PlaceCardType.Near) ? '200' : '110'} alt="Place image" />
         </Link>
       </div>
       <div className={`${type === PlaceCardType.Favorite ? 'favorites__card-info' : ''} place-card__info`}>
@@ -41,7 +41,7 @@ function PlaceCard({offer, type} : OfferProps): React.JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Offer}/id`}>{offer.title}</Link>
+          <Link to={`${AppRoute.Offer}/${offer.id}`}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>
