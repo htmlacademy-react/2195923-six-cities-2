@@ -8,18 +8,22 @@ type PlaceCardListProps = {
 }
 
 function PlaceCardList({offers} : PlaceCardListProps) {
-  const [activeCard, setActiveCard] = useState('');
+  const [activeCard, setActiveCard] = useState(' ');
 
   const handlePlaceCardMouseOver = (evt : React.MouseEvent) => {
-    console.log(evt.currentTarget);
+    evt.preventDefault();
+    const id = evt.currentTarget.getAttribute('data-id');
+    if (id !== null) {
+      setActiveCard(id);
+    }
   };
 
-  function getPlaceCards(offersArray: PreviewOffer[]) {
-    return Array.from({length: offers.length}, (_, index : number) => <PlaceCard offer={offersArray[index]} type={PlaceCardType.City} key={offersArray[index].id}/>);
+  function getPlaceCards(cards: PreviewOffer[]) {
+    return Array.from({length: offers.length}, (_, index : number) => <PlaceCard callback={handlePlaceCardMouseOver} offer={cards[index]} type={PlaceCardType.City} key={cards[index].id}/>);
   }
 
   return (
-    <div className="cities__places-list places__list tabs__content" onMouseOver={handlePlaceCardMouseOver}>
+    <div className="cities__places-list places__list tabs__content">
       {getPlaceCards(offers)}
     </div>
   );

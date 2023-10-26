@@ -7,11 +7,12 @@ import { NUMBER_PERCENT_IN_ONE_STAR } from '../../data';
 type OfferProps = {
   offer: PreviewOffer;
   type: string;
+  callback: React.MouseEventHandler<HTMLElement>;
 };
 
-function PlaceCard({offer, type} : OfferProps): React.JSX.Element {
+function PlaceCard({offer, type, callback} : OfferProps): React.JSX.Element {
   return (
-    <article className={`${type}__card place-card`}>
+    <article className={`${type}__card place-card`} onMouseOver={callback} data-id={offer.id}>
       {offer.isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
