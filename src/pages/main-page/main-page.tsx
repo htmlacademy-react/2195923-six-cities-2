@@ -1,7 +1,7 @@
 import PlaceCard from '../../components/place-card/place-card';
 import Header from '../../components/header/header';
 import {Link} from 'react-router-dom';
-import { AppRoute } from '../../data';
+import { AppRoute } from '../../app-route';
 import { Helmet } from 'react-helmet-async';
 
 type MainPageProps = {

@@ -1,4 +1,4 @@
-import { AppRoute } from '../../data';
+import { AppRoute } from '../../app-route';
 import styles from './not-found-page.module.css';
 import {Link} from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';

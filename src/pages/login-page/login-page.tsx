@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Header from '../../components/header/header';
 import { Helmet } from 'react-helmet-async';
-import { AppRoute } from '../../data';
+import { AppRoute } from '../../app-route';
 
 function LoginPage() : React.JSX.Element {
   return (
