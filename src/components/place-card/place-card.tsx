@@ -8,7 +8,7 @@ import { AppRoute } from '../../app-route';
 type OfferProps = {
   offer: PreviewOffer;
   type: string;
-  callback: React.MouseEventHandler<HTMLElement>;
+  callback?: React.MouseEventHandler<HTMLElement>;
 };
 
 function PlaceCard({offer, type, callback} : OfferProps): React.JSX.Element {

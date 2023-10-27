@@ -7,7 +7,7 @@ import ReviewList from '../../components/review-list/review-list';
 import ReviewsForm from '../../components/reviews-form/reviews-form';
 import PlaceCard from '../../components/place-card/place-card';
 import {useParams, Navigate} from 'react-router-dom';
-import { AppRoute } from '../../data';
+import { AppRoute } from '../../app-route';
 
 type OfferPageProps = {
   offers: FullOffer[];

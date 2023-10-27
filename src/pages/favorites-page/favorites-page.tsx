@@ -1,16 +1,16 @@
 import Header from '../../components/header/header';
 import { Helmet } from 'react-helmet-async';
-import { Offer } from '../../types/offer';
+import { PreviewOffer } from '../../types/offer';
 import PlaceCard from '../../components/place-card/place-card';
 import { PlaceCardType } from '../../data';
 
 type FavoritesPageProps = {
-  offers: Offer[];
+  offers: PreviewOffer[];
 }
 
 function FavoritesPage({offers} : FavoritesPageProps) : React.JSX.Element {
 
-  function renderFavoritePlaceListByCity(offersByCities: {[key: string]: Offer[]}, city: string) {
+  function renderFavoritePlaceListByCity(offersByCities: {[key: string]: PreviewOffer[]}, city: string) {
     const favoritePlaceListByCity : React.JSX.Element[] = [];
     for (const offerByCity of offersByCities[city]) {
       favoritePlaceListByCity.push(<PlaceCard offer={offerByCity} type={PlaceCardType.Favorite} key={offerByCity.id}/>);
@@ -18,7 +18,7 @@ function FavoritesPage({offers} : FavoritesPageProps) : React.JSX.Element {
     return favoritePlaceListByCity;
   }
 
-  function renderFavoriteList(offersByCities: {[key: string]: Offer[]}) {
+  function renderFavoriteList(offersByCities: {[key: string]: PreviewOffer[]}) {
     const favoriteList : React.JSX.Element[] = [];
 
     for (const city of Object.keys(offersByCities)) {
@@ -40,7 +40,7 @@ function FavoritesPage({offers} : FavoritesPageProps) : React.JSX.Element {
     return favoriteList;
   }
 
-  const offersByCities = offers.reduce((group: {[key: string]: Offer[]}, offer) => {
+  const offersByCities = offers.reduce((group: {[key: string]: PreviewOffer[]}, offer) => {
     if (!group[offer.city.name]) {
       group[offer.city.name] = [];
     }
