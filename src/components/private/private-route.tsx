@@ -1,14 +1,14 @@
 import {Navigate} from 'react-router-dom';
+import { AppRoute } from '../../app-route';
 
 type PrivateRouteProps = {
-  navigateTo: string;
   children: React.JSX.Element;
 };
 
-function PrivateRoute({children, navigateTo}: PrivateRouteProps): React.JSX.Element {
-  const hasAccess = true;
+function PrivateRoute({children}: PrivateRouteProps): React.JSX.Element {
+  const hasAccess = false;
 
-  return hasAccess ? children : <Navigate to={navigateTo} />;
+  return hasAccess ? children : <Navigate to={AppRoute.Login} />;
 }
 
 export default PrivateRoute;
