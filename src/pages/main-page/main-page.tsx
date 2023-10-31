@@ -3,10 +3,11 @@ import PlaceCardList from '../../components/place-card-list/place-card-list';
 import {Link} from 'react-router-dom';
 import { AppRoute } from '../../app-route';
 import { Helmet } from 'react-helmet-async';
-import { Offer } from '../../types/offer';
+import { PreviewOffer } from '../../types/offer';
+import Map from '../../components/map/map';
 
 type MainPageProps = {
-  offers: Offer[];
+  offers: PreviewOffer[];
 }
 
 function MainPage({offers} : MainPageProps) : React.JSX.Element {
@@ -77,7 +78,7 @@ function MainPage({offers} : MainPageProps) : React.JSX.Element {
               <PlaceCardList offers={offers} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map offers={offers}/>
             </div>
           </div>
         </div>

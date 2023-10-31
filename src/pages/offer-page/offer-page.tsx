@@ -2,7 +2,7 @@ import Header from '../../components/header/header';
 import { Helmet } from 'react-helmet-async';
 import { FullOffer, PreviewOffer } from '../../types/offer';
 import { Review } from '../../types/review';
-import { NUMBER_PERCENT_IN_ONE_STAR, PlaceCardType } from '../../data';
+import { NUMBER_PERCENT_IN_ONE_STAR, PlaceCardType } from '../../const';
 import ReviewList from '../../components/review-list/review-list';
 import ReviewsForm from '../../components/reviews-form/reviews-form';
 import PlaceCard from '../../components/place-card/place-card';

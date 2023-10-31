@@ -1,7 +1,7 @@
 import { PreviewOffer } from '../../types/offer';
 import {useState} from 'react';
 import PlaceCard from '../place-card/place-card';
-import { PlaceCardType } from '../../data';
+import { PlaceCardType } from '../../const';
 
 type PlaceCardListProps = {
   offers: PreviewOffer[];
