@@ -31,7 +31,7 @@ const previewOffers: PreviewOffer[] = [
     type: 'room',
     price: 80,
     city: {
-      name: 'Hamburg',
+      name: 'Amsterdam',
       location: {
         latitude: 52.3609553943508,
         longitude: 4.85309666406198,
@@ -142,7 +142,7 @@ const fullOffers: FullOffer[] = [
     type: 'room',
     price: 80,
     city: {
-      name: 'Hamburg',
+      name: 'Amsterdam',
       location: {
         latitude: 52.3609553943508,
         longitude: 4.85309666406198,
