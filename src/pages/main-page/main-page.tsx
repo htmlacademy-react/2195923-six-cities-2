@@ -5,12 +5,24 @@ import { AppRoute } from '../../app-route';
 import { Helmet } from 'react-helmet-async';
 import { PreviewOffer } from '../../types/offer';
 import Map from '../../components/map/map';
+import { useState } from 'react';
 
 type MainPageProps = {
   offers: PreviewOffer[];
 }
 
 function MainPage({offers} : MainPageProps) : React.JSX.Element {
+  const [activeCard, setActiveCard] = useState(' ');
+
+  const handlePlaceCardMouseOver = (evt : React.MouseEvent) => {
+    evt.preventDefault();
+    const id = evt.currentTarget.getAttribute('data-id');
+    if (id !== null) {
+      setActiveCard(id);
+    }
+  };
+
+
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -75,10 +87,10 @@ function MainPage({offers} : MainPageProps) : React.JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <PlaceCardList offers={offers} />
+              <PlaceCardList offers={offers} callback={handlePlaceCardMouseOver} />
             </section>
             <div className="cities__right-section">
-              <Map offers={offers}/>
+              <Map offers={offers} activeCard={activeCard}/>
             </div>
           </div>
         </div>

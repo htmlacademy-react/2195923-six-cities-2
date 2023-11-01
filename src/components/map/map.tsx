@@ -7,6 +7,7 @@ import { CenterCity, MapIconURL } from '../../const';
 
 type MapProps = {
   offers: PreviewOffer[];
+  activeCard: string;
 }
 
 const passiveIcon = new Icon({
@@ -21,7 +22,7 @@ const activeIcon = new Icon({
   iconAnchor: [13.5, 39]
 });
 
-function Map({offers} : MapProps) {
+function Map({offers, activeCard} : MapProps) {
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, CenterCity[offers[0].city.name]);
@@ -36,11 +37,7 @@ function Map({offers} : MapProps) {
         });
 
         marker
-          .setIcon(passiveIcon
-            // selectedPoint !== undefined && point.title === selectedPoint.title
-            //   ? currentCustomIcon
-            //   : defaultCustomIcon
-          )
+          .setIcon(offer.id === activeCard ? activeIcon : passiveIcon)
           .addTo(markerLayer);
       });
 
@@ -48,7 +45,7 @@ function Map({offers} : MapProps) {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, offers]);
+  }, [map, offers, activeCard]);
 
   return (
     <section className="cities__map map" ref={mapRef}></section>
