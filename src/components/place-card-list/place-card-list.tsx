@@ -4,17 +4,31 @@ import { PlaceCardType } from '../../const';
 
 type PlaceCardListProps = {
   offers: PreviewOffer[];
+  type: string;
   callback?: React.MouseEventHandler<HTMLElement>;
 }
 
-function PlaceCardList({offers, callback} : PlaceCardListProps) {
+function PlaceCardList({offers, type, callback} : PlaceCardListProps) {
 
   function getPlaceCards(cards: PreviewOffer[]) {
-    return Array.from({length: offers.length}, (_, index : number) => <PlaceCard callback={callback} offer={cards[index]} type={PlaceCardType.City} key={cards[index].id}/>);
+    return Array.from({length: offers.length}, (_, index : number) => <PlaceCard callback={callback} offer={cards[index]} type={type} key={cards[index].id}/>);
+  }
+
+  function getPlaceCardListClass(typeCardList: string) {
+    let placeCardListClass = '';
+    switch(typeCardList) {
+      case PlaceCardType.City:
+        placeCardListClass = 'cities__places-list';
+        break;
+      case PlaceCardType.Near:
+        placeCardListClass = 'near-places__list';
+        break;
+    }
+    return placeCardListClass;
   }
 
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <div className={`${getPlaceCardListClass(type)} places__list tabs__content`}>
       {getPlaceCards(offers)}
     </div>
   );

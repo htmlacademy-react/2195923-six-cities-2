@@ -7,7 +7,8 @@ import { CenterCity, MapIconURL } from '../../const';
 
 type MapProps = {
   offers: PreviewOffer[];
-  activeCard: string;
+  type: string;
+  activeCard?: string;
 }
 
 const passiveIcon = new Icon({
@@ -22,7 +23,7 @@ const activeIcon = new Icon({
   iconAnchor: [13.5, 39]
 });
 
-function Map({offers, activeCard} : MapProps) {
+function Map({offers, type, activeCard} : MapProps) {
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, CenterCity[offers[0].city.name]);
@@ -48,7 +49,7 @@ function Map({offers, activeCard} : MapProps) {
   }, [map, offers, activeCard]);
 
   return (
-    <section className="cities__map map" ref={mapRef}></section>
+    <section className={`${type}__map map`} ref={mapRef}></section>
   );
 }
 

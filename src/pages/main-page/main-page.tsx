@@ -1,5 +1,6 @@
 import Header from '../../components/header/header';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
+import { PlaceCardType } from '../../const';
 import {Link} from 'react-router-dom';
 import { AppRoute } from '../../app-route';
 import { Helmet } from 'react-helmet-async';
@@ -87,10 +88,10 @@ function MainPage({offers} : MainPageProps) : React.JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <PlaceCardList offers={offers} callback={handlePlaceCardMouseOver} />
+              <PlaceCardList offers={offers} type={PlaceCardType.City} callback={handlePlaceCardMouseOver} />
             </section>
             <div className="cities__right-section">
-              <Map offers={offers} activeCard={activeCard}/>
+              <Map offers={offers} activeCard={activeCard} type={'cities'}/>
             </div>
           </div>
         </div>
