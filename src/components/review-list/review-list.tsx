@@ -8,7 +8,7 @@ type ReviewListProps = {
 function ReviewList({reviews} : ReviewListProps) {
 
   function getPlaceCards(reviewsArray: Review[]) {
-    return Array.from({length: reviewsArray.length}, (_, index : number) => <ReviewPage review={reviews[index]} key={reviewsArray[index].id}/>);
+    return reviewsArray.map((review) => <ReviewPage review={review} key={review.id}/>);
   }
 
   return (
