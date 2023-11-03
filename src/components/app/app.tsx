@@ -26,7 +26,7 @@ function App({fullOffers, previewOffers, reviews} : AppProps) : React.JSX.Elemen
           <Route path={AppRoute.Favorite} element={<PrivateRoute><FavoritesPage offers={previewOffers.filter((offer : PreviewOffer) => offer.isFavorite)}/></PrivateRoute>} />
           <Route
             path={`${AppRoute.Offer}/:id`}
-            element={<OfferPage offers={fullOffers} nearOffers={previewOffers} reviews={reviews} />}
+            element={<OfferPage offer={fullOffers[0]} nearOffers={previewOffers} reviews={reviews} />}
           />
           <Route path={AppRoute.Error} element={<NotFoundPage />} />
         </Routes>
