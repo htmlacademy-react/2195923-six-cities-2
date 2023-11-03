@@ -1,18 +1,15 @@
-import PlaceCard from '../../components/place-card/place-card';
 import Header from '../../components/header/header';
+import PlaceCardList from '../../components/place-card-list/place-card-list';
 import {Link} from 'react-router-dom';
 import { AppRoute } from '../../app-route';
 import { Helmet } from 'react-helmet-async';
+import { PreviewOffer } from '../../types/offer';
 
 type MainPageProps = {
-  placesCount : number;
+  offers: PreviewOffer[];
 }
 
-function getPlaceCards(cardCount : number) {
-  return Array.from({length: cardCount}, (_, index : number) => <PlaceCard key={index}/>);
-}
-
-function MainPage({placesCount} : MainPageProps) : React.JSX.Element {
+function MainPage({offers} : MainPageProps) : React.JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -61,7 +58,7 @@ function MainPage({placesCount} : MainPageProps) : React.JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{placesCount} places to stay in Amsterdam</b>
+              <b className="places__found">{offers.length} places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -77,9 +74,7 @@ function MainPage({placesCount} : MainPageProps) : React.JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                {getPlaceCards(placesCount)}
-              </div>
+              <PlaceCardList offers={offers} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>

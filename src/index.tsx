@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import {MockData} from './data';
+import { fullOffers, previewOffers } from './mocks/offers';
+import { reviews } from './mocks/reviews';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -9,6 +10,10 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App placesCount = {MockData.PlacesCount}/>
+    <App
+      fullOffers = {fullOffers}
+      previewOffers={previewOffers}
+      reviews = {reviews}
+    />
   </React.StrictMode>
 );

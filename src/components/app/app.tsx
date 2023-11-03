@@ -7,20 +7,27 @@ import PrivateRoute from '../private/private-route';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../app-route';
 import { HelmetProvider } from 'react-helmet-async';
+import { FullOffer, PreviewOffer } from '../../types/offer';
+import { Review } from '../../types/review';
 
 type AppProps = {
-  placesCount: number;
+  fullOffers: FullOffer[];
+  previewOffers: PreviewOffer[];
+  reviews: Review[];
 }
 
-function App({placesCount} : AppProps) : React.JSX.Element {
+function App({fullOffers, previewOffers, reviews} : AppProps) : React.JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
-          <Route path={AppRoute.Main} element={<MainPage placesCount={placesCount}/>} />
-          <Route path={AppRoute.Login} element={<LoginPage />} />
-          <Route path={AppRoute.Favorite} element={<PrivateRoute><FavoritesPage /></PrivateRoute>} />
-          <Route path={`${AppRoute.Offer}/:id`} element={<OfferPage />} />
+          <Route path={AppRoute.Main} element={<MainPage offers={previewOffers}/>} />
+          <Route path={AppRoute.Login} element={<LoginPage />}/>
+          <Route path={AppRoute.Favorite} element={<PrivateRoute><FavoritesPage offers={previewOffers.filter((offer : PreviewOffer) => offer.isFavorite)}/></PrivateRoute>} />
+          <Route
+            path={`${AppRoute.Offer}/:id`}
+            element={<OfferPage offer={fullOffers[0]} nearOffers={previewOffers} reviews={reviews} />}
+          />
           <Route path={AppRoute.Error} element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
