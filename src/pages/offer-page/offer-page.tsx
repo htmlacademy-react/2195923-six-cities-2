@@ -9,6 +9,7 @@ import ReviewList from '../../components/review-list/review-list';
 import ReviewsForm from '../../components/reviews-form/reviews-form';
 import { Navigate} from 'react-router-dom';
 import { AppRoute } from '../../app-route';
+import { useState } from 'react';
 
 type OfferPageProps = {
   offer: FullOffer;
@@ -17,6 +18,20 @@ type OfferPageProps = {
 }
 
 function OfferPage({offer, nearOffers, reviews} : OfferPageProps) : React.JSX.Element {
+  const [activeCard, setActiveCard] = useState(' ');
+
+  const handlePlaceCardMouseEnter = (evt : React.MouseEvent) => {
+    evt.preventDefault();
+    const id = evt.currentTarget.getAttribute('data-id');
+    if (id !== null) {
+      setActiveCard(id);
+    }
+  };
+
+  const handlePlaceCardMouseLeave = (evt : React.MouseEvent) => {
+    evt.preventDefault();
+    setActiveCard(' ');
+  };
 
   function generatePhotos(images: string[]) {
     return Array.from({length: images.length}, (_, index: number) => (
@@ -128,12 +143,12 @@ function OfferPage({offer, nearOffers, reviews} : OfferPageProps) : React.JSX.El
               </section>
             </div>
           </div>
-          <Map offers={threeNearOffers} type={'offer'}/>
+          <Map offers={threeNearOffers} type={'offer'} activeCard={activeCard} />
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <PlaceCardList offers={threeNearOffers} type={PlaceCardType.Near}/>
+            <PlaceCardList offers={threeNearOffers} type={PlaceCardType.Near} onMouseEnter={handlePlaceCardMouseEnter} onMouseLeave={handlePlaceCardMouseLeave}/>
           </section>
         </div>
       </main>
