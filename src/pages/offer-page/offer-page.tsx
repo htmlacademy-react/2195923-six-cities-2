@@ -6,17 +6,16 @@ import { NUMBER_PERCENT_IN_ONE_STAR, PlaceCardType } from '../../data';
 import ReviewList from '../../components/review-list/review-list';
 import ReviewsForm from '../../components/reviews-form/reviews-form';
 import PlaceCard from '../../components/place-card/place-card';
-import {useParams, Navigate} from 'react-router-dom';
+import { Navigate} from 'react-router-dom';
 import { AppRoute } from '../../app-route';
 
 type OfferPageProps = {
-  offers: FullOffer[];
+  offer: FullOffer;
   nearOffers: PreviewOffer[];
   reviews: Review[];
 }
 
-function OfferPage({offers, nearOffers, reviews} : OfferPageProps) : React.JSX.Element {
-  const {id} = useParams();
+function OfferPage({offer, nearOffers, reviews} : OfferPageProps) : React.JSX.Element {
 
   function generatePhotos(images: string[]) {
     return Array.from({length: images.length}, (_, index: number) => (
@@ -24,7 +23,6 @@ function OfferPage({offers, nearOffers, reviews} : OfferPageProps) : React.JSX.E
         <img className="offer__image" src={images[index]} alt="Photo studio" />
       </div>
     ));
-
   }
 
   function generateOfferInside(goods: string[]) {
@@ -34,8 +32,6 @@ function OfferPage({offers, nearOffers, reviews} : OfferPageProps) : React.JSX.E
       </li>
     ));
   }
-
-  const offer = offers.find((currentOffer) => currentOffer.id === id);
 
   if (offer === undefined) {
     return <Navigate to={AppRoute.Error} />;
