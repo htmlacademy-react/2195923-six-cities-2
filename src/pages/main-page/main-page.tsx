@@ -15,12 +15,17 @@ type MainPageProps = {
 function MainPage({offers} : MainPageProps) : React.JSX.Element {
   const [activeCard, setActiveCard] = useState(' ');
 
-  const handlePlaceCardMouseOver = (evt : React.MouseEvent) => {
+  const handlePlaceCardMouseEnter = (evt : React.MouseEvent) => {
     evt.preventDefault();
     const id = evt.currentTarget.getAttribute('data-id');
     if (id !== null) {
       setActiveCard(id);
     }
+  };
+
+  const handlePlaceCardMouseLeave = (evt : React.MouseEvent) => {
+    evt.preventDefault();
+    setActiveCard(' ');
   };
 
 
@@ -88,7 +93,7 @@ function MainPage({offers} : MainPageProps) : React.JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <PlaceCardList offers={offers} type={PlaceCardType.City} callback={handlePlaceCardMouseOver} />
+              <PlaceCardList offers={offers} type={PlaceCardType.City} onMouseEnter={handlePlaceCardMouseEnter} onMouseLeave={handlePlaceCardMouseLeave} />
             </section>
             <div className="cities__right-section">
               <Map offers={offers} activeCard={activeCard} type={'cities'}/>

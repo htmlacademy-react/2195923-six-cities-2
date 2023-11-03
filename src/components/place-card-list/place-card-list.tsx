@@ -5,27 +5,14 @@ import { PlaceCardType } from '../../const';
 type PlaceCardListProps = {
   offers: PreviewOffer[];
   type: string;
-  callback?: React.MouseEventHandler<HTMLElement>;
+  onMouseEnter?: React.MouseEventHandler<HTMLElement>;
+  onMouseLeave?: React.MouseEventHandler<HTMLElement>;
 }
 
-function PlaceCardList({offers,type, callback} : PlaceCardListProps) {
-  const [activeCard, setActiveCard] = useState(' ');
-
-  const handlePlaceCardMouseEnter = (evt : React.MouseEvent) => {
-    evt.preventDefault();
-    const id = evt.currentTarget.getAttribute('data-id');
-    if (id !== null) {
-      setActiveCard(id);
-    }
-  };
-
-  const handlePlaceCardMouseLeave = (evt : React.MouseEvent) => {
-    evt.preventDefault();
-    setActiveCard(' ');
-  };
+function PlaceCardList({offers,type, onMouseEnter, onMouseLeave} : PlaceCardListProps) {
 
   function getPlaceCards(cards: PreviewOffer[]) {
-    return Array.from({length: offers.length}, (_, index : number) => <PlaceCard onMouseEnter={handlePlaceCardMouseEnter} onMouseLeave={handlePlaceCardMouseLeave} offer={cards[index]} type={type} key={cards[index].id}/>);
+    return Array.from({length: offers.length}, (_, index : number) => <PlaceCard onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} offer={cards[index]} type={type} key={cards[index].id}/>);
   }
 
   function getPlaceCardListClass(typeCardList: string) {
