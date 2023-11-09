@@ -1,13 +1,15 @@
 import Header from '../../components/header/header';
+import Map from '../../components/map/map';
+import PlaceCardList from '../../components/place-card-list/place-card-list';
 import { Helmet } from 'react-helmet-async';
 import { FullOffer, PreviewOffer } from '../../types/offer';
 import { Review } from '../../types/review';
-import { NUMBER_PERCENT_IN_ONE_STAR, PlaceCardType } from '../../data';
+import { NUMBER_PERCENT_IN_ONE_STAR, PlaceCardType } from '../../const';
 import ReviewList from '../../components/review-list/review-list';
 import ReviewsForm from '../../components/reviews-form/reviews-form';
-import PlaceCard from '../../components/place-card/place-card';
 import { Navigate} from 'react-router-dom';
 import { AppRoute } from '../../app-route';
+import { useState } from 'react';
 
 type OfferPageProps = {
   offer: FullOffer;
@@ -16,6 +18,20 @@ type OfferPageProps = {
 }
 
 function OfferPage({offer, nearOffers, reviews} : OfferPageProps) : React.JSX.Element {
+  const [activeCard, setActiveCard] = useState(' ');
+
+  const handlePlaceCardMouseEnter = (evt : React.MouseEvent) => {
+    evt.preventDefault();
+    const id = evt.currentTarget.getAttribute('data-id');
+    if (id !== null) {
+      setActiveCard(id);
+    }
+  };
+
+  const handlePlaceCardMouseLeave = (evt : React.MouseEvent) => {
+    evt.preventDefault();
+    setActiveCard(' ');
+  };
 
   function generatePhotos(images: string[]) {
     return Array.from({length: images.length}, (_, index: number) => (
@@ -36,6 +52,8 @@ function OfferPage({offer, nearOffers, reviews} : OfferPageProps) : React.JSX.El
   if (offer === undefined) {
     return <Navigate to={AppRoute.Error} />;
   }
+
+  const threeNearOffers = [nearOffers[0], nearOffers[1], nearOffers[2]];
 
   return (
     <div className="page">
@@ -125,16 +143,12 @@ function OfferPage({offer, nearOffers, reviews} : OfferPageProps) : React.JSX.El
               </section>
             </div>
           </div>
-          <section className="offer__map map"></section>
+          <Map offers={threeNearOffers} type={'offer'} activeCard={activeCard} />
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <div className="near-places__list places__list">
-              <PlaceCard type={PlaceCardType.Near} offer={nearOffers[0]}/>
-              <PlaceCard type={PlaceCardType.Near} offer={nearOffers[0]}/>
-              <PlaceCard type={PlaceCardType.Near} offer={nearOffers[0]}/>
-            </div>
+            <PlaceCardList offers={threeNearOffers} type={PlaceCardType.Near} onMouseEnter={handlePlaceCardMouseEnter} onMouseLeave={handlePlaceCardMouseLeave}/>
           </section>
         </div>
       </main>

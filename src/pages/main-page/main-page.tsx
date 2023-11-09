@@ -1,15 +1,34 @@
 import Header from '../../components/header/header';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
+import { PlaceCardType } from '../../const';
 import {Link} from 'react-router-dom';
 import { AppRoute } from '../../app-route';
 import { Helmet } from 'react-helmet-async';
 import { PreviewOffer } from '../../types/offer';
+import Map from '../../components/map/map';
+import { useState } from 'react';
 
 type MainPageProps = {
   offers: PreviewOffer[];
 }
 
 function MainPage({offers} : MainPageProps) : React.JSX.Element {
+  const [activeCard, setActiveCard] = useState(' ');
+
+  const handlePlaceCardMouseEnter = (evt : React.MouseEvent) => {
+    evt.preventDefault();
+    const id = evt.currentTarget.getAttribute('data-id');
+    if (id !== null) {
+      setActiveCard(id);
+    }
+  };
+
+  const handlePlaceCardMouseLeave = (evt : React.MouseEvent) => {
+    evt.preventDefault();
+    setActiveCard(' ');
+  };
+
+
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -74,10 +93,10 @@ function MainPage({offers} : MainPageProps) : React.JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <PlaceCardList offers={offers} />
+              <PlaceCardList offers={offers} type={PlaceCardType.City} onMouseEnter={handlePlaceCardMouseEnter} onMouseLeave={handlePlaceCardMouseLeave} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map offers={offers} activeCard={activeCard} type={'cities'}/>
             </div>
           </div>
         </div>

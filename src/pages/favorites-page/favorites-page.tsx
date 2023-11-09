@@ -2,7 +2,7 @@ import Header from '../../components/header/header';
 import { Helmet } from 'react-helmet-async';
 import { PreviewOffer } from '../../types/offer';
 import PlaceCard from '../../components/place-card/place-card';
-import { PlaceCardType } from '../../data';
+import { PlaceCardType } from '../../const';
 
 type FavoritesPageProps = {
   offers: PreviewOffer[];

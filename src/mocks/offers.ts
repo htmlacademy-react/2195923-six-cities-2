@@ -10,14 +10,14 @@ const previewOffers: PreviewOffer[] = [
     city: {
       name: 'Amsterdam',
       location: {
-        latitude: 52.35514938496378,
-        longitude: 4.673877537499948,
+        latitude: 52.3909553943508,
+        longitude: 4.85309666406198,
         zoom: 8
       }
     },
     location: {
-      latitude: 52.35514938496378,
-      longitude: 4.673877537499948,
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
       zoom: 8
     },
     isFavorite: true,
@@ -31,16 +31,16 @@ const previewOffers: PreviewOffer[] = [
     type: 'room',
     price: 80,
     city: {
-      name: 'Hamburg',
+      name: 'Amsterdam',
       location: {
-        latitude: 52.35514938496378,
-        longitude: 34.673877537499948,
+        latitude: 52.3609553943508,
+        longitude: 4.85309666406198,
         zoom: 8
       }
     },
     location: {
-      latitude: 52.35514938496378,
-      longitude: 34.673877537499948,
+      latitude: 52.3609553943508,
+      longitude: 4.85309666406198,
       zoom: 8
     },
     isPremium: true,
@@ -56,14 +56,14 @@ const previewOffers: PreviewOffer[] = [
     city: {
       name: 'Amsterdam',
       location: {
-        latitude: 52.35514938496378,
-        longitude: 4.673877537499948,
+        latitude: 52.3909553943508,
+        longitude: 4.929309666406198,
         zoom: 8
       }
     },
     location: {
-      latitude: 52.35514938496380,
-      longitude: 4.673877537499999,
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
       zoom: 8
     },
     isFavorite: true,
@@ -79,14 +79,14 @@ const previewOffers: PreviewOffer[] = [
     city: {
       name: 'Amsterdam',
       location: {
-        latitude: 52.35514938496378,
-        longitude: 4.673877537499948,
+        latitude: 52.3809553943508,
+        longitude: 4.939309666406198,
         zoom: 8
       }
     },
     location: {
-      latitude: 52.35514938498888,
-      longitude: 4.6738775378888,
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
       zoom: 8
     },
     isFavorite: true,
@@ -105,14 +105,14 @@ const fullOffers: FullOffer[] = [
     city: {
       name: 'Amsterdam',
       location: {
-        latitude: 52.35514938496378,
-        longitude: 4.673877537499948,
+        latitude: 52.3909553943508,
+        longitude: 4.85309666406198,
         zoom: 8
       }
     },
     location: {
-      latitude: 52.35514938496378,
-      longitude: 4.673877537499948,
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
       zoom: 8
     },
     isFavorite: true,
@@ -142,16 +142,16 @@ const fullOffers: FullOffer[] = [
     type: 'room',
     price: 80,
     city: {
-      name: 'Hamburg',
+      name: 'Amsterdam',
       location: {
-        latitude: 52.35514938496378,
-        longitude: 34.673877537499948,
+        latitude: 52.3609553943508,
+        longitude: 4.85309666406198,
         zoom: 8
       }
     },
     location: {
-      latitude: 52.35514938496378,
-      longitude: 34.673877537499948,
+      latitude: 52.3609553943508,
+      longitude: 4.85309666406198,
       zoom: 8
     },
     isPremium: true,
@@ -182,14 +182,14 @@ const fullOffers: FullOffer[] = [
     city: {
       name: 'Amsterdam',
       location: {
-        latitude: 52.35514938496378,
-        longitude: 4.673877537499948,
+        latitude: 52.3909553943508,
+        longitude: 4.929309666406198,
         zoom: 8
       }
     },
     location: {
-      latitude: 52.35514938496380,
-      longitude: 4.673877537499999,
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
       zoom: 8
     },
     isFavorite: true,
@@ -219,14 +219,14 @@ const fullOffers: FullOffer[] = [
     city: {
       name: 'Amsterdam',
       location: {
-        latitude: 52.35514938496378,
-        longitude: 4.673877537499948,
+        latitude: 52.3809553943508,
+        longitude: 4.939309666406198,
         zoom: 8
       }
     },
     location: {
-      latitude: 52.35514938498888,
-      longitude: 4.6738775378888,
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
       zoom: 8
     },
     isFavorite: true,

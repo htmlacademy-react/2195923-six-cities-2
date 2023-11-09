@@ -1,8 +1,8 @@
 import {Link} from 'react-router-dom';
 
 import { PreviewOffer } from '../../types/offer';
-import { PlaceCardType } from '../../data';
-import { NUMBER_PERCENT_IN_ONE_STAR } from '../../data';
+import { PlaceCardType } from '../../const';
+import { NUMBER_PERCENT_IN_ONE_STAR } from '../../const';
 import { AppRoute } from '../../app-route';
 
 type OfferProps = {
