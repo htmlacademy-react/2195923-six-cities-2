@@ -1,12 +1,12 @@
+import { useState } from 'react';
+import {Link} from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header/header';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
-import { PlaceCardType } from '../../const';
-import {Link} from 'react-router-dom';
-import { AppRoute } from '../../app-route';
-import { Helmet } from 'react-helmet-async';
-import { PreviewOffer } from '../../types/offer';
 import Map from '../../components/map/map';
-import { useState } from 'react';
+import { PlaceCardType } from '../../const';
+import { AppRoute } from '../../app-route';
+import { PreviewOffer } from '../../types/offer';
 
 type MainPageProps = {
   offers: PreviewOffer[];

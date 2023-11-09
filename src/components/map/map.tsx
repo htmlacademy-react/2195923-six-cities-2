@@ -1,8 +1,8 @@
+import 'leaflet/dist/leaflet.css';
 import { Icon, Marker, layerGroup } from 'leaflet';
 import { useRef, useEffect } from 'react';
 import { PreviewOffer } from '../../types/offer';
 import useMap from '../../hooks/use-map';
-import 'leaflet/dist/leaflet.css';
 import { CenterCity, MapIconURL } from '../../const';
 
 type MapProps = {
