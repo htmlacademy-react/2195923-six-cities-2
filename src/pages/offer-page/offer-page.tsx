@@ -1,15 +1,16 @@
+import { useState } from 'react';
+import { Navigate} from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header/header';
 import Map from '../../components/map/map';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
-import { Helmet } from 'react-helmet-async';
+import ReviewList from '../../components/review-list/review-list';
+import ReviewsForm from '../../components/reviews-form/reviews-form';
 import { FullOffer, PreviewOffer } from '../../types/offer';
 import { Review } from '../../types/review';
 import { NUMBER_PERCENT_IN_ONE_STAR, PlaceCardType } from '../../const';
-import ReviewList from '../../components/review-list/review-list';
-import ReviewsForm from '../../components/reviews-form/reviews-form';
-import { Navigate} from 'react-router-dom';
 import { AppRoute } from '../../app-route';
-import { useState } from 'react';
+
 
 type OfferPageProps = {
   offer: FullOffer;
