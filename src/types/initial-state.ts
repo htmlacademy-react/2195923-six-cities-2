@@ -1,6 +1,6 @@
-import { CityName, PreviewOffer } from './offer';
+import { City, PreviewOffer } from './offer';
 
 export type InitialState = {
-  city: CityName;
+  city: City;
   offers: PreviewOffer[];
 };

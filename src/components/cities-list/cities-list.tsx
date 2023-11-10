@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
 import { AppRoute } from '../../app-route';
 import { Cities } from '../../const';
-import { CityName } from '../../types/offer';
+import { City, CityName } from '../../types/offer';
 
 type CitiesListProps = {
   onCityClick: React.MouseEventHandler<HTMLElement>;
@@ -20,8 +20,8 @@ function CitiesList({onCityClick} : CitiesListProps) {
     );
   }
 
-  function getCityList(cities: CityName[]) {
-    return cities.map((city) => getCityListItem(city));
+  function getCityList(cities: City[]) {
+    return cities.map((city) => getCityListItem(city.name));
   }
 
   return (

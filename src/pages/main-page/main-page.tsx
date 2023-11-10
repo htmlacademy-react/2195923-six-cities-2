@@ -7,13 +7,13 @@ import PlaceCardList from '../../components/place-card-list/place-card-list';
 import Map from '../../components/map/map';
 import CitiesList from '../../components/cities-list/cities-list';
 import { PlaceCardType } from '../../const';
-import { CityName, PreviewOffer } from '../../types/offer';
+import { City, CityName, PreviewOffer } from '../../types/offer';
 import { changeCity } from '../../store/actions/action';
 
 
 function MainPage() : React.JSX.Element {
   const [activeCard, setActiveCard] = useState(' ');
-  const city = useSelector((state) => state.city) as CityName;
+  const city = useSelector((state) => state.city) as City;
   const offers = useSelector((state) => state.offers) as PreviewOffer[];
   const dispatch = useDispatch();
 
@@ -36,7 +36,7 @@ function MainPage() : React.JSX.Element {
   };
 
   function getOffersByCity() {
-    return offers.filter((offer) => offer.city.name === city);
+    return offers.filter((offer) => offer.city.name === city.name);
   }
 
   return (
@@ -71,7 +71,7 @@ function MainPage() : React.JSX.Element {
               <PlaceCardList offers={getOffersByCity()} type={PlaceCardType.City} onMouseEnter={handlePlaceCardMouseEnter} onMouseLeave={handlePlaceCardMouseLeave} />
             </section>
             <div className="cities__right-section">
-              <Map offers={offers} activeCard={activeCard} type={'cities'}/>
+              <Map city={city} offers={getOffersByCity()} activeCard={activeCard} type={'cities'}/>
             </div>
           </div>
         </div>
