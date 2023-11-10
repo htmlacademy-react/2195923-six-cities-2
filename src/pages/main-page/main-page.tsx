@@ -1,21 +1,21 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useSelector } from 'react-redux/es/hooks/useSelector';
-import { useDispatch } from 'react-redux/es/hooks/useDispatch';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
+import { useAppSelector } from '../../hooks/use-app-selector';
 import Header from '../../components/header/header';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
 import Map from '../../components/map/map';
 import CitiesList from '../../components/cities-list/cities-list';
 import { PlaceCardType } from '../../const';
-import { City, CityName, PreviewOffer } from '../../types/offer';
+import { CityName} from '../../types/offer';
 import { changeCity } from '../../store/actions/action';
 
 
 function MainPage() : React.JSX.Element {
   const [activeCard, setActiveCard] = useState(' ');
-  const city = useSelector((state) => state.city) as City;
-  const offers = useSelector((state) => state.offers) as PreviewOffer[];
-  const dispatch = useDispatch();
+  const city = useAppSelector((state) => state.city);
+  const offers = useAppSelector((state) => state.offers);
+  const dispatch = useAppDispatch();
 
   const handlePlaceCardMouseEnter = (evt : React.MouseEvent) => {
     evt.preventDefault();
