@@ -39,6 +39,8 @@ function MainPage() : React.JSX.Element {
     return offers.filter((offer) => offer.city.name === city.name);
   }
 
+  const offersInCity = getOffersByCity();
+
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -52,7 +54,7 @@ function MainPage() : React.JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers.length} places to stay in Amsterdam</b>
+              <b className="places__found">{offersInCity.length} places to stay in {city.name}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -68,10 +70,10 @@ function MainPage() : React.JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <PlaceCardList offers={getOffersByCity()} type={PlaceCardType.City} onMouseEnter={handlePlaceCardMouseEnter} onMouseLeave={handlePlaceCardMouseLeave} />
+              <PlaceCardList offers={offersInCity} type={PlaceCardType.City} onMouseEnter={handlePlaceCardMouseEnter} onMouseLeave={handlePlaceCardMouseLeave} />
             </section>
             <div className="cities__right-section">
-              <Map city={city} offers={getOffersByCity()} activeCard={activeCard} type={'cities'}/>
+              <Map city={city} offers={offersInCity} activeCard={activeCard} type={'cities'}/>
             </div>
           </div>
         </div>
