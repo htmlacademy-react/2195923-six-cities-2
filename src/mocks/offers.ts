@@ -94,6 +94,29 @@ const previewOffers: PreviewOffer[] = [
     rating: 2.25,
     previewImage: 'https://media.admagazine.ru/photos/61408b2f4311246f36873963/16:9/w_1280,c_limit/w2000%20-%202020-07-14T164056.159.jpeg'
   },
+  {
+    id: crypto.randomUUID(),
+    title: 'Canal View Prinsengracht',
+    type: 'room',
+    price: 147,
+    previewImage: 'https://13.design.pages.academy/static/hotel/12.jpg',
+    city: {
+      name: 'Dusseldorf',
+      location: {
+        latitude: 51.225402,
+        longitude: 6.776314,
+        zoom: 13
+      }
+    },
+    location: {
+      latitude: 51.217402,
+      longitude: 6.7693140000000005,
+      zoom: 16
+    },
+    isFavorite: false,
+    isPremium: false,
+    rating: 1.3
+  }
 ];
 
 const fullOffers: FullOffer[] = [
