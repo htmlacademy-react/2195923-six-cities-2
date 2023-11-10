@@ -1,19 +1,19 @@
 import { useState } from 'react';
 import {Link} from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { useSelector } from 'react-redux/es/hooks/useSelector';
 import Header from '../../components/header/header';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
 import Map from '../../components/map/map';
 import { PlaceCardType } from '../../const';
 import { AppRoute } from '../../app-route';
-import { PreviewOffer } from '../../types/offer';
+import { City, PreviewOffer } from '../../types/offer';
 
-type MainPageProps = {
-  offers: PreviewOffer[];
-}
 
-function MainPage({offers} : MainPageProps) : React.JSX.Element {
+function MainPage() : React.JSX.Element {
   const [activeCard, setActiveCard] = useState(' ');
+  const city = useSelector((state) => state.city) as City;
+  const offers = useSelector((state) => state.offers) as PreviewOffer[];
 
   const handlePlaceCardMouseEnter = (evt : React.MouseEvent) => {
     evt.preventDefault();
@@ -28,6 +28,9 @@ function MainPage({offers} : MainPageProps) : React.JSX.Element {
     setActiveCard(' ');
   };
 
+  function getOffersByCity() {
+
+  }
 
   return (
     <div className="page page--gray page--main">

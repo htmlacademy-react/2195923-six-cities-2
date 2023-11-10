@@ -7,7 +7,7 @@ export type Coordinate = {
 };
 
 export type City = {
-  name: string;
+  name: 'Paris' | 'Cologne' | 'Brussels' | 'Amsterdam' | 'Hamburg' | 'Dusseldorf';
   location: Coordinate;
 };
 

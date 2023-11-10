@@ -21,7 +21,7 @@ function App({fullOffers, previewOffers, reviews} : AppProps) : React.JSX.Elemen
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
-          <Route path={AppRoute.Main} element={<MainPage offers={previewOffers}/>} />
+          <Route path={AppRoute.Main} element={<MainPage/>} />
           <Route path={AppRoute.Login} element={<LoginPage />}/>
           <Route path={AppRoute.Favorite} element={<PrivateRoute><FavoritesPage offers={previewOffers.filter((offer : PreviewOffer) => offer.isFavorite)}/></PrivateRoute>} />
           <Route
