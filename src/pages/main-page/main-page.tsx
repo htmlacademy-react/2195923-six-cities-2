@@ -49,7 +49,7 @@ function MainPage() : React.JSX.Element {
       <Header isNavRequired isAuth={false}/>
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <CitiesList onCityClick={handleCityClick}/>
+        <CitiesList currentCity={city} onCityClick={handleCityClick}/>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">

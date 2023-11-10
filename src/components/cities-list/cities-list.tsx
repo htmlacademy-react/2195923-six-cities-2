@@ -4,16 +4,16 @@ import { Cities } from '../../const';
 import { City, CityName } from '../../types/offer';
 
 type CitiesListProps = {
+  currentCity: City;
   onCityClick: React.MouseEventHandler<HTMLElement>;
 };
 
-// добавить активному пункту класс tabs__item--active
-function CitiesList({onCityClick} : CitiesListProps) {
+function CitiesList({currentCity, onCityClick} : CitiesListProps) {
 
   function getCityListItem(city: CityName) {
     return (
       <li className="locations__item" key={city}>
-        <Link className="locations__item-link tabs__item" to={AppRoute.Main} onClick={onCityClick}>
+        <Link className={`locations__item-link tabs__item ${city === currentCity.name ? 'tabs__item--active' : ''}`} to={AppRoute.Main} onClick={onCityClick}>
           <span>{city}</span>
         </Link>
       </li>
