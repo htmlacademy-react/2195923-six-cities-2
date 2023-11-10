@@ -1,21 +1,18 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { previewOffers } from '../../mocks/offers';
 import { InitialState } from '../../types/initial-state';
+import { changeCity } from '../actions/action';
 
 const initialState: InitialState = {
-  city: {
-    name: 'Paris',
-    location: {
-      latitude: 48.8534100,
-      longitude: 2.3488000,
-      zoom: 8,
-    },
-  },
+  city: 'Paris',
   offers: previewOffers,
 };
 
-const reducer = createReducer(initialState, (builder) => {
+export const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase()
+    .addCase(changeCity, (state, action) => {
+      console.log(1);
+      state.city = action.payload;
+    });
 });
 

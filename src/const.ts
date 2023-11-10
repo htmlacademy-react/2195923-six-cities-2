@@ -1,4 +1,5 @@
 import { CenterOfCity } from './types/center-city';
+import { CityName } from './types/offer';
 
 const MockData = {
   PlacesCount: 5,
@@ -24,10 +25,20 @@ const MapIconURL = {
   passiveIcon: './../../public/img/pin.svg',
 };
 
+const Cities: CityName[] = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf'
+];
+
 export {
   MockData,
   PlaceCardType,
   NUMBER_PERCENT_IN_ONE_STAR,
   CenterCity,
-  MapIconURL
+  MapIconURL,
+  Cities
 };

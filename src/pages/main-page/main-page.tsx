@@ -1,19 +1,21 @@
 import { useState } from 'react';
-import {Link} from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
+import { useDispatch } from 'react-redux/es/hooks/useDispatch';
 import Header from '../../components/header/header';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
 import Map from '../../components/map/map';
+import CitiesList from '../../components/cities-list/cities-list';
 import { PlaceCardType } from '../../const';
-import { AppRoute } from '../../app-route';
-import { City, PreviewOffer } from '../../types/offer';
+import { CityName, PreviewOffer } from '../../types/offer';
+import { changeCity } from '../../store/actions/action';
 
 
 function MainPage() : React.JSX.Element {
   const [activeCard, setActiveCard] = useState(' ');
-  const city = useSelector((state) => state.city) as City;
+  const city = useSelector((state) => state.city) as CityName;
   const offers = useSelector((state) => state.offers) as PreviewOffer[];
+  const dispatch = useDispatch();
 
   const handlePlaceCardMouseEnter = (evt : React.MouseEvent) => {
     evt.preventDefault();
@@ -28,8 +30,13 @@ function MainPage() : React.JSX.Element {
     setActiveCard(' ');
   };
 
-  function getOffersByCity() {
+  const handleCityClick = (evt: React.MouseEvent) => {
+    evt.preventDefault();
+    dispatch(changeCity(evt.currentTarget.textContent as CityName));
+  };
 
+  function getOffersByCity() {
+    return offers.filter((offer) => offer.city.name === city);
   }
 
   return (
@@ -40,42 +47,7 @@ function MainPage() : React.JSX.Element {
       <Header isNavRequired isAuth={false}/>
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item" to={AppRoute.Main}>
-                  <span>Paris</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item" to={AppRoute.Main}>
-                  <span>Cologne</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item" to={AppRoute.Main}>
-                  <span>Brussels</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item tabs__item--active" to={AppRoute.Main}>
-                  <span>Amsterdam</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item" to={AppRoute.Main}>
-                  <span>Hamburg</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item" to={AppRoute.Main}>
-                  <span>Dusseldorf</span>
-                </Link>
-              </li>
-            </ul>
-          </section>
-        </div>
+        <CitiesList onCityClick={handleCityClick}/>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
@@ -96,7 +68,7 @@ function MainPage() : React.JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <PlaceCardList offers={offers} type={PlaceCardType.City} onMouseEnter={handlePlaceCardMouseEnter} onMouseLeave={handlePlaceCardMouseLeave} />
+              <PlaceCardList offers={getOffersByCity()} type={PlaceCardType.City} onMouseEnter={handlePlaceCardMouseEnter} onMouseLeave={handlePlaceCardMouseLeave} />
             </section>
             <div className="cities__right-section">
               <Map offers={offers} activeCard={activeCard} type={'cities'}/>
