@@ -14,15 +14,11 @@ import { changeCity, fillOffers } from '../../store/actions/action';
 
 function MainPage() : React.JSX.Element {
   const city = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.offers);
+  const offersByCity = useAppSelector((state) => state.offers.filter((offer) => offer.city.name === state.city.name));
+  const sortingOffersByCity = useAppSelector((state) => state.sortingOffers.filter((offer) => offer.city.name === state.city.name));
   const dispatch = useAppDispatch();
 
-  function getOffersByCity() {
-    return offers.filter((offer) => offer.city.name === city.name);
-  }
-
   const [activeCard, setActiveCard] = useState(' ');
-  // const [currentOffers, setCurrentOffers] = useState(offers);
 
   const handlePlaceCardMouseEnter = (evt : React.MouseEvent) => {
     evt.preventDefault();
@@ -45,23 +41,19 @@ function MainPage() : React.JSX.Element {
   const handleSortingClick = (sortType: string) => {
     switch(sortType) {
       case SortingType.POPULAR:
+        dispatch(fillOffers(structuredClone(offersByCity)));
         break;
       case SortingType.PRICE_HIGH_TO_LOW:
-        // setCurrentOffers(structuredClone(currentOffers).sort((a, b) => Number(a.price < b.price)));
-        dispatch(fillOffers(structuredClone(offers).sort((a, b) => Number(a.price < b.price))));
+        dispatch(fillOffers(structuredClone(sortingOffersByCity).sort((a, b) => Number(a.price < b.price))));
         break;
       case SortingType.PRICE_LOW_TO_HIGH:
-        // setCurrentOffers(structuredClone(currentOffers).sort((a, b) => Number(a.price > b.price)));
-        dispatch(fillOffers(structuredClone(offers).sort((a, b) => Number(a.price > b.price))));
+        dispatch(fillOffers(structuredClone(sortingOffersByCity).sort((a, b) => Number(a.price > b.price))));
         break;
       case SortingType.TOP_RATED_FIRST:
-        // setCurrentOffers(structuredClone(currentOffers).sort((a, b) => Number(a.rating < b.rating)));
-        dispatch(fillOffers(structuredClone(offers).sort((a, b) => Number(a.rating < b.rating))));
+        dispatch(fillOffers(structuredClone(sortingOffersByCity).sort((a, b) => Number(a.rating < b.rating))));
         break;
     }
   };
-
-  const offersByCity = getOffersByCity();
 
   return (
     <div className="page page--gray page--main">
@@ -76,12 +68,12 @@ function MainPage() : React.JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offersByCity.length} places to stay in {city.name}</b>
+              <b className="places__found">{sortingOffersByCity.length} places to stay in {city.name}</b>
               <Sorting onSortTypeClick={handleSortingClick}/>
-              <PlaceCardList offers={offersByCity} type={PlaceCardType.City} onMouseEnter={handlePlaceCardMouseEnter} onMouseLeave={handlePlaceCardMouseLeave} />
+              <PlaceCardList offers={sortingOffersByCity} type={PlaceCardType.City} onMouseEnter={handlePlaceCardMouseEnter} onMouseLeave={handlePlaceCardMouseLeave} />
             </section>
             <div className="cities__right-section">
-              <Map city={city} offers={offersByCity} activeCard={activeCard} type={'cities'}/>
+              <Map city={city} offers={sortingOffersByCity} activeCard={activeCard} type={'cities'}/>
             </div>
           </div>
         </div>

@@ -7,6 +7,7 @@ import { Cities } from '../../const';
 const initialState: InitialState = {
   city: Cities[0],
   offers: previewOffers,
+  sortingOffers: previewOffers,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -19,7 +20,7 @@ export const reducer = createReducer(initialState, (builder) => {
       }
     })
     .addCase(fillOffers, (state, action) => {
-      state.offers = action.payload;
+      state.sortingOffers = action.payload;
     });
 });
 
