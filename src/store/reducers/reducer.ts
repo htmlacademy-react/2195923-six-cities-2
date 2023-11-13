@@ -20,7 +20,7 @@ export const reducer = createReducer(initialState, (builder) => {
       }
     })
     .addCase(fillOffers, (state, action) => {
-      state.sortingOffers = action.payload;
+      state.offers = action.payload;
     });
 });
 

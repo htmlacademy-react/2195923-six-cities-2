@@ -116,6 +116,29 @@ const previewOffers: PreviewOffer[] = [
     isFavorite: false,
     isPremium: false,
     rating: 1.3
+  },
+  {
+    id: crypto.randomUUID(),
+    title: 'Prinsengracht',
+    type: 'room',
+    price: 100,
+    previewImage: 'https://13.design.pages.academy/static/hotel/12.jpg',
+    city: {
+      name: 'Dusseldorf',
+      location: {
+        latitude: 51.225402,
+        longitude: 6.776314,
+        zoom: 13
+      }
+    },
+    location: {
+      latitude: 51.217402,
+      longitude: 6.7693140000000005,
+      zoom: 16
+    },
+    isFavorite: false,
+    isPremium: false,
+    rating: 4.3
   }
 ];
 

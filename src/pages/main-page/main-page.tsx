@@ -14,11 +14,11 @@ import { changeCity, fillOffers } from '../../store/actions/action';
 
 function MainPage() : React.JSX.Element {
   const city = useAppSelector((state) => state.city);
-  const offersByCity = useAppSelector((state) => state.offers.filter((offer) => offer.city.name === state.city.name));
-  const sortingOffersByCity = useAppSelector((state) => state.sortingOffers.filter((offer) => offer.city.name === state.city.name));
+  const offers = useAppSelector((state) => state.offers);
   const dispatch = useAppDispatch();
 
   const [activeCard, setActiveCard] = useState(' ');
+  const [sortingOffers, setSortingOffers] = useState(offers.filter((offer) => offer.city.name === city.name));
 
   const handlePlaceCardMouseEnter = (evt : React.MouseEvent) => {
     evt.preventDefault();
@@ -36,21 +36,22 @@ function MainPage() : React.JSX.Element {
   const handleCityClick = (evt: React.MouseEvent) => {
     evt.preventDefault();
     dispatch(changeCity(evt.currentTarget.textContent as CityName));
+    setSortingOffers(offers.filter((offer) => offer.city.name === evt.currentTarget.textContent));
   };
 
   const handleSortingClick = (sortType: string) => {
     switch(sortType) {
       case SortingType.POPULAR:
-        dispatch(fillOffers(structuredClone(offersByCity)));
+        setSortingOffers(offers.filter((offer) => offer.city.name === city.name));
         break;
       case SortingType.PRICE_HIGH_TO_LOW:
-        dispatch(fillOffers(structuredClone(sortingOffersByCity).sort((a, b) => Number(a.price < b.price))));
+        setSortingOffers(sortingOffers.sort((a, b) => Number(a.price < b.price)));
         break;
       case SortingType.PRICE_LOW_TO_HIGH:
-        dispatch(fillOffers(structuredClone(sortingOffersByCity).sort((a, b) => Number(a.price > b.price))));
+        setSortingOffers(sortingOffers.sort((a, b) => Number(a.price > b.price)));
         break;
       case SortingType.TOP_RATED_FIRST:
-        dispatch(fillOffers(structuredClone(sortingOffersByCity).sort((a, b) => Number(a.rating < b.rating))));
+        setSortingOffers(sortingOffers.sort((a, b) => Number(a.rating < b.rating)));
         break;
     }
   };
@@ -68,12 +69,12 @@ function MainPage() : React.JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{sortingOffersByCity.length} places to stay in {city.name}</b>
+              <b className="places__found">{sortingOffers.length} places to stay in {city.name}</b>
               <Sorting onSortTypeClick={handleSortingClick}/>
-              <PlaceCardList offers={sortingOffersByCity} type={PlaceCardType.City} onMouseEnter={handlePlaceCardMouseEnter} onMouseLeave={handlePlaceCardMouseLeave} />
+              <PlaceCardList offers={sortingOffers} type={PlaceCardType.City} onMouseEnter={handlePlaceCardMouseEnter} onMouseLeave={handlePlaceCardMouseLeave} />
             </section>
             <div className="cities__right-section">
-              <Map city={city} offers={sortingOffersByCity} activeCard={activeCard} type={'cities'}/>
+              <Map city={city} offers={sortingOffers} activeCard={activeCard} type={'cities'}/>
             </div>
           </div>
         </div>
