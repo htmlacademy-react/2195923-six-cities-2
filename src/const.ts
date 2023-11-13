@@ -68,10 +68,18 @@ const Cities: City[] = [
   },
 ];
 
+const SortingType = {
+  POPULAR: 'Popular',
+  PRICE_LOW_TO_HIGH: 'Price: low to high',
+  PRICE_HIGH_TO_LOW: 'Price: high to low',
+  TOP_RATED_FIRST: 'Top rated first',
+};
+
 export {
   MockData,
   PlaceCardType,
   NUMBER_PERCENT_IN_ONE_STAR,
   MapIconURL,
-  Cities
+  Cities,
+  SortingType
 };

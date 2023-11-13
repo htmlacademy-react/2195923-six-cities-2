@@ -6,16 +6,23 @@ import Header from '../../components/header/header';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
 import Map from '../../components/map/map';
 import CitiesList from '../../components/cities-list/cities-list';
-import { PlaceCardType } from '../../const';
+import Sorting from '../../components/sorting/sorting';
+import { PlaceCardType, SortingType } from '../../const';
 import { CityName} from '../../types/offer';
-import { changeCity } from '../../store/actions/action';
+import { changeCity, fillOffers } from '../../store/actions/action';
 
 
 function MainPage() : React.JSX.Element {
-  const [activeCard, setActiveCard] = useState(' ');
   const city = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
   const dispatch = useAppDispatch();
+
+  function getOffersByCity() {
+    return offers.filter((offer) => offer.city.name === city.name);
+  }
+
+  const [activeCard, setActiveCard] = useState(' ');
+  // const [currentOffers, setCurrentOffers] = useState(offers);
 
   const handlePlaceCardMouseEnter = (evt : React.MouseEvent) => {
     evt.preventDefault();
@@ -35,11 +42,26 @@ function MainPage() : React.JSX.Element {
     dispatch(changeCity(evt.currentTarget.textContent as CityName));
   };
 
-  function getOffersByCity() {
-    return offers.filter((offer) => offer.city.name === city.name);
-  }
+  const handleSortingClick = (sortType: string) => {
+    switch(sortType) {
+      case SortingType.POPULAR:
+        break;
+      case SortingType.PRICE_HIGH_TO_LOW:
+        // setCurrentOffers(structuredClone(currentOffers).sort((a, b) => Number(a.price < b.price)));
+        dispatch(fillOffers(structuredClone(offers).sort((a, b) => Number(a.price < b.price))));
+        break;
+      case SortingType.PRICE_LOW_TO_HIGH:
+        // setCurrentOffers(structuredClone(currentOffers).sort((a, b) => Number(a.price > b.price)));
+        dispatch(fillOffers(structuredClone(offers).sort((a, b) => Number(a.price > b.price))));
+        break;
+      case SortingType.TOP_RATED_FIRST:
+        // setCurrentOffers(structuredClone(currentOffers).sort((a, b) => Number(a.rating < b.rating)));
+        dispatch(fillOffers(structuredClone(offers).sort((a, b) => Number(a.rating < b.rating))));
+        break;
+    }
+  };
 
-  const offersInCity = getOffersByCity();
+  const offersByCity = getOffersByCity();
 
   return (
     <div className="page page--gray page--main">
@@ -54,26 +76,12 @@ function MainPage() : React.JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offersInCity.length} places to stay in {city.name}</b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex={0}>
-                  Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                  <li className="places__option" tabIndex={0}>Price: low to high</li>
-                  <li className="places__option" tabIndex={0}>Price: high to low</li>
-                  <li className="places__option" tabIndex={0}>Top rated first</li>
-                </ul>
-              </form>
-              <PlaceCardList offers={offersInCity} type={PlaceCardType.City} onMouseEnter={handlePlaceCardMouseEnter} onMouseLeave={handlePlaceCardMouseLeave} />
+              <b className="places__found">{offersByCity.length} places to stay in {city.name}</b>
+              <Sorting onSortTypeClick={handleSortingClick}/>
+              <PlaceCardList offers={offersByCity} type={PlaceCardType.City} onMouseEnter={handlePlaceCardMouseEnter} onMouseLeave={handlePlaceCardMouseLeave} />
             </section>
             <div className="cities__right-section">
-              <Map city={city} offers={offersInCity} activeCard={activeCard} type={'cities'}/>
+              <Map city={city} offers={offersByCity} activeCard={activeCard} type={'cities'}/>
             </div>
           </div>
         </div>
