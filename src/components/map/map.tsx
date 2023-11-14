@@ -1,13 +1,13 @@
 import 'leaflet/dist/leaflet.css';
 import { Icon, Marker, layerGroup } from 'leaflet';
 import { useRef, useEffect } from 'react';
-import { PreviewOffer, City } from '../../types/offer';
+import { PreviewOffer, CityName, City } from '../../types/offer';
 import useMap from '../../hooks/use-map';
-import { MapIconURL } from '../../const';
+import { MapIconURL, Cities } from '../../const';
 
 type MapProps = {
   offers: PreviewOffer[];
-  city: City;
+  cityName: CityName;
   type: string;
   activeCard?: string;
 }
@@ -24,10 +24,11 @@ const activeIcon = new Icon({
   iconAnchor: [13.5, 39]
 });
 
-function Map({offers, city, type, activeCard} : MapProps) {
+function Map({offers, cityName, type, activeCard} : MapProps) {
+  const cityLocation = (Cities.find((city) => city.name === cityName) as City).location;
 
   const mapRef = useRef(null);
-  const map = useMap(mapRef, city.location);
+  const map = useMap(mapRef, cityLocation);
 
   useEffect(() => {
     if (map) {

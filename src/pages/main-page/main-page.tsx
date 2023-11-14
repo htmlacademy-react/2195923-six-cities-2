@@ -13,7 +13,8 @@ import { changeCity, fillOffers } from '../../store/actions/action';
 
 
 function MainPage() : React.JSX.Element {
-  const city = useAppSelector((state) => state.city);
+  const [activeCard, setActiveCard] = useState(' ');
+  const cityName = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
   const dispatch = useAppDispatch();
 
@@ -55,6 +56,11 @@ function MainPage() : React.JSX.Element {
         break;
     }
   };
+  function getOffersByCity() {
+    return offers.filter((offer) => offer.city.name === cityName);
+  }
+
+  const offersInCity = getOffersByCity();
 
   return (
     <div className="page page--gray page--main">
@@ -64,7 +70,7 @@ function MainPage() : React.JSX.Element {
       <Header isNavRequired isAuth={false}/>
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <CitiesList currentCity={city} onCityClick={handleCityClick}/>
+        <CitiesList currentCity={cityName} onCityClick={handleCityClick}/>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
