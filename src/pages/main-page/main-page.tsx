@@ -13,7 +13,7 @@ import { changeCity } from '../../store/actions/action';
 
 function MainPage() : React.JSX.Element {
   const [activeCard, setActiveCard] = useState(' ');
-  const city = useAppSelector((state) => state.city);
+  const cityName = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
   const dispatch = useAppDispatch();
 
@@ -36,7 +36,7 @@ function MainPage() : React.JSX.Element {
   };
 
   function getOffersByCity() {
-    return offers.filter((offer) => offer.city.name === city.name);
+    return offers.filter((offer) => offer.city.name === cityName);
   }
 
   const offersInCity = getOffersByCity();
@@ -49,12 +49,12 @@ function MainPage() : React.JSX.Element {
       <Header isNavRequired isAuth={false}/>
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <CitiesList currentCity={city} onCityClick={handleCityClick}/>
+        <CitiesList currentCity={cityName} onCityClick={handleCityClick}/>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offersInCity.length} places to stay in {city.name}</b>
+              <b className="places__found">{offersInCity.length} places to stay in {cityName}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -73,7 +73,7 @@ function MainPage() : React.JSX.Element {
               <PlaceCardList offers={offersInCity} type={PlaceCardType.City} onMouseEnter={handlePlaceCardMouseEnter} onMouseLeave={handlePlaceCardMouseLeave} />
             </section>
             <div className="cities__right-section">
-              <Map city={city} offers={offersInCity} activeCard={activeCard} type={'cities'}/>
+              <Map cityName={cityName} offers={offersInCity} activeCard={activeCard} type={'cities'}/>
             </div>
           </div>
         </div>

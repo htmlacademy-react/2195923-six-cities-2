@@ -5,7 +5,7 @@ import { changeCity, fillOffers } from '../actions/action';
 import { Cities } from '../../const';
 
 const initialState: InitialState = {
-  city: Cities[0],
+  city: 'Paris',
   offers: previewOffers,
 };
 
@@ -14,12 +14,10 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(changeCity, (state, action) => {
       const newCity = Cities.find((city) => city.name === action.payload);
       if (newCity) {
-        state.city.name = action.payload;
-        state.city.location = newCity.location;
+        state.city = action.payload;
       }
     })
     .addCase(fillOffers, (state, action) => {
       state.offers = action.payload;
     });
 });
-
