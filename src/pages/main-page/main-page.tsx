@@ -9,7 +9,7 @@ import CitiesList from '../../components/cities-list/cities-list';
 import Sorting from '../../components/sorting/sorting';
 import { PlaceCardType, SortingType } from '../../const';
 import { CityName} from '../../types/offer';
-import { changeCity, fillOffers } from '../../store/actions/action';
+import { changeCity } from '../../store/actions/action';
 
 
 function MainPage() : React.JSX.Element {
@@ -18,8 +18,7 @@ function MainPage() : React.JSX.Element {
   const offers = useAppSelector((state) => state.offers);
   const dispatch = useAppDispatch();
 
-  const [activeCard, setActiveCard] = useState(' ');
-  const [sortingOffers, setSortingOffers] = useState(offers.filter((offer) => offer.city.name === city.name));
+  const [sortingOffers, setSortingOffers] = useState(offers.filter((offer) => offer.city.name === cityName));
 
   const handlePlaceCardMouseEnter = (evt : React.MouseEvent) => {
     evt.preventDefault();
@@ -43,7 +42,7 @@ function MainPage() : React.JSX.Element {
   const handleSortingClick = (sortType: string) => {
     switch(sortType) {
       case SortingType.POPULAR:
-        setSortingOffers(offers.filter((offer) => offer.city.name === city.name));
+        setSortingOffers(offers.filter((offer) => offer.city.name === cityName));
         break;
       case SortingType.PRICE_HIGH_TO_LOW:
         setSortingOffers(sortingOffers.sort((a, b) => Number(a.price < b.price)));
@@ -75,12 +74,12 @@ function MainPage() : React.JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{sortingOffers.length} places to stay in {city.name}</b>
+              <b className="places__found">{sortingOffers.length} places to stay in {cityName}</b>
               <Sorting onSortTypeClick={handleSortingClick}/>
               <PlaceCardList offers={sortingOffers} type={PlaceCardType.City} onMouseEnter={handlePlaceCardMouseEnter} onMouseLeave={handlePlaceCardMouseLeave} />
             </section>
             <div className="cities__right-section">
-              <Map city={city} offers={sortingOffers} activeCard={activeCard} type={'cities'}/>
+              <Map cityName={cityName} offers={sortingOffers} activeCard={activeCard} type={'cities'}/>
             </div>
           </div>
         </div>
