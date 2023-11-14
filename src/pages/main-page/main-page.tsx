@@ -1,19 +1,21 @@
 import { useState } from 'react';
-import {Link} from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
+import { useAppSelector } from '../../hooks/use-app-selector';
 import Header from '../../components/header/header';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
 import Map from '../../components/map/map';
+import CitiesList from '../../components/cities-list/cities-list';
 import { PlaceCardType } from '../../const';
-import { AppRoute } from '../../app-route';
-import { PreviewOffer } from '../../types/offer';
+import { CityName} from '../../types/offer';
+import { changeCity } from '../../store/actions/action';
 
-type MainPageProps = {
-  offers: PreviewOffer[];
-}
 
-function MainPage({offers} : MainPageProps) : React.JSX.Element {
+function MainPage() : React.JSX.Element {
   const [activeCard, setActiveCard] = useState(' ');
+  const cityName = useAppSelector((state) => state.city);
+  const offers = useAppSelector((state) => state.offers);
+  const dispatch = useAppDispatch();
 
   const handlePlaceCardMouseEnter = (evt : React.MouseEvent) => {
     evt.preventDefault();
@@ -28,6 +30,16 @@ function MainPage({offers} : MainPageProps) : React.JSX.Element {
     setActiveCard(' ');
   };
 
+  const handleCityClick = (evt: React.MouseEvent) => {
+    evt.preventDefault();
+    dispatch(changeCity(evt.currentTarget.textContent as CityName));
+  };
+
+  function getOffersByCity() {
+    return offers.filter((offer) => offer.city.name === cityName);
+  }
+
+  const offersInCity = getOffersByCity();
 
   return (
     <div className="page page--gray page--main">
@@ -37,47 +49,12 @@ function MainPage({offers} : MainPageProps) : React.JSX.Element {
       <Header isNavRequired isAuth={false}/>
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item" to={AppRoute.Main}>
-                  <span>Paris</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item" to={AppRoute.Main}>
-                  <span>Cologne</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item" to={AppRoute.Main}>
-                  <span>Brussels</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item tabs__item--active" to={AppRoute.Main}>
-                  <span>Amsterdam</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item" to={AppRoute.Main}>
-                  <span>Hamburg</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item" to={AppRoute.Main}>
-                  <span>Dusseldorf</span>
-                </Link>
-              </li>
-            </ul>
-          </section>
-        </div>
+        <CitiesList currentCity={cityName} onCityClick={handleCityClick}/>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers.length} places to stay in Amsterdam</b>
+              <b className="places__found">{offersInCity.length} places to stay in {cityName}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -93,10 +70,10 @@ function MainPage({offers} : MainPageProps) : React.JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <PlaceCardList offers={offers} type={PlaceCardType.City} onMouseEnter={handlePlaceCardMouseEnter} onMouseLeave={handlePlaceCardMouseLeave} />
+              <PlaceCardList offers={offersInCity} type={PlaceCardType.City} onMouseEnter={handlePlaceCardMouseEnter} onMouseLeave={handlePlaceCardMouseLeave} />
             </section>
             <div className="cities__right-section">
-              <Map offers={offers} activeCard={activeCard} type={'cities'}/>
+              <Map cityName={cityName} offers={offersInCity} activeCard={activeCard} type={'cities'}/>
             </div>
           </div>
         </div>
