@@ -7,16 +7,14 @@ import PlaceCardList from '../../components/place-card-list/place-card-list';
 import Map from '../../components/map/map';
 import CitiesList from '../../components/cities-list/cities-list';
 import { PlaceCardType } from '../../const';
-import { CityName, PreviewOffer} from '../../types/offer';
+import { CityName} from '../../types/offer';
 import { changeCity } from '../../store/actions/action';
 
-type MainPageProps = {
-  offers: PreviewOffer[];
-}
 
-function MainPage({offers} : MainPageProps) : React.JSX.Element {
+function MainPage() : React.JSX.Element {
   const [activeCard, setActiveCard] = useState(' ');
   const city = useAppSelector((state) => state.city);
+  const offers = useAppSelector((state) => state.offers);
   const dispatch = useAppDispatch();
 
   const handlePlaceCardMouseEnter = (evt : React.MouseEvent) => {
