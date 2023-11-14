@@ -1,6 +1,5 @@
-import { City, PreviewOffer } from './offer';
+import { City } from './offer';
 
 export type InitialState = {
   city: City;
-  offers: PreviewOffer[];
 };
