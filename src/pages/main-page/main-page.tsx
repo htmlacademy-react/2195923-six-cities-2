@@ -10,6 +10,7 @@ import Sorting from '../../components/sorting/sorting';
 import { PlaceCardType, SortingType } from '../../const';
 import { CityName} from '../../types/offer';
 import { changeCity } from '../../store/actions/action';
+import { SortingElement } from '../../types/sorting';
 
 
 function MainPage() : React.JSX.Element {
@@ -24,6 +25,7 @@ function MainPage() : React.JSX.Element {
   let offersByCity = getOffersByCity();
 
   const [activeCard, setActiveCard] = useState(' ');
+  const [sortType, setSortType] = useState(SortingType.POPULAR);
   const [sortingAndFilteringOffers, setSortingAndFilteringOffers] = useState(offersByCity);
   const [filteringOffers, setFilteringOffers] = useState(offersByCity);
 
@@ -46,10 +48,11 @@ function MainPage() : React.JSX.Element {
     offersByCity = offers.filter((offer) => offer.city.name === evt.currentTarget.textContent);
     setSortingAndFilteringOffers(offersByCity);
     setFilteringOffers(structuredClone(offersByCity));
+    setSortType(SortingType.POPULAR);
   };
 
-  const handleSortingClick = (sortType: string) => {
-    switch(sortType) {
+  const handleSortingClick = (type: string, newSortType: SortingElement) => {
+    switch(type) {
       case SortingType.POPULAR.message:
         setSortingAndFilteringOffers(structuredClone(filteringOffers));
         break;
@@ -63,6 +66,7 @@ function MainPage() : React.JSX.Element {
         setSortingAndFilteringOffers(sortingAndFilteringOffers.sort(SortingType.TOP_RATED_FIRST.algorithm));
         break;
     }
+    setSortType(newSortType);
   };
 
   return (
@@ -79,7 +83,7 @@ function MainPage() : React.JSX.Element {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{sortingAndFilteringOffers.length} places to stay in {cityName}</b>
-              <Sorting onSortTypeClick={handleSortingClick}/>
+              <Sorting onSortTypeClick={handleSortingClick} type={sortType}/>
               <PlaceCardList offers={sortingAndFilteringOffers} type={PlaceCardType.City} onMouseEnter={handlePlaceCardMouseEnter} onMouseLeave={handlePlaceCardMouseLeave} />
             </section>
             <div className="cities__right-section">

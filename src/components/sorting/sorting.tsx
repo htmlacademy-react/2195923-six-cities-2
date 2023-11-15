@@ -1,12 +1,13 @@
-import { MutableRefObject, useRef, useState } from 'react';
+import { MutableRefObject, useRef } from 'react';
 import { SortingType } from '../../const';
+import { SortingElement } from '../../types/sorting';
 
 type SortingProps = {
-  onSortTypeClick: (sortType: string) => void;
+  onSortTypeClick: (type: string, newSortType: SortingElement) => void;
+  type: SortingElement;
 }
 
-function Sorting({onSortTypeClick} : SortingProps) {
-  const [sortType, setSortType] = useState(SortingType.POPULAR);
+function Sorting({onSortTypeClick, type} : SortingProps) {
   const sortingRef: MutableRefObject<HTMLUListElement | null> = useRef(null);
 
   const handleSortingOpenClick = (evt: React.MouseEvent) => {
@@ -22,8 +23,7 @@ function Sorting({onSortTypeClick} : SortingProps) {
       const newSortTypeMessage = evt.target.getAttribute('data-type');
       const newSortType = Object.values(SortingType).find((sortingType) => sortingType.message === newSortTypeMessage);
       if (newSortType !== undefined) {
-        setSortType(newSortType);
-        onSortTypeClick(newSortType.message);
+        onSortTypeClick(newSortType.message, newSortType);
         evt.target.classList.add('places__option--active');
       }
     }
@@ -38,7 +38,7 @@ function Sorting({onSortTypeClick} : SortingProps) {
     <form className="places__sorting" action="#" method="get" >
       <span className="places__sorting-caption">Sort by</span>
       <span className="places__sorting-type" tabIndex={0} onClick={handleSortingOpenClick}>
-        {sortType.message}
+        {type.message}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
