@@ -88,6 +88,10 @@ const SortingType: Sorting = {
   }
 };
 
+export enum APIRoute {
+  Offers = '/offers',
+}
+
 export {
   MockData,
   PlaceCardType,

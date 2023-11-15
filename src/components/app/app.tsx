@@ -9,6 +9,7 @@ import PrivateRoute from '../private/private-route';
 import { AppRoute } from '../../app-route';
 import { FullOffer, PreviewOffer } from '../../types/offer';
 import { Review } from '../../types/review';
+import { useAppSelector } from '../../hooks/use-app-selector';
 
 type AppProps = {
   fullOffers: FullOffer[];
@@ -17,6 +18,12 @@ type AppProps = {
 }
 
 function App({fullOffers, previewOffers, reviews} : AppProps) : React.JSX.Element {
+  const isOffersDataLoadingStatus = useAppSelector((state) => state.isOffersDataLoading);
+
+  if (isOffersDataLoadingStatus) {
+    return (<div></div>);
+  }
+
   return (
     <HelmetProvider>
       <BrowserRouter>
