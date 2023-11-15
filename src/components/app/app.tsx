@@ -5,6 +5,7 @@ import LoginPage from '../../pages/login-page/login-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import OfferPage from '../../pages/offer-page/offer-page';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import PrivateRoute from '../private/private-route';
 import { AppRoute } from '../../app-route';
 import { FullOffer, PreviewOffer } from '../../types/offer';
@@ -21,7 +22,7 @@ function App({fullOffers, previewOffers, reviews} : AppProps) : React.JSX.Elemen
   const isOffersDataLoadingStatus = useAppSelector((state) => state.isOffersDataLoading);
 
   if (isOffersDataLoadingStatus) {
-    return (<div></div>);
+    return <LoadingScreen />;
   }
 
   return (
