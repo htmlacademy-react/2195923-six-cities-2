@@ -13,12 +13,19 @@ import { changeCity } from '../../store/actions/action';
 
 
 function MainPage() : React.JSX.Element {
-  const [activeCard, setActiveCard] = useState(' ');
   const cityName = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
   const dispatch = useAppDispatch();
 
-  const [sortingOffers, setSortingOffers] = useState(offers.filter((offer) => offer.city.name === cityName));
+  function getOffersByCity() {
+    return offers.filter((offer) => offer.city.name === cityName);
+  }
+
+  let offersByCity = getOffersByCity();
+
+  const [activeCard, setActiveCard] = useState(' ');
+  const [sortingAndFilteringOffers, setSortingAndFilteringOffers] = useState(offersByCity);
+  const [filteringOffers, setFilteringOffers] = useState(offersByCity);
 
   const handlePlaceCardMouseEnter = (evt : React.MouseEvent) => {
     evt.preventDefault();
@@ -36,30 +43,27 @@ function MainPage() : React.JSX.Element {
   const handleCityClick = (evt: React.MouseEvent) => {
     evt.preventDefault();
     dispatch(changeCity(evt.currentTarget.textContent as CityName));
-    setSortingOffers(offers.filter((offer) => offer.city.name === evt.currentTarget.textContent));
+    offersByCity = offers.filter((offer) => offer.city.name === evt.currentTarget.textContent);
+    setSortingAndFilteringOffers(offersByCity);
+    setFilteringOffers(structuredClone(offersByCity));
   };
 
   const handleSortingClick = (sortType: string) => {
     switch(sortType) {
-      case SortingType.POPULAR:
-        setSortingOffers(offers.filter((offer) => offer.city.name === cityName));
+      case SortingType.POPULAR.message:
+        setSortingAndFilteringOffers(structuredClone(filteringOffers));
         break;
-      case SortingType.PRICE_HIGH_TO_LOW:
-        setSortingOffers(sortingOffers.sort((a, b) => Number(a.price < b.price)));
+      case SortingType.PRICE_HIGH_TO_LOW.message:
+        setSortingAndFilteringOffers(sortingAndFilteringOffers.sort(SortingType.PRICE_HIGH_TO_LOW.algorithm));
         break;
-      case SortingType.PRICE_LOW_TO_HIGH:
-        setSortingOffers(sortingOffers.sort((a, b) => Number(a.price > b.price)));
+      case SortingType.PRICE_LOW_TO_HIGH.message:
+        setSortingAndFilteringOffers(sortingAndFilteringOffers.sort(SortingType.PRICE_LOW_TO_HIGH.algorithm));
         break;
-      case SortingType.TOP_RATED_FIRST:
-        setSortingOffers(sortingOffers.sort((a, b) => Number(a.rating < b.rating)));
+      case SortingType.TOP_RATED_FIRST.message:
+        setSortingAndFilteringOffers(sortingAndFilteringOffers.sort(SortingType.TOP_RATED_FIRST.algorithm));
         break;
     }
   };
-  function getOffersByCity() {
-    return offers.filter((offer) => offer.city.name === cityName);
-  }
-
-  const offersInCity = getOffersByCity();
 
   return (
     <div className="page page--gray page--main">
@@ -74,12 +78,12 @@ function MainPage() : React.JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{sortingOffers.length} places to stay in {cityName}</b>
+              <b className="places__found">{sortingAndFilteringOffers.length} places to stay in {cityName}</b>
               <Sorting onSortTypeClick={handleSortingClick}/>
-              <PlaceCardList offers={sortingOffers} type={PlaceCardType.City} onMouseEnter={handlePlaceCardMouseEnter} onMouseLeave={handlePlaceCardMouseLeave} />
+              <PlaceCardList offers={sortingAndFilteringOffers} type={PlaceCardType.City} onMouseEnter={handlePlaceCardMouseEnter} onMouseLeave={handlePlaceCardMouseLeave} />
             </section>
             <div className="cities__right-section">
-              <Map cityName={cityName} offers={sortingOffers} activeCard={activeCard} type={'cities'}/>
+              <Map cityName={cityName} offers={sortingAndFilteringOffers} activeCard={activeCard} type={'cities'}/>
             </div>
           </div>
         </div>
