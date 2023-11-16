@@ -1,4 +1,5 @@
-import { City } from './types/offer';
+import { City, PreviewOffer } from './types/offer';
+import { Sorting } from './types/sorting';
 
 const MockData = {
   PlacesCount: 5,
@@ -68,10 +69,30 @@ const Cities: City[] = [
   },
 ];
 
+const SortingType: Sorting = {
+  POPULAR: {
+    message:  'Popular',
+    algorithm: () => 1,
+  },
+  PRICE_LOW_TO_HIGH: {
+    message: 'Price: low to high',
+    algorithm: (a: PreviewOffer, b: PreviewOffer) => a.price - b.price,
+  },
+  PRICE_HIGH_TO_LOW: {
+    message: 'Price: high to low',
+    algorithm: (a: PreviewOffer, b: PreviewOffer) => b.price - a.price,
+  },
+  TOP_RATED_FIRST: {
+    message: 'Top rated first',
+    algorithm: (a: PreviewOffer, b: PreviewOffer) => b.rating - a.rating,
+  }
+};
+
 export {
   MockData,
   PlaceCardType,
   NUMBER_PERCENT_IN_ONE_STAR,
   MapIconURL,
-  Cities
+  Cities,
+  SortingType,
 };
