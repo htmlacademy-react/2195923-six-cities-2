@@ -7,7 +7,6 @@ import { Cities } from '../../const';
 const initialState: InitialState = {
   city: 'Paris',
   offers: previewOffers,
-  sortingOffers: previewOffers,
 };
 
 export const reducer = createReducer(initialState, (builder) => {

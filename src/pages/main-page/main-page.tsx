@@ -17,7 +17,7 @@ function MainPage() : React.JSX.Element {
   const dispatch = useAppDispatch();
 
   const offersByCity = useMemo(() => offers.filter((offer) => offer.city.name === cityName), [cityName, offers]);
-  const sortingOffers = useMemo(() => structuredClone(offersByCity), [offersByCity]);
+  const sortingOffers = useMemo(() => [...offersByCity], [offersByCity]);
 
   const [activeCard, setActiveCard] = useState(' ');
   const [sortType, setSortType] = useState(SortingType.POPULAR.message);
