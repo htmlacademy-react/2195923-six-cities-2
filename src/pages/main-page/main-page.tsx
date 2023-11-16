@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useAppSelector } from '../../hooks/use-app-selector';
@@ -16,16 +16,11 @@ function MainPage() : React.JSX.Element {
   const offers = useAppSelector((state) => state.offers);
   const dispatch = useAppDispatch();
 
-  function getOffersByCity() {
-    return offers.filter((offer) => offer.city.name === cityName);
-  }
-
-  let offersByCity = getOffersByCity();
+  const offersByCity = useMemo(() => offers.filter((offer) => offer.city.name === cityName), [cityName, offers]);
+  const sortingOffers = useMemo(() => structuredClone(offersByCity), [offersByCity]);
 
   const [activeCard, setActiveCard] = useState(' ');
   const [sortType, setSortType] = useState(SortingType.POPULAR.message);
-  const [sortingAndFilteringOffers, setSortingAndFilteringOffers] = useState(offersByCity);
-  const [filteringOffers, setFilteringOffers] = useState(offersByCity);
 
   const handlePlaceCardMouseEnter = (evt : React.MouseEvent) => {
     evt.preventDefault();
@@ -43,25 +38,22 @@ function MainPage() : React.JSX.Element {
   const handleCityClick = (evt: React.MouseEvent) => {
     evt.preventDefault();
     dispatch(changeCity(evt.currentTarget.textContent as CityName));
-    offersByCity = offers.filter((offer) => offer.city.name === evt.currentTarget.textContent);
-    setSortingAndFilteringOffers(offersByCity);
-    setFilteringOffers(structuredClone(offersByCity));
     setSortType(SortingType.POPULAR.message);
   };
 
   const handleSortingClick = (type: string) => {
     switch(type) {
       case SortingType.POPULAR.message:
-        setSortingAndFilteringOffers(structuredClone(filteringOffers));
+        sortingOffers.splice(0, sortingOffers.length, ...offersByCity);
         break;
       case SortingType.PRICE_HIGH_TO_LOW.message:
-        setSortingAndFilteringOffers(sortingAndFilteringOffers.sort(SortingType.PRICE_HIGH_TO_LOW.algorithm));
+        sortingOffers.sort(SortingType.PRICE_HIGH_TO_LOW.algorithm);
         break;
       case SortingType.PRICE_LOW_TO_HIGH.message:
-        setSortingAndFilteringOffers(sortingAndFilteringOffers.sort(SortingType.PRICE_LOW_TO_HIGH.algorithm));
+        sortingOffers.sort(SortingType.PRICE_LOW_TO_HIGH.algorithm);
         break;
       case SortingType.TOP_RATED_FIRST.message:
-        setSortingAndFilteringOffers(sortingAndFilteringOffers.sort(SortingType.TOP_RATED_FIRST.algorithm));
+        sortingOffers.sort(SortingType.TOP_RATED_FIRST.algorithm);
         break;
     }
     setSortType(type);
@@ -80,12 +72,12 @@ function MainPage() : React.JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{sortingAndFilteringOffers.length} places to stay in {cityName}</b>
+              <b className="places__found">{sortingOffers.length} places to stay in {cityName}</b>
               <Sorting onSortTypeClick={handleSortingClick} type={sortType}/>
-              <PlaceCardList offers={sortingAndFilteringOffers} type={PlaceCardType.City} onMouseEnter={handlePlaceCardMouseEnter} onMouseLeave={handlePlaceCardMouseLeave} />
+              <PlaceCardList offers={sortingOffers} type={PlaceCardType.City} onMouseEnter={handlePlaceCardMouseEnter} onMouseLeave={handlePlaceCardMouseLeave} />
             </section>
             <div className="cities__right-section">
-              <Map cityName={cityName} offers={sortingAndFilteringOffers} activeCard={activeCard} type={'cities'}/>
+              <Map cityName={cityName} offers={sortingOffers} activeCard={activeCard} type={'cities'}/>
             </div>
           </div>
         </div>
