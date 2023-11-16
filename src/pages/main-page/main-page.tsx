@@ -10,8 +10,6 @@ import Sorting from '../../components/sorting/sorting';
 import { PlaceCardType, SortingType } from '../../const';
 import { CityName} from '../../types/offer';
 import { changeCity } from '../../store/actions/action';
-import { SortingElement } from '../../types/sorting';
-
 
 function MainPage() : React.JSX.Element {
   const cityName = useAppSelector((state) => state.city);
@@ -25,7 +23,7 @@ function MainPage() : React.JSX.Element {
   let offersByCity = getOffersByCity();
 
   const [activeCard, setActiveCard] = useState(' ');
-  const [sortType, setSortType] = useState(SortingType.POPULAR);
+  const [sortType, setSortType] = useState(SortingType.POPULAR.message);
   const [sortingAndFilteringOffers, setSortingAndFilteringOffers] = useState(offersByCity);
   const [filteringOffers, setFilteringOffers] = useState(offersByCity);
 
@@ -48,10 +46,10 @@ function MainPage() : React.JSX.Element {
     offersByCity = offers.filter((offer) => offer.city.name === evt.currentTarget.textContent);
     setSortingAndFilteringOffers(offersByCity);
     setFilteringOffers(structuredClone(offersByCity));
-    setSortType(SortingType.POPULAR);
+    setSortType(SortingType.POPULAR.message);
   };
 
-  const handleSortingClick = (type: string, newSortType: SortingElement) => {
+  const handleSortingClick = (type: string) => {
     switch(type) {
       case SortingType.POPULAR.message:
         setSortingAndFilteringOffers(structuredClone(filteringOffers));
@@ -66,7 +64,7 @@ function MainPage() : React.JSX.Element {
         setSortingAndFilteringOffers(sortingAndFilteringOffers.sort(SortingType.TOP_RATED_FIRST.algorithm));
         break;
     }
-    setSortType(newSortType);
+    setSortType(type);
   };
 
   return (
