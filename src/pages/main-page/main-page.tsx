@@ -15,6 +15,7 @@ import { SortingType as TSortingType } from '../../types/sorting';
 function MainPage() : React.JSX.Element {
   const cityName = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
+  const authStatus = useAppSelector((state) => state.authorizationStatus);
   const dispatch = useAppDispatch();
 
   const [activeCard, setActiveCard] = useState(' ');
@@ -64,7 +65,7 @@ function MainPage() : React.JSX.Element {
       <Helmet>
         <title>6 Cities</title>
       </Helmet>
-      <Header isNavRequired isAuth={false}/>
+      <Header isNavRequired isAuth={authStatus}/>
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <CitiesList currentCity={cityName} onCityClick={handleCityClick}/>

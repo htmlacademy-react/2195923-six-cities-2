@@ -1,12 +1,16 @@
 import {Link} from 'react-router-dom';
 import { AppRoute } from '../../app-route';
+import { AuthorizationStatus } from '../../const';
+import { useAppSelector } from '../../hooks/use-app-selector';
 
 type HeaderProps = {
   isNavRequired: boolean;
-  isAuth: boolean;
+  isAuth: AuthorizationStatus;
 }
 
 function Header({isNavRequired, isAuth}: HeaderProps) : React.JSX.Element {
+  const userData = useAppSelector((state) => state.userData);
+
   return (
     <header className="header">
       <div className="container">
@@ -18,13 +22,13 @@ function Header({isNavRequired, isAuth}: HeaderProps) : React.JSX.Element {
           </div>
           {isNavRequired &&
             <nav className="header__nav">
-              {isAuth ?
+              {isAuth === AuthorizationStatus.Auth ?
                 <ul className="header__nav-list">
                   <li className="header__nav-item user">
                     <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorite}>
                       <div className="header__avatar-wrapper user__avatar-wrapper">
                       </div>
-                      <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                      <span className="header__user-name user__name">{userData.email}</span>
                       <span className="header__favorite-count">3</span>
                     </Link>
                   </li>
