@@ -7,6 +7,8 @@ const PlaceCardType = {
   Near: 'near-places'
 };
 
+const TIMEOUT_SHOW_ERROR = 2000;
+
 const NUMBER_PERCENT_IN_ONE_STAR = 20;
 
 const MapIconURL = {
@@ -86,6 +88,13 @@ const SortingType: Sorting = {
 
 export enum APIRoute {
   Offers = '/offers',
+  Login = '/login',
+}
+
+export enum AuthorizationStatus {
+  Unknown = 'Unknown',
+  Auth = 'Auth',
+  NoAuth = 'NoAuth',
 }
 
 export {
@@ -94,4 +103,5 @@ export {
   MapIconURL,
   Cities,
   SortingType,
+  TIMEOUT_SHOW_ERROR
 };
