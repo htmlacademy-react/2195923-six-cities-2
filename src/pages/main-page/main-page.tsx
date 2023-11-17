@@ -10,6 +10,7 @@ import Sorting from '../../components/sorting/sorting';
 import { PlaceCardType, SortingType } from '../../const';
 import { CityName} from '../../types/offer';
 import { changeCity } from '../../store/actions/action';
+import { SortingType as TSortingType } from '../../types/sorting';
 
 function MainPage() : React.JSX.Element {
   const cityName = useAppSelector((state) => state.city);
@@ -17,18 +18,18 @@ function MainPage() : React.JSX.Element {
   const dispatch = useAppDispatch();
 
   const [activeCard, setActiveCard] = useState(' ');
-  const [sortType, setSortType] = useState(SortingType.POPULAR.message);
+  const [sortType, setSortType] = useState<TSortingType>('POPULAR');
 
   const offersByCity = useMemo(() => offers.filter((offer) => offer.city.name === cityName), [cityName, offers]);
   const sortingOffers = useMemo(() => {
     switch(sortType) {
-      case SortingType.POPULAR.message:
+      case 'POPULAR':
         return [...offersByCity];
-      case SortingType.PRICE_HIGH_TO_LOW.message:
+      case 'PRICE_HIGH_TO_LOW':
         return [...offersByCity].sort(SortingType.PRICE_HIGH_TO_LOW.algorithm);
-      case SortingType.PRICE_LOW_TO_HIGH.message:
+      case 'PRICE_LOW_TO_HIGH':
         return [...offersByCity].sort(SortingType.PRICE_LOW_TO_HIGH.algorithm);
-      case SortingType.TOP_RATED_FIRST.message:
+      case 'TOP_RATED_FIRST':
         return [...offersByCity].sort(SortingType.TOP_RATED_FIRST.algorithm);
       default:
         return [...offersByCity];
@@ -51,10 +52,10 @@ function MainPage() : React.JSX.Element {
   const handleCityClick = (evt: React.MouseEvent) => {
     evt.preventDefault();
     dispatch(changeCity(evt.currentTarget.textContent as CityName));
-    setSortType(SortingType.POPULAR.message);
+    setSortType('POPULAR');
   };
 
-  const handleSortingClick = (type: string) => {
+  const handleSortingClick = (type: TSortingType) => {
     setSortType(type);
   };
 
