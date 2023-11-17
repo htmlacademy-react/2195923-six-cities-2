@@ -16,11 +16,24 @@ function MainPage() : React.JSX.Element {
   const offers = useAppSelector((state) => state.offers);
   const dispatch = useAppDispatch();
 
-  const offersByCity = useMemo(() => offers.filter((offer) => offer.city.name === cityName), [cityName, offers]);
-  const sortingOffers = useMemo(() => [...offersByCity], [offersByCity]);
-
   const [activeCard, setActiveCard] = useState(' ');
   const [sortType, setSortType] = useState(SortingType.POPULAR.message);
+
+  const offersByCity = useMemo(() => offers.filter((offer) => offer.city.name === cityName), [cityName, offers]);
+  const sortingOffers = useMemo(() => {
+    switch(sortType) {
+      case SortingType.POPULAR.message:
+        return [...offersByCity];
+      case SortingType.PRICE_HIGH_TO_LOW.message:
+        return [...offersByCity].sort(SortingType.PRICE_HIGH_TO_LOW.algorithm);
+      case SortingType.PRICE_LOW_TO_HIGH.message:
+        return [...offersByCity].sort(SortingType.PRICE_LOW_TO_HIGH.algorithm);
+      case SortingType.TOP_RATED_FIRST.message:
+        return [...offersByCity].sort(SortingType.TOP_RATED_FIRST.algorithm);
+      default:
+        return [...offersByCity];
+    }
+  }, [offersByCity, sortType]);
 
   const handlePlaceCardMouseEnter = (evt : React.MouseEvent) => {
     evt.preventDefault();
@@ -42,20 +55,6 @@ function MainPage() : React.JSX.Element {
   };
 
   const handleSortingClick = (type: string) => {
-    switch(type) {
-      case SortingType.POPULAR.message:
-        sortingOffers.splice(0, sortingOffers.length, ...offersByCity);
-        break;
-      case SortingType.PRICE_HIGH_TO_LOW.message:
-        sortingOffers.sort(SortingType.PRICE_HIGH_TO_LOW.algorithm);
-        break;
-      case SortingType.PRICE_LOW_TO_HIGH.message:
-        sortingOffers.sort(SortingType.PRICE_LOW_TO_HIGH.algorithm);
-        break;
-      case SortingType.TOP_RATED_FIRST.message:
-        sortingOffers.sort(SortingType.TOP_RATED_FIRST.algorithm);
-        break;
-    }
     setSortType(type);
   };
 
