@@ -76,15 +76,15 @@ const SortingType: Sorting = {
   },
   PRICE_LOW_TO_HIGH: {
     message: 'Price: low to high',
-    algorithm: (a: PreviewOffer, b: PreviewOffer) => Number(a.price > b.price),
+    algorithm: (a: PreviewOffer, b: PreviewOffer) => a.price - b.price,
   },
   PRICE_HIGH_TO_LOW: {
     message: 'Price: high to low',
-    algorithm: (a: PreviewOffer, b: PreviewOffer) => Number(a.price < b.price),
+    algorithm: (a: PreviewOffer, b: PreviewOffer) => b.price - a.price,
   },
   TOP_RATED_FIRST: {
     message: 'Top rated first',
-    algorithm: (a: PreviewOffer, b: PreviewOffer) => Number(a.rating < b.rating),
+    algorithm: (a: PreviewOffer, b: PreviewOffer) => b.rating - a.rating,
   }
 };
 
