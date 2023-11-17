@@ -1,3 +1,5 @@
+// Моки пока не удалял, так как они пока еще передаются в компонент App
+
 import { FullOffer } from '../types/offer';
 import { PreviewOffer } from '../types/offer';
 
