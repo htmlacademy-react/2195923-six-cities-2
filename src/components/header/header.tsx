@@ -5,7 +5,7 @@ import { useAppSelector } from '../../hooks/use-app-selector';
 
 type HeaderProps = {
   isNavRequired: boolean;
-  isAuth: AuthorizationStatus;
+  isAuth?: AuthorizationStatus;
 }
 
 function Header({isNavRequired, isAuth}: HeaderProps) : React.JSX.Element {
