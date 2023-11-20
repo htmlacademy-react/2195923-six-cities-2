@@ -10,8 +10,15 @@ function LoginPage() : React.JSX.Element {
 
   const onFormSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    const authorizationData: AuthData = {email: evt.currentTarget.elements.email.value, password: evt.currentTarget.elements.password.value};
-    store.dispatch(loginAction(authorizationData));
+    const email = (evt.currentTarget.elements.namedItem('email') as Element).textContent;
+    const password = (evt.currentTarget.elements.namedItem('password') as Element).textContent;
+    if (email && password) {
+      const authorizationData: AuthData = {
+        email: email,
+        password: password
+      };
+      store.dispatch(loginAction(authorizationData));
+    }
   };
 
   return (
