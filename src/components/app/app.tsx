@@ -5,10 +5,12 @@ import LoginPage from '../../pages/login-page/login-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import OfferPage from '../../pages/offer-page/offer-page';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import PrivateRoute from '../private/private-route';
 import { AppRoute } from '../../app-route';
 import { FullOffer, PreviewOffer } from '../../types/offer';
 import { Review } from '../../types/review';
+import { useAppSelector } from '../../hooks/use-app-selector';
 
 type AppProps = {
   fullOffers: FullOffer[];
@@ -17,6 +19,12 @@ type AppProps = {
 }
 
 function App({fullOffers, previewOffers, reviews} : AppProps) : React.JSX.Element {
+  const isOffersDataLoadingStatus = useAppSelector((state) => state.isOffersDataLoading);
+
+  if (isOffersDataLoadingStatus) {
+    return <LoadingScreen />;
+  }
+
   return (
     <HelmetProvider>
       <BrowserRouter>

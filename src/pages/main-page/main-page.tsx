@@ -10,17 +10,31 @@ import Sorting from '../../components/sorting/sorting';
 import { PlaceCardType, SortingType } from '../../const';
 import { CityName} from '../../types/offer';
 import { changeCity } from '../../store/actions/action';
+import { SortingType as TSortingType } from '../../types/sorting';
 
 function MainPage() : React.JSX.Element {
   const cityName = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
   const dispatch = useAppDispatch();
 
-  const offersByCity = useMemo(() => offers.filter((offer) => offer.city.name === cityName), [cityName, offers]);
-  const sortingOffers = useMemo(() => [...offersByCity], [offersByCity]);
-
   const [activeCard, setActiveCard] = useState(' ');
-  const [sortType, setSortType] = useState(SortingType.POPULAR.message);
+  const [sortType, setSortType] = useState<TSortingType>('POPULAR');
+
+  const offersByCity = useMemo(() => offers.filter((offer) => offer.city.name === cityName), [cityName, offers]);
+  const sortingOffers = useMemo(() => {
+    switch(sortType) {
+      case 'POPULAR':
+        return [...offersByCity];
+      case 'PRICE_HIGH_TO_LOW':
+        return [...offersByCity].sort(SortingType.PRICE_HIGH_TO_LOW.algorithm);
+      case 'PRICE_LOW_TO_HIGH':
+        return [...offersByCity].sort(SortingType.PRICE_LOW_TO_HIGH.algorithm);
+      case 'TOP_RATED_FIRST':
+        return [...offersByCity].sort(SortingType.TOP_RATED_FIRST.algorithm);
+      default:
+        return [...offersByCity];
+    }
+  }, [offersByCity, sortType]);
 
   const handlePlaceCardMouseEnter = (evt : React.MouseEvent) => {
     evt.preventDefault();
@@ -38,24 +52,10 @@ function MainPage() : React.JSX.Element {
   const handleCityClick = (evt: React.MouseEvent) => {
     evt.preventDefault();
     dispatch(changeCity(evt.currentTarget.textContent as CityName));
-    setSortType(SortingType.POPULAR.message);
+    setSortType('POPULAR');
   };
 
-  const handleSortingClick = (type: string) => {
-    switch(type) {
-      case SortingType.POPULAR.message:
-        sortingOffers.splice(0, sortingOffers.length, ...offersByCity);
-        break;
-      case SortingType.PRICE_HIGH_TO_LOW.message:
-        sortingOffers.sort(SortingType.PRICE_HIGH_TO_LOW.algorithm);
-        break;
-      case SortingType.PRICE_LOW_TO_HIGH.message:
-        sortingOffers.sort(SortingType.PRICE_LOW_TO_HIGH.algorithm);
-        break;
-      case SortingType.TOP_RATED_FIRST.message:
-        sortingOffers.sort(SortingType.TOP_RATED_FIRST.algorithm);
-        break;
-    }
+  const handleSortingClick = (type: TSortingType) => {
     setSortType(type);
   };
 

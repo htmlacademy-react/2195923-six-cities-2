@@ -1,10 +1,6 @@
 import { City, PreviewOffer } from './types/offer';
 import { Sorting } from './types/sorting';
 
-const MockData = {
-  PlacesCount: 5,
-};
-
 const PlaceCardType = {
   Favorite: 'favorites',
   City: 'cities',
@@ -88,8 +84,11 @@ const SortingType: Sorting = {
   }
 };
 
+export enum APIRoute {
+  Offers = '/offers',
+}
+
 export {
-  MockData,
   PlaceCardType,
   NUMBER_PERCENT_IN_ONE_STAR,
   MapIconURL,
