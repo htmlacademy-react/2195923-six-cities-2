@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { InitialState } from '../../types/initial-state';
-import { changeCity, fillOffers, loadOffers, setOffersDataLoadingStatus } from '../actions/action';
+import { changeCity, loadOffers, setOffersDataLoadingStatus } from '../actions/action';
 import { Cities } from '../../const';
 
 const initialState: InitialState = {
@@ -16,9 +16,6 @@ export const reducer = createReducer(initialState, (builder) => {
       if (newCity) {
         state.city = action.payload;
       }
-    })
-    .addCase(fillOffers, (state, action) => {
-      state.offers = action.payload;
     })
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;

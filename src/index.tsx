@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './components/app/app';
 import { store } from './store/stores';
-import { fullOffers } from './mocks/offers';
+import { fullOffers, previewOffers } from './mocks/offers';
 import { reviews } from './mocks/reviews';
 import { fetchOffersAction } from './store/actions/api-actions';
 
@@ -18,7 +18,7 @@ root.render(
     <Provider store={store}>
       <App
         fullOffers = {fullOffers}
-        previewOffers={store.getState().offers}
+        previewOffers={previewOffers}
         reviews = {reviews}
       />
     </Provider>
