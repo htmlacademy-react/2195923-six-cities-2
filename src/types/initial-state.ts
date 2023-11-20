@@ -8,5 +8,4 @@ export type InitialState = {
   isOffersDataLoading: boolean;
   authorizationStatus: AuthorizationStatus;
   userData: UserData;
-  error: string| null;
 };

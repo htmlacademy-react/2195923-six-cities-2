@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 import App from './components/app/app';
-import ErrorMessage from './components/error-message/error-message';
+import 'react-toastify/dist/ReactToastify.css';
 import { store } from './store/stores';
 import { fullOffers } from './mocks/offers';
 import { reviews } from './mocks/reviews';
@@ -19,7 +20,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ErrorMessage />
+      <ToastContainer />
       <App
         fullOffers = {fullOffers}
         previewOffers={store.getState().offers}

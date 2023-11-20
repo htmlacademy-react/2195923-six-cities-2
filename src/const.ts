@@ -7,8 +7,6 @@ const PlaceCardType = {
   Near: 'near-places'
 };
 
-const TIMEOUT_SHOW_ERROR = 2000;
-
 const NUMBER_PERCENT_IN_ONE_STAR = 20;
 
 const MapIconURL = {
@@ -103,5 +101,4 @@ export {
   MapIconURL,
   Cities,
   SortingType,
-  TIMEOUT_SHOW_ERROR
 };

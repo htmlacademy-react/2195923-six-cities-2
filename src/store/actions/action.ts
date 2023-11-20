@@ -13,7 +13,5 @@ export const setAuthorizationStatus = createAction<AuthorizationStatus>('data/se
 
 export const setUserData = createAction<UserData>('data/setUser');
 
-export const setError = createAction<string | null>('data/setError');
-
 export const redirectToRoute = createAction<string>('city/redirectToRoute');
 
