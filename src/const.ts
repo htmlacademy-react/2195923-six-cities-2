@@ -87,6 +87,7 @@ const SortingType: Sorting = {
 export enum APIRoute {
   Offers = '/offers',
   Login = '/login',
+  Reviews = '/comments',
 }
 
 export enum AuthorizationStatus {

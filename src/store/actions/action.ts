@@ -1,13 +1,22 @@
 import { createAction } from '@reduxjs/toolkit';
-import { CityName, PreviewOffer } from '../../types/offer';
+import { CityName, FullOffer, PreviewOffer } from '../../types/offer';
 import { AuthorizationStatus } from '../../const';
 import { UserData } from '../../types/user-data';
+import { Review } from '../../types/review';
 
 export const changeCity = createAction<CityName>('city/change');
 
 export const loadOffers = createAction<PreviewOffer[]>('data/loadOffers');
 
-export const setOffersDataLoadingStatus = createAction<boolean>('data/setOffersDataLoadingStatus');
+export const loadOfferByID = createAction<FullOffer>('data/loadOfferByID');
+
+export const loadNearbyOffers = createAction<PreviewOffer[]>('data/loadNearbyOffers');
+
+export const loadReviews = createAction<Review[]>('data/loadReviews');
+
+export const addReview = createAction<Review>('data/addReview');
+
+export const setDataLoadingStatus = createAction<boolean>('data/setDataLoadingStatus');
 
 export const setAuthorizationStatus = createAction<AuthorizationStatus>('data/setAuthorizationStatus');
 

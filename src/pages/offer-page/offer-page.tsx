@@ -1,38 +1,26 @@
 import { useState } from 'react';
-import { Navigate} from 'react-router-dom';
+import { Navigate, useParams} from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header/header';
 import Map from '../../components/map/map';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
 import ReviewList from '../../components/review-list/review-list';
 import ReviewsForm from '../../components/reviews-form/reviews-form';
-import { FullOffer, PreviewOffer } from '../../types/offer';
-import { Review } from '../../types/review';
-import { NUMBER_PERCENT_IN_ONE_STAR, PlaceCardType } from '../../const';
+import { AuthorizationStatus, NUMBER_PERCENT_IN_ONE_STAR, PlaceCardType } from '../../const';
 import { AppRoute } from '../../app-route';
+import { useAppSelector } from '../../hooks/use-app-selector';
+import { UserReview } from '../../types/review';
+import { store } from '../../store/stores';
+import { createReviewAction } from '../../store/actions/api-actions';
 
-
-type OfferPageProps = {
-  offer: FullOffer;
-  nearOffers: PreviewOffer[];
-  reviews: Review[];
-}
-
-function OfferPage({offer, nearOffers, reviews} : OfferPageProps) : React.JSX.Element {
+function OfferPage() : React.JSX.Element {
+  const id = useParams() as unknown as string;
   const [activeCard, setActiveCard] = useState(' ');
-
-  const handlePlaceCardMouseEnter = (evt : React.MouseEvent) => {
-    evt.preventDefault();
-    const id = evt.currentTarget.getAttribute('data-id');
-    if (id !== null) {
-      setActiveCard(id);
-    }
-  };
-
-  const handlePlaceCardMouseLeave = (evt : React.MouseEvent) => {
-    evt.preventDefault();
-    setActiveCard(' ');
-  };
+  const cityName = useAppSelector((state) => state.city);
+  const offer = useAppSelector((state) => state.fullOffers);
+  const reviews = useAppSelector((state) => state.reviews);
+  const nearOffers = useAppSelector((state) => state.nearbyOffers);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
   function generatePhotos(images: string[]) {
     return Array.from({length: images.length}, (_, index: number) => (
@@ -50,6 +38,10 @@ function OfferPage({offer, nearOffers, reviews} : OfferPageProps) : React.JSX.El
     ));
   }
 
+  const handleFormSubmit = (formData: UserReview) => {
+    store.dispatch(createReviewAction(formData));
+  };
+
   if (offer === undefined) {
     return <Navigate to={AppRoute.Error} />;
   }
@@ -61,7 +53,7 @@ function OfferPage({offer, nearOffers, reviews} : OfferPageProps) : React.JSX.El
       <Helmet>
         <title>6 Cities: Offer</title>
       </Helmet>
-      <Header isNavRequired isAuth={false}/>
+      <Header isNavRequired isAuth={authorizationStatus}/>
       <main className="page__main page__main--offer">
         <section className="offer">
           <div className="offer__gallery-container container">
@@ -140,16 +132,16 @@ function OfferPage({offer, nearOffers, reviews} : OfferPageProps) : React.JSX.El
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
                 <ReviewList reviews={reviews} />
-                <ReviewsForm />
+                {authorizationStatus === AuthorizationStatus.Auth && <ReviewsForm onFormSubmit={handleFormSubmit}/>}
               </section>
             </div>
           </div>
-          <Map offers={threeNearOffers} type={'offer'} activeCard={activeCard} />
+          <Map cityName={cityName} offers={threeNearOffers} type={'offer'} activeCard={activeCard} />
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <PlaceCardList offers={threeNearOffers} type={PlaceCardType.Near} onMouseEnter={handlePlaceCardMouseEnter} onMouseLeave={handlePlaceCardMouseLeave}/>
+            <PlaceCardList offers={threeNearOffers} type={PlaceCardType.Near} />
           </section>
         </div>
       </main>
