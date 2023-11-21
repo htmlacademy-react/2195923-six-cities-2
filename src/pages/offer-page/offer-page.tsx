@@ -39,7 +39,7 @@ function OfferPage() : React.JSX.Element {
   }
 
   const handleFormSubmit = (formData: UserReview) => {
-    store.dispatch(createReviewAction(formData));
+    store.dispatch(createReviewAction({userReview: formData, offerID: id}));
   };
 
   if (offer === undefined) {

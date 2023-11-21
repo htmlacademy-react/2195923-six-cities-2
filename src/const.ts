@@ -96,6 +96,15 @@ export enum AuthorizationStatus {
   NoAuth = 'NoAuth',
 }
 
+
+export enum RatingLabel {
+  Perfect = 'perfect',
+  Good = 'good',
+  NotBad = 'not bad',
+  Badly = 'badly',
+  Terribly = 'terribly',
+}
+
 export {
   PlaceCardType,
   NUMBER_PERCENT_IN_ONE_STAR,
