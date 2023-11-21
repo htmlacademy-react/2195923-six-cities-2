@@ -9,7 +9,7 @@ import ReviewsForm from '../../components/reviews-form/reviews-form';
 import { AuthorizationStatus, NUMBER_PERCENT_IN_ONE_STAR, PlaceCardType } from '../../const';
 import { AppRoute } from '../../app-route';
 import { useAppSelector } from '../../hooks/use-app-selector';
-import { UserReview } from '../../types/review';
+import { Review, UserReview } from '../../types/review';
 import { store } from '../../store/stores';
 import { createReviewAction } from '../../store/actions/api-actions';
 
@@ -36,6 +36,14 @@ function OfferPage() : React.JSX.Element {
         {goods[index]}
       </li>
     ));
+  }
+
+  function limitReviewsItems(fullReviewsList: Review[]) {
+    if (fullReviewsList.length <= 10) {
+      return fullReviewsList;
+    } else {
+      return [...fullReviewsList].reverse().slice(0, 10);
+    }
   }
 
   const handleFormSubmit = (formData: UserReview) => {
@@ -131,7 +139,7 @@ function OfferPage() : React.JSX.Element {
               </div>
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                <ReviewList reviews={reviews} />
+                <ReviewList reviews={limitReviewsItems(reviews)} />
                 {authorizationStatus === AuthorizationStatus.Auth && <ReviewsForm onFormSubmit={handleFormSubmit}/>}
               </section>
             </div>
