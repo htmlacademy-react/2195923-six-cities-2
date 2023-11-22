@@ -37,15 +37,13 @@ function ReviewsForm({onFormSubmit}: ReviewsFormProps) {
     evt.preventDefault();
     try {
       onFormSubmit(formData);
+      setFormData({
+        comment: '',
+        rating: 0,
+      });
     } catch {
       toast.warn('Не удалось сохранить комментарий');
-    } finally {
-
     }
-    setFormData({
-      comment: '',
-      rating: 0,
-    });
   };
 
   return (

@@ -19,7 +19,7 @@ type OfferProps = {
 function PlaceCard({offer, type, onMouseEnter, onMouseLeave} : OfferProps): React.JSX.Element {
   const dispatch = useAppDispatch();
 
-  const handlePlaceCardClick = async () => {
+  async function getData() {
     dispatch(setDataLoadingStatus(true));
     await Promise.all([
       store.dispatch(loadOfferByIDAction(offer.id)),
@@ -27,6 +27,10 @@ function PlaceCard({offer, type, onMouseEnter, onMouseLeave} : OfferProps): Reac
       store.dispatch(loadReviewsAction(offer.id))
     ]);
     dispatch(setDataLoadingStatus(false));
+  }
+
+  const handlePlaceCardClick = () => {
+    getData();
   };
 
   return (
