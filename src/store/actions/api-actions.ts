@@ -1,5 +1,6 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
+import { toast } from 'react-toastify';
 import { AppDispatch, State } from '../../types/state';
 import { FullOffer, PreviewOffer } from '../../types/offer';
 import { APIRoute, AuthorizationStatus } from '../../const';
@@ -19,7 +20,6 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
   async (_arg, {dispatch, extra: api}) => {
     dispatch(setDataLoadingStatus(true));
     const {data} = await api.get<PreviewOffer[]>(APIRoute.Offers);
-    dispatch(setDataLoadingStatus(false));
     dispatch(loadOffers(data));
   },
 );
@@ -67,10 +67,14 @@ export const createReviewAction = createAsyncThunk<void, {userReview: UserReview
 }>(
   'data/createReview',
   async ({userReview, offerID}, {dispatch, extra: api}) => {
-    const rating = userReview.rating;
-    const comment = userReview.comment;
-    const {data} = await api.post<Review>(`${APIRoute.Reviews}/${offerID.id}`, {rating, comment});
-    dispatch(addReview(data));
+    try {
+      const rating = userReview.rating;
+      const comment = userReview.comment;
+      const {data} = await api.post<Review>(`${APIRoute.Reviews}/${offerID.id}`, {rating, comment});
+      dispatch(addReview(data));
+    } catch {
+      toast.warn('Failed to load comment');
+    }
   },
 );
 
@@ -86,8 +90,9 @@ export const getAuthorizationStatusAction = createAsyncThunk<void, undefined, {
       dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
     } catch {
       dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
+    } finally {
+      dispatch(setDataLoadingStatus(false));
     }
-
   }
 );
 
