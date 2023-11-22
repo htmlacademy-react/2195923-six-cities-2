@@ -1,20 +1,21 @@
 import { City, PreviewOffer } from './types/offer';
 import { Sorting } from './types/sorting';
 
-const PlaceCardType = {
+export const PlaceCardType = {
   Favorite: 'favorites',
   City: 'cities',
   Near: 'near-places'
 };
 
-const NUMBER_PERCENT_IN_ONE_STAR = 20;
+export const NUMBER_PERCENT_IN_ONE_STAR = 20;
+export const MAX_COUNT_IMAGES_OFFERS = 6;
 
-const MapIconURL = {
+export const MapIconURL = {
   activeIcon: './../../public/img/pin-active.svg',
   passiveIcon: './../../public/img/pin.svg',
 };
 
-const Cities: City[] = [
+export const Cities: City[] = [
   {
     name: 'Paris',
     location: {
@@ -65,7 +66,7 @@ const Cities: City[] = [
   },
 ];
 
-const SortingType: Sorting = {
+export const SortingType: Sorting = {
   POPULAR: {
     message:  'Popular',
     algorithm: () => 1,
@@ -105,10 +106,3 @@ export enum RatingLabel {
   Terribly = 'terribly',
 }
 
-export {
-  PlaceCardType,
-  NUMBER_PERCENT_IN_ONE_STAR,
-  MapIconURL,
-  Cities,
-  SortingType,
-};

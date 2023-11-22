@@ -5,7 +5,7 @@ import Map from '../../components/map/map';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
 import ReviewList from '../../components/review-list/review-list';
 import ReviewsForm from '../../components/reviews-form/reviews-form';
-import { AuthorizationStatus, NUMBER_PERCENT_IN_ONE_STAR, PlaceCardType } from '../../const';
+import { AuthorizationStatus, NUMBER_PERCENT_IN_ONE_STAR, PlaceCardType, MAX_COUNT_IMAGES_OFFERS } from '../../const';
 import { AppRoute } from '../../app-route';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { Review, UserReview } from '../../types/review';
@@ -22,7 +22,7 @@ function OfferPage() : React.JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
   function generatePhotos(images: string[]) {
-    return Array.from({length: images.length}, (_, index: number) => (
+    return Array.from({length: images.length > MAX_COUNT_IMAGES_OFFERS ? MAX_COUNT_IMAGES_OFFERS : images.length}, (_, index: number) => (
       <div className="offer__image-wrapper" key={index}>
         <img className="offer__image" src={images[index]} alt="Photo studio" />
       </div>
