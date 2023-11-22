@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Navigate, useParams} from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header/header';
@@ -15,8 +14,8 @@ import { createReviewAction } from '../../store/actions/api-actions';
 
 function OfferPage() : React.JSX.Element {
   const id = useParams() as unknown as string;
-  const [activeCard, setActiveCard] = useState(' ');
   const cityName = useAppSelector((state) => state.city);
+  const offers = useAppSelector((state) => state.offers);
   const offer = useAppSelector((state) => state.fullOffers);
   const reviews = useAppSelector((state) => state.reviews);
   const nearOffers = useAppSelector((state) => state.nearbyOffers);
@@ -46,6 +45,15 @@ function OfferPage() : React.JSX.Element {
     }
   }
 
+  function getRandomNearOffers() {
+    const temp = [...nearOffers];
+    const randomNearOffers = [];
+    for (let i = 0; i < 3; i++) {
+      randomNearOffers.push(temp.splice(Math.random() * temp.length, 1)[0]);
+    }
+    return randomNearOffers;
+  }
+
   const handleFormSubmit = (formData: UserReview) => {
     store.dispatch(createReviewAction({userReview: formData, offerID: id}));
   };
@@ -54,7 +62,8 @@ function OfferPage() : React.JSX.Element {
     return <Navigate to={AppRoute.Error} />;
   }
 
-  const threeNearOffers = [nearOffers[0], nearOffers[1], nearOffers[2]];
+  const currentPreviewOffer = offers.find((previewOffer) => previewOffer.id === offer.id);
+  const threeNearOffers = getRandomNearOffers();
 
   return (
     <div className="page">
@@ -144,7 +153,7 @@ function OfferPage() : React.JSX.Element {
               </section>
             </div>
           </div>
-          <Map cityName={cityName} offers={threeNearOffers} type={'offer'} activeCard={activeCard} />
+          <Map cityName={cityName} offers={threeNearOffers.concat(currentPreviewOffer)} type={'offer'} activeCard={offer.id} />
         </section>
         <div className="container">
           <section className="near-places places">
