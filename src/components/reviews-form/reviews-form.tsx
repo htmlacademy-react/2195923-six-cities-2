@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 import Rating from '../rating/rating';
 import { UserReview } from '../../types/review';
 
@@ -34,7 +35,17 @@ function ReviewsForm({onFormSubmit}: ReviewsFormProps) {
 
   const handleFormSubmit = (evt: React.FormEvent) => {
     evt.preventDefault();
-    onFormSubmit(formData);
+    try {
+      onFormSubmit(formData);
+    } catch {
+      toast.warn('Не удалось сохранить комментарий');
+    } finally {
+
+    }
+    setFormData({
+      comment: '',
+      rating: 0,
+    });
   };
 
   return (
