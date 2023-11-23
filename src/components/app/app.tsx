@@ -22,8 +22,9 @@ type AppProps = {
 
 function App({fullOffers, previewOffers, reviews} : AppProps) : React.JSX.Element {
   const isOffersDataLoadingStatus = useAppSelector((state) => state.isOffersDataLoading);
+  const isAuthorizationLoadingStatus = useAppSelector((state) => state.isAuthorizationStatusLoading);
 
-  if (isOffersDataLoadingStatus) {
+  if (isOffersDataLoadingStatus || isAuthorizationLoadingStatus) {
     return <LoadingScreen />;
   }
 
@@ -33,7 +34,7 @@ function App({fullOffers, previewOffers, reviews} : AppProps) : React.JSX.Elemen
         <Routes>
           <Route path={AppRoute.Main} element={<MainPage/>} />
           <Route path={AppRoute.Login} element={<LoginPage />}/>
-          <Route path={AppRoute.Favorite} element={<PrivateRoute><FavoritesPage offers={previewOffers.filter((offer : PreviewOffer) => offer.isFavorite)}/></PrivateRoute>} />
+          <Route path={AppRoute.Favorite} element={<PrivateRoute><FavoritesPage /></PrivateRoute>} />
           <Route
             path={`${AppRoute.Offer}/:id`}
             element={<OfferPage offer={fullOffers[0]} nearOffers={previewOffers} reviews={reviews} />}

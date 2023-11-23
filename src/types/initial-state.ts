@@ -7,5 +7,6 @@ export type InitialState = {
   offers: PreviewOffer[];
   isOffersDataLoading: boolean;
   authorizationStatus: AuthorizationStatus;
+  isAuthorizationStatusLoading: boolean;
   userData: UserData;
 };
