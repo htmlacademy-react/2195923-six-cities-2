@@ -3,12 +3,11 @@ import Header from '../../components/header/header';
 import { PreviewOffer } from '../../types/offer';
 import PlaceCard from '../../components/place-card/place-card';
 import { PlaceCardType } from '../../const';
+import { useAppSelector } from '../../hooks/use-app-selector';
 
-type FavoritesPageProps = {
-  offers: PreviewOffer[];
-}
-
-function FavoritesPage({offers} : FavoritesPageProps) : React.JSX.Element {
+function FavoritesPage() : React.JSX.Element {
+  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const offers = useAppSelector((state) => state.offers).filter((offer : PreviewOffer) => offer.isFavorite);
 
   function renderFavoritePlaceListByCity(offersByCities: {[key: string]: PreviewOffer[]}, city: string) {
     const favoritePlaceListByCity : React.JSX.Element[] = [];
@@ -53,7 +52,7 @@ function FavoritesPage({offers} : FavoritesPageProps) : React.JSX.Element {
       <Helmet>
         <title>6 Cities: Favorites places</title>
       </Helmet>
-      <Header isNavRequired isAuth={false}/>
+      <Header isNavRequired isAuth={authStatus}/>
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">
