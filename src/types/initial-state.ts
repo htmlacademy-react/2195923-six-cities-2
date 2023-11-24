@@ -9,8 +9,11 @@ export type InitialState = {
   offers: PreviewOffer[];
   nearbyOffers: PreviewOffer[];
   reviews: Review[];
-  isDataLoading: boolean;
   authorizationStatus: AuthorizationStatus;
-  isAuthorizationStatusLoading: boolean;
   userData: UserData;
+  isOffersDataLoading: boolean;
+  isAuthorizationStatusLoading: boolean;
+  isNearByOffersDataLoading: boolean;
+  isOfferByIdDataLoading: boolean;
+  isReviewsDataLoading: boolean;
 };

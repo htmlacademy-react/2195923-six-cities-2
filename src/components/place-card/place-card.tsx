@@ -4,10 +4,6 @@ import { PreviewOffer } from '../../types/offer';
 import { PlaceCardType } from '../../const';
 import { NUMBER_PERCENT_IN_ONE_STAR } from '../../const';
 import { AppRoute } from '../../app-route';
-import { store } from '../../store/stores';
-import { loadNearbyOffersAction, loadOfferByIDAction, loadReviewsAction } from '../../store/actions/api-actions';
-import { useAppDispatch } from '../../hooks/use-app-dispatch';
-import { setDataLoadingStatus } from '../../store/actions/action';
 
 type OfferProps = {
   offer: PreviewOffer;
@@ -17,22 +13,6 @@ type OfferProps = {
 };
 
 function PlaceCard({offer, type, onMouseEnter, onMouseLeave} : OfferProps): React.JSX.Element {
-  const dispatch = useAppDispatch();
-
-  async function getData() {
-    dispatch(setDataLoadingStatus(true));
-    await Promise.all([
-      store.dispatch(loadOfferByIDAction(offer.id)),
-      store.dispatch(loadNearbyOffersAction(offer.id)),
-      store.dispatch(loadReviewsAction(offer.id))
-    ]);
-    dispatch(setDataLoadingStatus(false));
-  }
-
-  const handlePlaceCardClick = () => {
-    getData();
-  };
-
   return (
     <article className={`${type}__card place-card`} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} data-id={offer.id}>
       {offer.isPremium &&
@@ -64,7 +44,7 @@ function PlaceCard({offer, type, onMouseEnter, onMouseLeave} : OfferProps): Reac
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Offer}/${offer.id}`} onClick={handlePlaceCardClick}>{offer.title}</Link>
+          <Link to={`${AppRoute.Offer}/${offer.id}`}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>

@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { InitialState } from '../../types/initial-state';
-import { addReview, changeCity, loadNearbyOffers, loadOfferByID, loadOffers, loadReviews, setAuthorizationStatus, setDataLoadingStatus, setUserData } from '../actions/action';
+import { addReview, changeCity, loadNearbyOffers, loadOfferByID, loadOffers, loadReviews, setAuthorizationStatus, setNearByOffersDataLoadingStatus, setOfferByIdDataLoadingStatus, setReviewsDataLoadingStatus, setUserData } from '../actions/action';
 import { setAuthorizationLoadingStatus, setOffersDataLoadingStatus } from '../actions/action';
 import { AuthorizationStatus, Cities } from '../../const';
 
@@ -10,7 +10,6 @@ const initialState: InitialState = {
   fullOffers: [],
   nearbyOffers: [],
   reviews: [],
-  isDataLoading: false,
   authorizationStatus: AuthorizationStatus.Unknown,
   userData: {
     name: '',
@@ -19,7 +18,11 @@ const initialState: InitialState = {
     email: '',
     token: ''
   },
+  isOffersDataLoading: false,
   isAuthorizationStatusLoading: false,
+  isNearByOffersDataLoading: false,
+  isOfferByIdDataLoading: false,
+  isReviewsDataLoading: false,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -45,14 +48,23 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(addReview, (state, action) => {
       state.reviews.push(action.payload);
     })
-    .addCase(setDataLoadingStatus, (state, action) => {
-      state.isDataLoading = action.payload;
-    })
     .addCase(setAuthorizationStatus, (state, action) => {
       state.authorizationStatus = action.payload;
     })
+    .addCase(setOffersDataLoadingStatus, (state, action) => {
+      state.isOffersDataLoading = action.payload;
+    })
     .addCase(setAuthorizationLoadingStatus, (state, action) => {
       state.isAuthorizationStatusLoading = action.payload;
+    })
+    .addCase(setNearByOffersDataLoadingStatus, (state, action) => {
+      state.isNearByOffersDataLoading = action.payload;
+    })
+    .addCase(setOfferByIdDataLoadingStatus, (state, action) => {
+      state.isOfferByIdDataLoading = action.payload;
+    })
+    .addCase(setReviewsDataLoadingStatus, (state, action) => {
+      state.isReviewsDataLoading = action.payload;
     })
     .addCase(setUserData, (state, action) => {
       state.userData = action.payload;

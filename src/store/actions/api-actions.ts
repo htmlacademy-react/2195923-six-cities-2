@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { AppDispatch, State } from '../../types/state';
 import { FullOffer, PreviewOffer } from '../../types/offer';
 import { APIRoute, AuthorizationStatus } from '../../const';
-import { loadOffers, loadOfferByID, redirectToRoute, setAuthorizationStatus, setDataLoadingStatus, loadNearbyOffers, loadReviews, addReview } from './action';
+import { loadOffers, loadOfferByID, redirectToRoute, setAuthorizationStatus, loadNearbyOffers, loadReviews, addReview, setOfferByIdDataLoadingStatus, setNearByOffersDataLoadingStatus, setReviewsDataLoadingStatus } from './action';
 import { setAuthorizationLoadingStatus, setOffersDataLoadingStatus } from './action';
 import { UserData } from '../../types/user-data';
 import { dropToken, saveToken } from '../../services/token';
@@ -19,9 +19,10 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
 }>(
   'data/fetchOffers',
   async (_arg, {dispatch, extra: api}) => {
-    dispatch(setDataLoadingStatus(true));
+    dispatch(setOffersDataLoadingStatus(true));
     const {data} = await api.get<PreviewOffer[]>(APIRoute.Offers);
     dispatch(loadOffers(data));
+    dispatch(setOffersDataLoadingStatus(false));
   },
 );
 
@@ -32,8 +33,10 @@ export const loadOfferByIDAction = createAsyncThunk<void, string, {
 }>(
   'data/getOfferByID',
   async (offerID, {dispatch, extra: api}) => {
-    const {data} = await api.get<FullOffer>(`${APIRoute.Offers}/${offerID}`);
+    dispatch(setOfferByIdDataLoadingStatus(true));
+    const {data} = await api.get<FullOffer>(`${APIRoute.Offers}/${offerID.id}`);
     dispatch(loadOfferByID(data));
+    dispatch(setOfferByIdDataLoadingStatus(false));
   },
 );
 
@@ -44,8 +47,10 @@ export const loadNearbyOffersAction = createAsyncThunk<void, string, {
 }>(
   'data/getNearbyOffers',
   async (offerID, {dispatch, extra: api}) => {
-    const {data} = await api.get<PreviewOffer[]>(`${APIRoute.Offers}/${offerID}/nearby`);
+    dispatch(setNearByOffersDataLoadingStatus(true));
+    const {data} = await api.get<PreviewOffer[]>(`${APIRoute.Offers}/${offerID.id}/nearby`);
     dispatch(loadNearbyOffers(data));
+    dispatch(setNearByOffersDataLoadingStatus(false));
   }
 );
 
@@ -56,8 +61,10 @@ export const loadReviewsAction = createAsyncThunk<void, string, {
 }>(
   'data/getReviews',
   async (offerID, {dispatch, extra: api}) => {
-    const {data} = await api.get<Review[]>(`${APIRoute.Reviews}/${offerID}`);
+    dispatch(setReviewsDataLoadingStatus(true));
+    const {data} = await api.get<Review[]>(`${APIRoute.Reviews}/${offerID.id}`);
     dispatch(loadReviews(data));
+    dispatch(setReviewsDataLoadingStatus(false));
   }
 );
 

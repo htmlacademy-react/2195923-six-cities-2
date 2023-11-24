@@ -16,11 +16,17 @@ export const loadReviews = createAction<Review[]>('data/loadReviews');
 
 export const addReview = createAction<Review>('data/addReview');
 
-export const setDataLoadingStatus = createAction<boolean>('data/setDataLoadingStatus');
-
 export const setAuthorizationStatus = createAction<AuthorizationStatus>('data/setAuthorizationStatus');
 
+export const setOffersDataLoadingStatus = createAction<boolean>('data/setOfferDataLoadingStatus');
+
 export const setAuthorizationLoadingStatus = createAction<boolean>('data/setAuthorizationLoadingStatus');
+
+export const setNearByOffersDataLoadingStatus = createAction<boolean>('data/setNearByOffersDataLoadingStatus');
+
+export const setOfferByIdDataLoadingStatus = createAction<boolean>('data/setOfferByIdDataLoadingStatus');
+
+export const setReviewsDataLoadingStatus = createAction<boolean>('data/setReviewsDataLoadingStatus');
 
 export const setUserData = createAction<UserData>('data/setUser');
 
