@@ -1,6 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { InitialState } from '../../types/initial-state';
 import { addReview, changeCity, loadNearbyOffers, loadOfferByID, loadOffers, loadReviews, setAuthorizationStatus, setDataLoadingStatus, setUserData } from '../actions/action';
+import { setAuthorizationLoadingStatus, setOffersDataLoadingStatus } from '../actions/action';
 import { AuthorizationStatus, Cities } from '../../const';
 
 const initialState: InitialState = {
@@ -18,6 +19,7 @@ const initialState: InitialState = {
     email: '',
     token: ''
   },
+  isAuthorizationStatusLoading: false,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -48,6 +50,9 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setAuthorizationStatus, (state, action) => {
       state.authorizationStatus = action.payload;
+    })
+    .addCase(setAuthorizationLoadingStatus, (state, action) => {
+      state.isAuthorizationStatusLoading = action.payload;
     })
     .addCase(setUserData, (state, action) => {
       state.userData = action.payload;

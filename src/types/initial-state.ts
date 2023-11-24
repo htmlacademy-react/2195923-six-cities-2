@@ -11,5 +11,6 @@ export type InitialState = {
   reviews: Review[];
   isDataLoading: boolean;
   authorizationStatus: AuthorizationStatus;
+  isAuthorizationStatusLoading: boolean;
   userData: UserData;
 };

@@ -20,6 +20,8 @@ export const setDataLoadingStatus = createAction<boolean>('data/setDataLoadingSt
 
 export const setAuthorizationStatus = createAction<AuthorizationStatus>('data/setAuthorizationStatus');
 
+export const setAuthorizationLoadingStatus = createAction<boolean>('data/setAuthorizationLoadingStatus');
+
 export const setUserData = createAction<UserData>('data/setUser');
 
 export const redirectToRoute = createAction<string>('city/redirectToRoute');

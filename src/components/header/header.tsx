@@ -2,6 +2,8 @@ import {Link} from 'react-router-dom';
 import { AppRoute } from '../../app-route';
 import { AuthorizationStatus } from '../../const';
 import { useAppSelector } from '../../hooks/use-app-selector';
+import { store } from '../../store/stores';
+import { logoutAction } from '../../store/actions/api-actions';
 
 type HeaderProps = {
   isNavRequired: boolean;
@@ -10,6 +12,10 @@ type HeaderProps = {
 
 function Header({isNavRequired, isAuth}: HeaderProps) : React.JSX.Element {
   const userData = useAppSelector((state) => state.userData);
+
+  const onLogoutClick = () => {
+    store.dispatch(logoutAction());
+  };
 
   return (
     <header className="header">
@@ -33,7 +39,7 @@ function Header({isNavRequired, isAuth}: HeaderProps) : React.JSX.Element {
                     </Link>
                   </li>
                   <li className="header__nav-item">
-                    <Link className="header__nav-link" to="">
+                    <Link className="header__nav-link" to="" onClick={onLogoutClick}>
                       <span className="header__signout">Sign out</span>
                     </Link>
                   </li>
