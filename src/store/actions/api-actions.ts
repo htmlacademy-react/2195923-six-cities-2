@@ -32,11 +32,9 @@ export const loadOfferByIDAction = createAsyncThunk<void, string, {
   extra: AxiosInstance;
 }>(
   'data/getOfferByID',
-  async (offerID, {dispatch, extra: api}) => {
-    dispatch(setOfferByIdDataLoadingStatus(true));
-    const {data} = await api.get<FullOffer>(`${APIRoute.Offers}/${offerID.id}`);
+  async (id, {dispatch, extra: api}) => {
+    const {data} = await api.get<FullOffer>(`${APIRoute.Offers}/${id}`);
     dispatch(loadOfferByID(data));
-    dispatch(setOfferByIdDataLoadingStatus(false));
   },
 );
 
@@ -46,11 +44,9 @@ export const loadNearbyOffersAction = createAsyncThunk<void, string, {
   extra: AxiosInstance;
 }>(
   'data/getNearbyOffers',
-  async (offerID, {dispatch, extra: api}) => {
-    dispatch(setNearByOffersDataLoadingStatus(true));
-    const {data} = await api.get<PreviewOffer[]>(`${APIRoute.Offers}/${offerID.id}/nearby`);
+  async (id, {dispatch, extra: api}) => {
+    const {data} = await api.get<PreviewOffer[]>(`${APIRoute.Offers}/${id}/nearby`);
     dispatch(loadNearbyOffers(data));
-    dispatch(setNearByOffersDataLoadingStatus(false));
   }
 );
 
@@ -60,11 +56,9 @@ export const loadReviewsAction = createAsyncThunk<void, string, {
   extra: AxiosInstance;
 }>(
   'data/getReviews',
-  async (offerID, {dispatch, extra: api}) => {
-    dispatch(setReviewsDataLoadingStatus(true));
-    const {data} = await api.get<Review[]>(`${APIRoute.Reviews}/${offerID.id}`);
+  async (id, {dispatch, extra: api}) => {
+    const {data} = await api.get<Review[]>(`${APIRoute.Reviews}/${id}`);
     dispatch(loadReviews(data));
-    dispatch(setReviewsDataLoadingStatus(false));
   }
 );
 

@@ -11,8 +11,11 @@ import { PlaceCardType, SortingType } from '../../const';
 import { CityName} from '../../types/offer';
 import { changeCity } from '../../store/actions/action';
 import { SortingType as TSortingType } from '../../types/sorting';
+import { useNavigation } from 'react-router-dom';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 function MainPage() : React.JSX.Element {
+  const navigation = useNavigation();
   const cityName = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
   const authStatus = useAppSelector((state) => state.authorizationStatus);
@@ -59,6 +62,10 @@ function MainPage() : React.JSX.Element {
   const handleSortingClick = (type: TSortingType) => {
     setSortType(type);
   };
+
+  if (navigation.state === 'loading') {
+    return <LoadingScreen />;
+  }
 
   return (
     <div className="page page--gray page--main">
