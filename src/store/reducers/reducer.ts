@@ -18,11 +18,11 @@ const initialState: InitialState = {
     email: '',
     token: ''
   },
-  isOffersDataLoading: false,
-  isAuthorizationStatusLoading: false,
-  isNearByOffersDataLoading: false,
-  isOfferByIdDataLoading: false,
-  isReviewsDataLoading: false,
+  isOffersDataLoading: true,
+  isAuthorizationStatusLoading: true,
+  isNearByOffersDataLoading: true,
+  isOfferByIdDataLoading: true,
+  isReviewsDataLoading: true,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
