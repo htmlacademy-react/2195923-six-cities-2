@@ -15,16 +15,9 @@ import browserHistory from '../../browser-history';
 function App() : React.JSX.Element {
   const isOffersDataLoadingStatus = useAppSelector((state) => state.isOffersDataLoading);
   const isAuthorizationLoadingStatus = useAppSelector((state) => state.isAuthorizationStatusLoading);
-  const isNearByOffersDataLoading = useAppSelector((state) => state.isNearByOffersDataLoading);
-  const isOfferByIdDataLoading = useAppSelector((state) => state.isOfferByIdDataLoading);
-  const isReviewsDataLoading = useAppSelector((state) => state.isReviewsDataLoading);
 
   if (isOffersDataLoadingStatus ||
-    isAuthorizationLoadingStatus ||
-    isNearByOffersDataLoading ||
-    isOfferByIdDataLoading ||
-    isReviewsDataLoading
-  ) {
+    isAuthorizationLoadingStatus) {
     return <LoadingScreen />;
   }
 

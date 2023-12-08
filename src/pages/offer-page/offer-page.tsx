@@ -12,9 +12,11 @@ import { Review, UserReview } from '../../types/review';
 import { store } from '../../store/stores';
 import { createReviewAction, loadNearbyOffersAction, loadOfferByIDAction, loadReviewsAction } from '../../store/actions/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
+import { useState } from 'react';
 
 function OfferPage() : React.JSX.Element {
   const offerId = useParams() as unknown as string;
+  const [isLoading, setIsLoading] = useState(true);
   const cityName = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
   const offer = useAppSelector((state) => state.fullOffers);
@@ -25,9 +27,14 @@ function OfferPage() : React.JSX.Element {
   const isOfferByIdDataLoadingStatus = useAppSelector((state) => state.isOfferByIdDataLoading);
   const isReviewsDataLoadingStatus = useAppSelector((state) => state.isReviewsDataLoading);
 
-  store.dispatch(loadOfferByIDAction(offerId));
-  store.dispatch(loadNearbyOffersAction(offerId));
-  store.dispatch(loadReviewsAction(offerId));
+  if (isLoading) {
+    Promise.all([
+      store.dispatch(loadOfferByIDAction(offerId)),
+      store.dispatch(loadNearbyOffersAction(offerId)),
+      store.dispatch(loadReviewsAction(offerId))
+    ]);
+    setIsLoading(false);
+  }
 
   function generatePhotos(images: string[]) {
     return Array.from({length: images.length > MAX_COUNT_IMAGES_OFFERS ? MAX_COUNT_IMAGES_OFFERS : images.length}, (_, index: number) => (
@@ -74,7 +81,7 @@ function OfferPage() : React.JSX.Element {
     return <Navigate to={AppRoute.Error} />;
   }
 
-  const currentPreviewOffer = offers.find((previewOffer) => previewOffer.id === offer.id);
+  const currentPreviewOffer = offers.find((previewOffer) => previewOffer.id === offer.id) || [];
   const threeNearOffers = getRandomNearOffers();
 
   return (

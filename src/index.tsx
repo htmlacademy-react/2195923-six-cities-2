@@ -19,9 +19,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <ToastContainer />
-      <App
-        previewOffers={store.getState().offers}
-      />
+      <App/>
     </Provider>
   </React.StrictMode>
 );
