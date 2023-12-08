@@ -1,12 +1,19 @@
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header/header';
 import { AppRoute } from '../../app-route';
 import { store } from '../../store/stores';
 import { loginAction } from '../../store/actions/api-actions';
 import { AuthData } from '../../types/auth-data';
+import { useAppSelector } from '../../hooks/use-app-selector';
+import { AuthorizationStatus } from '../../const';
 
 function LoginPage() : React.JSX.Element {
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+
+  if (authorizationStatus === AuthorizationStatus.Auth) {
+    return <Navigate to={AppRoute.Main} />;
+  }
 
   const onFormSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
