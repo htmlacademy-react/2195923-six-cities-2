@@ -15,7 +15,7 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import { useState } from 'react';
 
 function OfferPage() : React.JSX.Element {
-  const offerId = useParams() as unknown as string;
+  const {id} = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const cityName = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
@@ -29,9 +29,9 @@ function OfferPage() : React.JSX.Element {
 
   if (isLoading) {
     Promise.all([
-      store.dispatch(loadOfferByIDAction(offerId)),
-      store.dispatch(loadNearbyOffersAction(offerId)),
-      store.dispatch(loadReviewsAction(offerId))
+      store.dispatch(loadOfferByIDAction(id as string)),
+      store.dispatch(loadNearbyOffersAction(id as string)),
+      store.dispatch(loadReviewsAction(id as string))
     ]);
     setIsLoading(false);
   }
@@ -70,7 +70,7 @@ function OfferPage() : React.JSX.Element {
   }
 
   const handleFormSubmit = (formData: UserReview) => {
-    store.dispatch(createReviewAction({userReview: formData, offerID: id}));
+    store.dispatch(createReviewAction({userReview: formData, id: id as string}));
   };
 
   if (isNearByOffersDataLoadingStatus || isOfferByIdDataLoadingStatus || isReviewsDataLoadingStatus) {
