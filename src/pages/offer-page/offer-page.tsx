@@ -1,4 +1,4 @@
-import { Navigate, useNavigation } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header/header';
 import Map from '../../components/map/map';
@@ -10,17 +10,24 @@ import { AppRoute } from '../../app-route';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { Review, UserReview } from '../../types/review';
 import { store } from '../../store/stores';
-import { createReviewAction } from '../../store/actions/api-actions';
+import { createReviewAction, loadNearbyOffersAction, loadOfferByIDAction, loadReviewsAction } from '../../store/actions/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 
 function OfferPage() : React.JSX.Element {
-  const navigation = useNavigation();
+  const offerId = useParams() as unknown as string;
   const cityName = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
   const offer = useAppSelector((state) => state.fullOffers);
   const reviews = useAppSelector((state) => state.reviews);
   const nearOffers = useAppSelector((state) => state.nearbyOffers);
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const isNearByOffersDataLoadingStatus = useAppSelector((state) => state.isNearByOffersDataLoading);
+  const isOfferByIdDataLoadingStatus = useAppSelector((state) => state.isOfferByIdDataLoading);
+  const isReviewsDataLoadingStatus = useAppSelector((state) => state.isReviewsDataLoading);
+
+  store.dispatch(loadOfferByIDAction(offerId));
+  store.dispatch(loadNearbyOffersAction(offerId));
+  store.dispatch(loadReviewsAction(offerId));
 
   function generatePhotos(images: string[]) {
     return Array.from({length: images.length > MAX_COUNT_IMAGES_OFFERS ? MAX_COUNT_IMAGES_OFFERS : images.length}, (_, index: number) => (
@@ -59,16 +66,16 @@ function OfferPage() : React.JSX.Element {
     store.dispatch(createReviewAction({userReview: formData, offerID: id}));
   };
 
+  if (isNearByOffersDataLoadingStatus || isOfferByIdDataLoadingStatus || isReviewsDataLoadingStatus) {
+    return <LoadingScreen />;
+  }
+
   if (offer === undefined) {
     return <Navigate to={AppRoute.Error} />;
   }
 
-  const currentPreviewOffer = offers.find((previewOffer) => previewOffer.id === offer.id) || [];
+  const currentPreviewOffer = offers.find((previewOffer) => previewOffer.id === offer.id);
   const threeNearOffers = getRandomNearOffers();
-
-  if (navigation.state === 'loading') {
-    return <LoadingScreen />;
-  }
 
   return (
     <div className="page">
