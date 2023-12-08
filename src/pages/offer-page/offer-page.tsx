@@ -54,9 +54,9 @@ function OfferPage() : React.JSX.Element {
 
   function limitReviewsItems(fullReviewsList: Review[]) {
     if (fullReviewsList.length <= 10) {
-      return fullReviewsList;
+      return [...fullReviewsList].sort((a: Review, b: Review) => new Date(b.date).getTime() - new Date(a.date).getTime());
     } else {
-      return [...fullReviewsList].reverse().slice(0, 10);
+      return [...fullReviewsList].sort((a: Review, b: Review) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 10);
     }
   }
 
