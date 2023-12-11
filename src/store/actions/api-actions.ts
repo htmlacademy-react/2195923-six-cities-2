@@ -107,7 +107,8 @@ export const getAuthorizationStatusAction = createAsyncThunk<void, undefined, {
   async (_arg, {dispatch, extra: api}) => {
     try {
       dispatch(setAuthorizationLoadingStatus(true));
-      await api.get<UserData>(APIRoute.Login);
+      const {data} = await api.get<UserData>(APIRoute.Login);
+      dispatch(setUserData(data));
       dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
     } catch {
       dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
