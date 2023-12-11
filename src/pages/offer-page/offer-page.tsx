@@ -5,7 +5,7 @@ import Map from '../../components/map/map';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
 import ReviewList from '../../components/review-list/review-list';
 import ReviewsForm from '../../components/reviews-form/reviews-form';
-import { AuthorizationStatus, NUMBER_PERCENT_IN_ONE_STAR, PlaceCardType, MAX_COUNT_IMAGES_OFFERS } from '../../const';
+import { AuthorizationStatus, NUMBER_PERCENT_IN_ONE_STAR, PlaceCardType, MAX_COUNT_IMAGES_OFFERS, MAX_COMMENTS_COUNT } from '../../const';
 import { AppRoute } from '../../app-route';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { Review, UserReview } from '../../types/review';
@@ -49,10 +49,10 @@ function OfferPage() : React.JSX.Element {
   }
 
   function limitReviewsItems(fullReviewsList: Review[]) {
-    if (fullReviewsList.length <= 10) {
+    if (fullReviewsList.length <= MAX_COMMENTS_COUNT) {
       return [...fullReviewsList].sort((a: Review, b: Review) => new Date(b.date).getTime() - new Date(a.date).getTime());
     } else {
-      return [...fullReviewsList].sort((a: Review, b: Review) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 10);
+      return [...fullReviewsList].sort((a: Review, b: Review) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, MAX_COMMENTS_COUNT);
     }
   }
 
