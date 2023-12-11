@@ -9,6 +9,8 @@ export const PlaceCardType = {
 
 export const NUMBER_PERCENT_IN_ONE_STAR = 20;
 export const MAX_COUNT_IMAGES_OFFERS = 6;
+export const MIN_COMMENT_LENGTH = 50;
+export const MAX_COMMENT_LENGTH = 300;
 
 export const MapIconURL = {
   activeIcon: './../../public/img/pin-active.svg',

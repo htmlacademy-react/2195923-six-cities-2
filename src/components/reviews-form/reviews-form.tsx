@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import Rating from '../rating/rating';
 import { UserReview } from '../../types/review';
+import { MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH } from '../../const';
 
 type ReviewsFormProps = {
   onFormSubmit: (formData: UserReview) => void;
@@ -14,7 +15,7 @@ function ReviewsForm({onFormSubmit}: ReviewsFormProps) {
   });
 
   function isValidReview() {
-    if ((formData.comment.length >= 50 && formData.comment.length <= 300) &&
+    if ((formData.comment.length >= MIN_COMMENT_LENGTH && formData.comment.length <= MAX_COMMENT_LENGTH) &&
         formData.rating > 0
     ) {
       return false;
