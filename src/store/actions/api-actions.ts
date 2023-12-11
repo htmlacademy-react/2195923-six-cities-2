@@ -19,10 +19,13 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
 }>(
   'data/fetchOffers',
   async (_arg, {dispatch, extra: api}) => {
-    dispatch(setOffersDataLoadingStatus(true));
-    const {data} = await api.get<PreviewOffer[]>(APIRoute.Offers);
-    dispatch(loadOffers(data));
-    dispatch(setOffersDataLoadingStatus(false));
+    try {
+      dispatch(setOffersDataLoadingStatus(true));
+      const {data} = await api.get<PreviewOffer[]>(APIRoute.Offers);
+      dispatch(loadOffers(data));
+    } finally {
+      dispatch(setOffersDataLoadingStatus(false));
+    }
   },
 );
 
@@ -33,10 +36,13 @@ export const loadOfferByIDAction = createAsyncThunk<void, string, {
 }>(
   'data/getOfferByID',
   async (id, {dispatch, extra: api}) => {
-    dispatch(setOfferByIdDataLoadingStatus(true));
-    const {data} = await api.get<FullOffer>(`${APIRoute.Offers}/${id}`);
-    dispatch(loadOfferByID(data));
-    dispatch(setOfferByIdDataLoadingStatus(false));
+    try {
+      dispatch(setOfferByIdDataLoadingStatus(true));
+      const {data} = await api.get<FullOffer>(`${APIRoute.Offers}/${id}`);
+      dispatch(loadOfferByID(data));
+    } finally {
+      dispatch(setOfferByIdDataLoadingStatus(false));
+    }
   },
 );
 
@@ -47,10 +53,13 @@ export const loadNearbyOffersAction = createAsyncThunk<void, string, {
 }>(
   'data/getNearbyOffers',
   async (id, {dispatch, extra: api}) => {
-    dispatch(setNearByOffersDataLoadingStatus(true));
-    const {data} = await api.get<PreviewOffer[]>(`${APIRoute.Offers}/${id}/nearby`);
-    dispatch(loadNearbyOffers(data));
-    dispatch(setNearByOffersDataLoadingStatus(false));
+    try {
+      dispatch(setNearByOffersDataLoadingStatus(true));
+      const {data} = await api.get<PreviewOffer[]>(`${APIRoute.Offers}/${id}/nearby`);
+      dispatch(loadNearbyOffers(data));
+    } finally {
+      dispatch(setNearByOffersDataLoadingStatus(false));
+    }
   }
 );
 
@@ -61,10 +70,13 @@ export const loadReviewsAction = createAsyncThunk<void, string, {
 }>(
   'data/getReviews',
   async (id, {dispatch, extra: api}) => {
-    dispatch(setReviewsDataLoadingStatus(true));
-    const {data} = await api.get<Review[]>(`${APIRoute.Reviews}/${id}`);
-    dispatch(loadReviews(data));
-    dispatch(setReviewsDataLoadingStatus(false));
+    try {
+      dispatch(setReviewsDataLoadingStatus(true));
+      const {data} = await api.get<Review[]>(`${APIRoute.Reviews}/${id}`);
+      dispatch(loadReviews(data));
+    } finally {
+      dispatch(setReviewsDataLoadingStatus(false));
+    }
   }
 );
 

@@ -12,14 +12,13 @@ import { Review, UserReview } from '../../types/review';
 import { store } from '../../store/stores';
 import { createReviewAction, loadNearbyOffersAction, loadOfferByIDAction, loadReviewsAction } from '../../store/actions/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
-import { useState } from 'react';
+import { useEffect } from 'react';
 
 function OfferPage() : React.JSX.Element {
   const {id} = useParams();
-  const [isLoading, setIsLoading] = useState(true);
   const cityName = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
-  const offer = useAppSelector((state) => state.fullOffers);
+  const offer = useAppSelector((state) => state.fullOffer);
   const reviews = useAppSelector((state) => state.reviews);
   const nearOffers = useAppSelector((state) => state.nearbyOffers);
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
@@ -27,14 +26,11 @@ function OfferPage() : React.JSX.Element {
   const isOfferByIdDataLoadingStatus = useAppSelector((state) => state.isOfferByIdDataLoading);
   const isReviewsDataLoadingStatus = useAppSelector((state) => state.isReviewsDataLoading);
 
-  if (isLoading) {
-    Promise.all([
-      store.dispatch(loadOfferByIDAction(id as string)),
-      store.dispatch(loadNearbyOffersAction(id as string)),
-      store.dispatch(loadReviewsAction(id as string))
-    ]);
-    setIsLoading(false);
-  }
+  useEffect(() => {
+    store.dispatch(loadOfferByIDAction(id as string));
+    store.dispatch(loadNearbyOffersAction(id as string));
+    store.dispatch(loadReviewsAction(id as string));
+  }, [id]);
 
   function generatePhotos(images: string[]) {
     return Array.from({length: images.length > MAX_COUNT_IMAGES_OFFERS ? MAX_COUNT_IMAGES_OFFERS : images.length}, (_, index: number) => (

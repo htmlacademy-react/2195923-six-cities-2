@@ -5,7 +5,7 @@ import { UserData } from './user-data';
 
 export type InitialState = {
   city: CityName;
-  fullOffers: FullOffer;
+  fullOffer: FullOffer | undefined;
   offers: PreviewOffer[];
   nearbyOffers: PreviewOffer[];
   reviews: Review[];

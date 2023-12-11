@@ -7,7 +7,7 @@ import { AuthorizationStatus, Cities } from '../../const';
 const initialState: InitialState = {
   city: 'Paris',
   offers: [],
-  fullOffers: [],
+  fullOffer: undefined,
   nearbyOffers: [],
   reviews: [],
   authorizationStatus: AuthorizationStatus.Unknown,
@@ -37,7 +37,7 @@ export const reducer = createReducer(initialState, (builder) => {
       state.offers = action.payload;
     })
     .addCase(loadOfferByID, (state, action) => {
-      state.fullOffers = action.payload;
+      state.fullOffer = action.payload;
     })
     .addCase(loadNearbyOffers, (state, action) => {
       state.nearbyOffers = action.payload;
