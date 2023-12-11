@@ -26,12 +26,10 @@ function ReviewsForm({onFormSubmit}: ReviewsFormProps) {
 
   const handleRatingChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({...formData, rating: Number.parseInt(evt.target.value, 10)});
-    isValidReview();
   };
 
   const handleReviewChange = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
     setFormData({...formData, comment: evt.target.value});
-    isValidReview();
   };
 
   const handleFormSubmit = (evt: React.FormEvent) => {
