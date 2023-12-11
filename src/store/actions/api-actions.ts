@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { AppDispatch, State } from '../../types/state';
 import { FullOffer, PreviewOffer } from '../../types/offer';
 import { APIRoute, AuthorizationStatus } from '../../const';
-import { loadOffers, loadOfferByID, redirectToRoute, setAuthorizationStatus, loadNearbyOffers, loadReviews, addReview, setOfferByIdDataLoadingStatus, setNearByOffersDataLoadingStatus, setReviewsDataLoadingStatus } from './action';
+import { loadOffers, loadOfferByID, redirectToRoute, setAuthorizationStatus, loadNearbyOffers, loadReviews, addReview, setOfferByIdDataLoadingStatus, setNearByOffersDataLoadingStatus, setReviewsDataLoadingStatus, setUserData } from './action';
 import { setAuthorizationLoadingStatus, setOffersDataLoadingStatus } from './action';
 import { UserData } from '../../types/user-data';
 import { dropToken, saveToken } from '../../services/token';
@@ -126,6 +126,7 @@ export const loginAction = createAsyncThunk<void, AuthData, {
   async ({email, password}, {dispatch, extra: api}) => {
     const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
     saveToken(data.token);
+    dispatch(setUserData(data));
     dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
     dispatch(redirectToRoute(AppRoute.Main));
   },
