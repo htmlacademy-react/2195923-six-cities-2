@@ -1,6 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
 import { CityName, FullOffer, PreviewOffer } from '../../types/offer';
-import { AuthorizationStatus } from '../../const';
 import { UserData } from '../../types/user-data';
 import { Review } from '../../types/review';
 
@@ -16,8 +15,6 @@ export const loadReviews = createAction<Review[]>('data/loadReviews');
 
 export const addReview = createAction<Review>('data/addReview');
 
-export const setAuthorizationStatus = createAction<AuthorizationStatus>('data/setAuthorizationStatus');
-
 export const setOffersDataLoadingStatus = createAction<boolean>('data/setOfferDataLoadingStatus');
 
 export const setAuthorizationLoadingStatus = createAction<boolean>('data/setAuthorizationLoadingStatus');
@@ -31,4 +28,3 @@ export const setReviewsDataLoadingStatus = createAction<boolean>('data/setReview
 export const setUserData = createAction<UserData>('data/setUser');
 
 export const redirectToRoute = createAction<string>('city/redirectToRoute');
-

@@ -3,8 +3,8 @@ import { AxiosInstance } from 'axios';
 import { toast } from 'react-toastify';
 import { AppDispatch, State } from '../../types/state';
 import { FullOffer, PreviewOffer } from '../../types/offer';
-import { APIRoute, AuthorizationStatus } from '../../const';
-import { loadOffers, loadOfferByID, redirectToRoute, setAuthorizationStatus, loadNearbyOffers, loadReviews, addReview, setOfferByIdDataLoadingStatus, setNearByOffersDataLoadingStatus, setReviewsDataLoadingStatus, setUserData } from './action';
+import { APIRoute } from '../../const';
+import { loadOffers, loadOfferByID, redirectToRoute, loadNearbyOffers, loadReviews, addReview, setOfferByIdDataLoadingStatus, setNearByOffersDataLoadingStatus, setReviewsDataLoadingStatus, setUserData } from './action';
 import { setAuthorizationLoadingStatus, setOffersDataLoadingStatus } from './action';
 import { UserData } from '../../types/user-data';
 import { dropToken, saveToken } from '../../services/token';
@@ -109,9 +109,6 @@ export const getAuthorizationStatusAction = createAsyncThunk<void, undefined, {
       dispatch(setAuthorizationLoadingStatus(true));
       const {data} = await api.get<UserData>(APIRoute.Login);
       dispatch(setUserData(data));
-      dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
-    } catch {
-      dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
     } finally {
       dispatch(setAuthorizationLoadingStatus(false));
     }
@@ -128,7 +125,6 @@ export const loginAction = createAsyncThunk<void, AuthData, {
     const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
     saveToken(data.token);
     dispatch(setUserData(data));
-    dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
     dispatch(redirectToRoute(AppRoute.Main));
   },
 );
@@ -142,7 +138,6 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   async (_arg, {dispatch, extra: api}) => {
     await api.delete(APIRoute.Logout);
     dropToken();
-    dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
     dispatch(redirectToRoute(AppRoute.Main));
   },
 );

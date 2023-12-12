@@ -110,3 +110,9 @@ export enum RatingLabel {
   Terribly = 'terribly',
 }
 
+export enum NameSpace {
+  User = 'USER',
+  Offer = 'OFFER',
+  Review = 'REVIEW'
+}
+

@@ -1,8 +1,8 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { InitialState } from '../../types/initial-state';
-import { addReview, changeCity, loadNearbyOffers, loadOfferByID, loadOffers, loadReviews, setAuthorizationStatus, setNearByOffersDataLoadingStatus, setOfferByIdDataLoadingStatus, setReviewsDataLoadingStatus, setUserData } from '../actions/action';
+import { addReview, changeCity, loadNearbyOffers, loadOfferByID, loadOffers, loadReviews, setNearByOffersDataLoadingStatus, setOfferByIdDataLoadingStatus, setReviewsDataLoadingStatus, setUserData } from '../actions/action';
 import { setAuthorizationLoadingStatus, setOffersDataLoadingStatus } from '../actions/action';
-import { AuthorizationStatus, Cities } from '../../const';
+import { Cities } from '../../const';
 
 const initialState: InitialState = {
   city: 'Paris',
@@ -10,7 +10,6 @@ const initialState: InitialState = {
   fullOffer: undefined,
   nearbyOffers: [],
   reviews: [],
-  authorizationStatus: AuthorizationStatus.Unknown,
   userData: {
     name: '',
     avatarUrl: '',
@@ -47,9 +46,6 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(addReview, (state, action) => {
       state.reviews.push(action.payload);
-    })
-    .addCase(setAuthorizationStatus, (state, action) => {
-      state.authorizationStatus = action.payload;
     })
     .addCase(setOffersDataLoadingStatus, (state, action) => {
       state.isOffersDataLoading = action.payload;
