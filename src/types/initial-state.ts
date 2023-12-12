@@ -1,12 +1,19 @@
 import { AuthorizationStatus } from '../const';
-import { CityName, PreviewOffer } from './offer';
+import { CityName, FullOffer, PreviewOffer } from './offer';
+import { Review } from './review';
 import { UserData } from './user-data';
 
 export type InitialState = {
   city: CityName;
+  fullOffer: FullOffer | undefined;
   offers: PreviewOffer[];
-  isOffersDataLoading: boolean;
+  nearbyOffers: PreviewOffer[];
+  reviews: Review[];
   authorizationStatus: AuthorizationStatus;
-  isAuthorizationStatusLoading: boolean;
   userData: UserData;
+  isOffersDataLoading: boolean;
+  isAuthorizationStatusLoading: boolean;
+  isNearByOffersDataLoading: boolean;
+  isOfferByIdDataLoading: boolean;
+  isReviewsDataLoading: boolean;
 };

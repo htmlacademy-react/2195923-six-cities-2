@@ -5,8 +5,6 @@ import { ToastContainer } from 'react-toastify';
 import App from './components/app/app';
 import 'react-toastify/dist/ReactToastify.css';
 import { store } from './store/stores';
-import { fullOffers, previewOffers } from './mocks/offers';
-import { reviews } from './mocks/reviews';
 import { fetchOffersAction } from './store/actions/api-actions';
 import { getAuthorizationStatusAction } from './store/actions/api-actions';
 
@@ -21,11 +19,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <ToastContainer />
-      <App
-        fullOffers = {fullOffers}
-        previewOffers={previewOffers}
-        reviews = {reviews}
-      />
+      <App/>
     </Provider>
   </React.StrictMode>
 );

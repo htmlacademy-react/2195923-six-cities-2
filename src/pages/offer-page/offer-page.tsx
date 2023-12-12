@@ -1,41 +1,39 @@
-import { useState } from 'react';
-import { Navigate} from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header/header';
 import Map from '../../components/map/map';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
 import ReviewList from '../../components/review-list/review-list';
 import ReviewsForm from '../../components/reviews-form/reviews-form';
-import { FullOffer, PreviewOffer } from '../../types/offer';
-import { Review } from '../../types/review';
-import { NUMBER_PERCENT_IN_ONE_STAR, PlaceCardType } from '../../const';
+import { AuthorizationStatus, NUMBER_PERCENT_IN_ONE_STAR, PlaceCardType, MAX_COUNT_IMAGES_OFFERS, MAX_COMMENTS_COUNT } from '../../const';
 import { AppRoute } from '../../app-route';
+import { useAppSelector } from '../../hooks/use-app-selector';
+import { Review, UserReview } from '../../types/review';
+import { store } from '../../store/stores';
+import { createReviewAction, loadNearbyOffersAction, loadOfferByIDAction, loadReviewsAction } from '../../store/actions/api-actions';
+import LoadingScreen from '../loading-screen/loading-screen';
+import { useEffect } from 'react';
 
+function OfferPage() : React.JSX.Element {
+  const {id} = useParams();
+  const cityName = useAppSelector((state) => state.city);
+  const offers = useAppSelector((state) => state.offers);
+  const offer = useAppSelector((state) => state.fullOffer);
+  const reviews = useAppSelector((state) => state.reviews);
+  const nearOffers = useAppSelector((state) => state.nearbyOffers);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const isNearByOffersDataLoadingStatus = useAppSelector((state) => state.isNearByOffersDataLoading);
+  const isOfferByIdDataLoadingStatus = useAppSelector((state) => state.isOfferByIdDataLoading);
+  const isReviewsDataLoadingStatus = useAppSelector((state) => state.isReviewsDataLoading);
 
-type OfferPageProps = {
-  offer: FullOffer;
-  nearOffers: PreviewOffer[];
-  reviews: Review[];
-}
-
-function OfferPage({offer, nearOffers, reviews} : OfferPageProps) : React.JSX.Element {
-  const [activeCard, setActiveCard] = useState(' ');
-
-  const handlePlaceCardMouseEnter = (evt : React.MouseEvent) => {
-    evt.preventDefault();
-    const id = evt.currentTarget.getAttribute('data-id');
-    if (id !== null) {
-      setActiveCard(id);
-    }
-  };
-
-  const handlePlaceCardMouseLeave = (evt : React.MouseEvent) => {
-    evt.preventDefault();
-    setActiveCard(' ');
-  };
+  useEffect(() => {
+    store.dispatch(loadOfferByIDAction(id as string));
+    store.dispatch(loadNearbyOffersAction(id as string));
+    store.dispatch(loadReviewsAction(id as string));
+  }, [id]);
 
   function generatePhotos(images: string[]) {
-    return Array.from({length: images.length}, (_, index: number) => (
+    return Array.from({length: images.length > MAX_COUNT_IMAGES_OFFERS ? MAX_COUNT_IMAGES_OFFERS : images.length}, (_, index: number) => (
       <div className="offer__image-wrapper" key={index}>
         <img className="offer__image" src={images[index]} alt="Photo studio" />
       </div>
@@ -50,18 +48,44 @@ function OfferPage({offer, nearOffers, reviews} : OfferPageProps) : React.JSX.El
     ));
   }
 
+  function limitReviewsItems(fullReviewsList: Review[]) {
+    if (fullReviewsList.length <= MAX_COMMENTS_COUNT) {
+      return [...fullReviewsList].sort((a: Review, b: Review) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    } else {
+      return [...fullReviewsList].sort((a: Review, b: Review) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, MAX_COMMENTS_COUNT);
+    }
+  }
+
+  function getRandomNearOffers() {
+    const temp = [...nearOffers];
+    const randomNearOffers = [];
+    for (let i = 0; i < 3; i++) {
+      randomNearOffers.push(temp.splice(Math.random() * temp.length, 1)[0]);
+    }
+    return randomNearOffers;
+  }
+
+  const handleFormSubmit = (formData: UserReview) => {
+    store.dispatch(createReviewAction({userReview: formData, id: id as string}));
+  };
+
+  if (isNearByOffersDataLoadingStatus || isOfferByIdDataLoadingStatus || isReviewsDataLoadingStatus) {
+    return <LoadingScreen />;
+  }
+
   if (offer === undefined) {
     return <Navigate to={AppRoute.Error} />;
   }
 
-  const threeNearOffers = [nearOffers[0], nearOffers[1], nearOffers[2]];
+  const currentPreviewOffer = offers.find((previewOffer) => previewOffer.id === offer.id) || [];
+  const threeNearOffers = getRandomNearOffers();
 
   return (
     <div className="page">
       <Helmet>
         <title>6 Cities: Offer</title>
       </Helmet>
-      <Header isNavRequired isAuth={false}/>
+      <Header isNavRequired isAuth={authorizationStatus}/>
       <main className="page__main page__main--offer">
         <section className="offer">
           <div className="offer__gallery-container container">
@@ -130,26 +154,23 @@ function OfferPage({offer, nearOffers, reviews} : OfferPageProps) : React.JSX.El
                 </div>
                 <div className="offer__description">
                   <p className="offer__text">
-                    A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                  </p>
-                  <p className="offer__text">
-                    An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
+                    {offer.description}
                   </p>
                 </div>
               </div>
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                <ReviewList reviews={reviews} />
-                <ReviewsForm />
+                <ReviewList reviews={limitReviewsItems(reviews)} />
+                {authorizationStatus === AuthorizationStatus.Auth && <ReviewsForm onFormSubmit={handleFormSubmit}/>}
               </section>
             </div>
           </div>
-          <Map offers={threeNearOffers} type={'offer'} activeCard={activeCard} />
+          <Map cityName={cityName} offers={threeNearOffers.concat(currentPreviewOffer)} type={'offer'} activeCard={offer.id} />
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <PlaceCardList offers={threeNearOffers} type={PlaceCardType.Near} onMouseEnter={handlePlaceCardMouseEnter} onMouseLeave={handlePlaceCardMouseLeave}/>
+            <PlaceCardList offers={threeNearOffers} type={PlaceCardType.Near} />
           </section>
         </div>
       </main>

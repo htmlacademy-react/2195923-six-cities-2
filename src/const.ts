@@ -1,20 +1,24 @@
 import { City, PreviewOffer } from './types/offer';
 import { Sorting } from './types/sorting';
 
-const PlaceCardType = {
+export const PlaceCardType = {
   Favorite: 'favorites',
   City: 'cities',
   Near: 'near-places'
 };
 
-const NUMBER_PERCENT_IN_ONE_STAR = 20;
+export const NUMBER_PERCENT_IN_ONE_STAR = 20;
+export const MAX_COUNT_IMAGES_OFFERS = 6;
+export const MIN_COMMENT_LENGTH = 50;
+export const MAX_COMMENT_LENGTH = 300;
+export const MAX_COMMENTS_COUNT = 10;
 
-const MapIconURL = {
+export const MapIconURL = {
   activeIcon: './../../public/img/pin-active.svg',
   passiveIcon: './../../public/img/pin.svg',
 };
 
-const Cities: City[] = [
+export const Cities: City[] = [
   {
     name: 'Paris',
     location: {
@@ -65,7 +69,7 @@ const Cities: City[] = [
   },
 ];
 
-const SortingType: Sorting = {
+export const SortingType: Sorting = {
   POPULAR: {
     message:  'Popular',
     algorithm: () => 1,
@@ -87,6 +91,7 @@ const SortingType: Sorting = {
 export enum APIRoute {
   Offers = '/offers',
   Login = '/login',
+  Reviews = '/comments',
   Logout = 'logout',
 }
 
@@ -96,10 +101,12 @@ export enum AuthorizationStatus {
   NoAuth = 'NoAuth',
 }
 
-export {
-  PlaceCardType,
-  NUMBER_PERCENT_IN_ONE_STAR,
-  MapIconURL,
-  Cities,
-  SortingType,
-};
+
+export enum RatingLabel {
+  Perfect = 'perfect',
+  Good = 'good',
+  NotBad = 'not bad',
+  Badly = 'badly',
+  Terribly = 'terribly',
+}
+

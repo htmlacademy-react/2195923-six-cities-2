@@ -8,23 +8,16 @@ import OfferPage from '../../pages/offer-page/offer-page';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import PrivateRoute from '../private/private-route';
 import { AppRoute } from '../../app-route';
-import { FullOffer, PreviewOffer } from '../../types/offer';
-import { Review } from '../../types/review';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 
-type AppProps = {
-  fullOffers: FullOffer[];
-  previewOffers: PreviewOffer[];
-  reviews: Review[];
-}
-
-function App({fullOffers, previewOffers, reviews} : AppProps) : React.JSX.Element {
+function App() : React.JSX.Element {
   const isOffersDataLoadingStatus = useAppSelector((state) => state.isOffersDataLoading);
   const isAuthorizationLoadingStatus = useAppSelector((state) => state.isAuthorizationStatusLoading);
 
-  if (isOffersDataLoadingStatus || isAuthorizationLoadingStatus) {
+  if (isOffersDataLoadingStatus ||
+    isAuthorizationLoadingStatus) {
     return <LoadingScreen />;
   }
 
@@ -37,7 +30,7 @@ function App({fullOffers, previewOffers, reviews} : AppProps) : React.JSX.Elemen
           <Route path={AppRoute.Favorite} element={<PrivateRoute><FavoritesPage /></PrivateRoute>} />
           <Route
             path={`${AppRoute.Offer}/:id`}
-            element={<OfferPage offer={fullOffers[0]} nearOffers={previewOffers} reviews={reviews} />}
+            element={<OfferPage />}
           />
           <Route path={AppRoute.Error} element={<NotFoundPage />} />
         </Routes>
@@ -47,3 +40,4 @@ function App({fullOffers, previewOffers, reviews} : AppProps) : React.JSX.Elemen
 }
 
 export default App;
+
