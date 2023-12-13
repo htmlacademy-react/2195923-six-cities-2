@@ -24,11 +24,12 @@ function PlaceCard({offer, type, onMouseEnter, onMouseLeave} : OfferProps): Reac
   const navigate = useNavigate();
 
   const handleFavoriteButtonClick = () => {
-    if (authStatus === AuthorizationStatus.Auth) {
-      store.dispatch(changeFavoriteStatusAction({id: offer.id, favoriteStatus: Number(!offer.isFavorite)}));
-      dispatch(changeFavoriteStatus(offer.id));
+    if (authStatus === AuthorizationStatus.NoAuth) {
+      navigate(AppRoute.Login);
+      return;
     }
-    navigate(AppRoute.Login);
+    store.dispatch(changeFavoriteStatusAction({id: offer.id, favoriteStatus: Number(!offer.isFavorite)}));
+    dispatch(changeFavoriteStatus(offer.id));
   };
 
   return (
