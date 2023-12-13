@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { OfferData } from '../../types/state';
 import { fetchOffersAction, loadNearbyOffersAction, loadOfferByIDAction } from '../actions/api-actions';
@@ -7,6 +7,7 @@ const initialState: OfferData = {
   offers: [],
   fullOffer: undefined,
   nearbyOffers: [],
+  activeCard: '',
   isOffersDataLoading: true,
   isNearByOffersDataLoading: true,
   isOfferByIdDataLoading: true,
@@ -15,7 +16,11 @@ const initialState: OfferData = {
 export const offerData = createSlice({
   name: NameSpace.Offer,
   initialState,
-  reducers: {},
+  reducers: {
+    changeActiveCard: (state, action: PayloadAction<string>) => {
+      state.activeCard = action.payload;
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchOffersAction.pending, (state) => {
@@ -50,3 +55,5 @@ export const offerData = createSlice({
       });
   }
 });
+
+export const { changeActiveCard } = offerData.actions;

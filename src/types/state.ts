@@ -14,6 +14,7 @@ export type OfferData = {
   fullOffer: FullOffer | undefined;
   offers: PreviewOffer[];
   nearbyOffers: PreviewOffer[];
+  activeCard: string;
   isOffersDataLoading: boolean;
   isNearByOffersDataLoading: boolean;
   isOfferByIdDataLoading: boolean;
