@@ -1,13 +1,15 @@
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
 import { PreviewOffer } from '../../types/offer';
-import { PlaceCardType } from '../../const';
+import { AuthorizationStatus, PlaceCardType } from '../../const';
 import { NUMBER_PERCENT_IN_ONE_STAR } from '../../const';
 import { AppRoute } from '../../app-route';
 import { store } from '../../store/stores';
 import { changeFavoriteStatusAction } from '../../store/actions/api-actions';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { changeFavoriteStatus } from '../../store/offer-data/offer-data.slice';
+import { useAppSelector } from '../../hooks/use-app-selector';
+import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
 
 type OfferProps = {
   offer: PreviewOffer;
@@ -17,11 +19,16 @@ type OfferProps = {
 };
 
 function PlaceCard({offer, type, onMouseEnter, onMouseLeave} : OfferProps): React.JSX.Element {
+  const authStatus = useAppSelector(getAuthorizationStatus);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleFavoriteButtonClick = () => {
-    store.dispatch(changeFavoriteStatusAction({id: offer.id, favoriteStatus: Number(!offer.isFavorite)}));
-    dispatch(changeFavoriteStatus(offer.id));
+    if (authStatus === AuthorizationStatus.Auth) {
+      store.dispatch(changeFavoriteStatusAction({id: offer.id, favoriteStatus: Number(!offer.isFavorite)}));
+      dispatch(changeFavoriteStatus(offer.id));
+    }
+    navigate(AppRoute.Login);
   };
 
   return (
