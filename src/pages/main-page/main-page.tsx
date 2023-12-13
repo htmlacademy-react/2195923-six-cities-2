@@ -9,13 +9,16 @@ import CitiesList from '../../components/cities-list/cities-list';
 import Sorting from '../../components/sorting/sorting';
 import { PlaceCardType, SortingType } from '../../const';
 import { CityName} from '../../types/offer';
-import { changeCity } from '../../store/actions/action';
 import { SortingType as TSortingType } from '../../types/sorting';
+import { getCity } from '../../store/city-process/city-process.selectors';
+import { getOffers } from '../../store/offer-data/offer-data.selectors';
+import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
+import { changeCity } from '../../store/city-process/city-process.slice';
 
 function MainPage() : React.JSX.Element {
-  const cityName = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.offers);
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const cityName = useAppSelector(getCity);
+  const offers = useAppSelector(getOffers);
+  const authStatus = useAppSelector(getAuthorizationStatus);
   const dispatch = useAppDispatch();
 
   const [activeCard, setActiveCard] = useState(' ');
@@ -88,3 +91,4 @@ function MainPage() : React.JSX.Element {
 }
 
 export default MainPage;
+

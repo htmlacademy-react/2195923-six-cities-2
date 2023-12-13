@@ -13,18 +13,22 @@ import { store } from '../../store/stores';
 import { createReviewAction, loadNearbyOffersAction, loadOfferByIDAction, loadReviewsAction } from '../../store/actions/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { useEffect } from 'react';
+import { getCity } from '../../store/city-process/city-process.selectors';
+import { getFullOffer, getNearByOffersDataLoading, getNearbyOffers, getOfferByIdDataLoading, getOffers } from '../../store/offer-data/offer-data.selectors';
+import { getReviews, getReviewsDataLoading } from '../../store/review-data/review-data.selectors';
+import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
 
 function OfferPage() : React.JSX.Element {
   const {id} = useParams();
-  const cityName = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.offers);
-  const offer = useAppSelector((state) => state.fullOffer);
-  const reviews = useAppSelector((state) => state.reviews);
-  const nearOffers = useAppSelector((state) => state.nearbyOffers);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const isNearByOffersDataLoadingStatus = useAppSelector((state) => state.isNearByOffersDataLoading);
-  const isOfferByIdDataLoadingStatus = useAppSelector((state) => state.isOfferByIdDataLoading);
-  const isReviewsDataLoadingStatus = useAppSelector((state) => state.isReviewsDataLoading);
+  const cityName = useAppSelector(getCity);
+  const offers = useAppSelector(getOffers);
+  const offer = useAppSelector(getFullOffer);
+  const reviews = useAppSelector(getReviews);
+  const nearOffers = useAppSelector(getNearbyOffers);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isNearByOffersDataLoadingStatus = useAppSelector(getNearByOffersDataLoading);
+  const isOfferByIdDataLoadingStatus = useAppSelector(getOfferByIdDataLoading);
+  const isReviewsDataLoadingStatus = useAppSelector(getReviewsDataLoading);
 
   useEffect(() => {
     store.dispatch(loadOfferByIDAction(id as string));

@@ -11,10 +11,12 @@ import { AppRoute } from '../../app-route';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
+import { getOffersDataLoading } from '../../store/offer-data/offer-data.selectors';
+import { getAuthorizationStatusLoading } from '../../store/user-process/user-process.selectors';
 
 function App() : React.JSX.Element {
-  const isOffersDataLoadingStatus = useAppSelector((state) => state.isOffersDataLoading);
-  const isAuthorizationLoadingStatus = useAppSelector((state) => state.isAuthorizationStatusLoading);
+  const isOffersDataLoadingStatus = useAppSelector(getOffersDataLoading);
+  const isAuthorizationLoadingStatus = useAppSelector(getAuthorizationStatusLoading);
 
   if (isOffersDataLoadingStatus ||
     isAuthorizationLoadingStatus) {

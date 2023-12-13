@@ -4,10 +4,12 @@ import { PreviewOffer } from '../../types/offer';
 import PlaceCard from '../../components/place-card/place-card';
 import { PlaceCardType } from '../../const';
 import { useAppSelector } from '../../hooks/use-app-selector';
+import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
+import { getOffers } from '../../store/offer-data/offer-data.selectors';
 
 function FavoritesPage() : React.JSX.Element {
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
-  const offers = useAppSelector((state) => state.offers).filter((offer : PreviewOffer) => offer.isFavorite);
+  const authStatus = useAppSelector(getAuthorizationStatus);
+  const offers = useAppSelector(getOffers).filter((offer : PreviewOffer) => offer.isFavorite);
 
   function renderFavoritePlaceListByCity(offersByCities: {[key: string]: PreviewOffer[]}, city: string) {
     const favoritePlaceListByCity : React.JSX.Element[] = [];

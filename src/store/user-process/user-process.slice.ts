@@ -5,6 +5,14 @@ import { loginAction, logoutAction, getAuthorizationStatusAction } from '../acti
 
 const initialState: UserProcess = {
   authorizationStatus: AuthorizationStatus.Unknown,
+  isAuthorizationStatusLoading: true,
+  userData: {
+    name: '',
+    avatarUrl: '',
+    isPro: false,
+    email: '',
+    token: ''
+  },
 };
 
 export const userProcess = createSlice({
@@ -13,14 +21,21 @@ export const userProcess = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(getAuthorizationStatusAction.fulfilled, (state) => {
+      .addCase(getAuthorizationStatusAction.pending, (state) => {
+        state.isAuthorizationStatusLoading = true;
+      })
+      .addCase(getAuthorizationStatusAction.fulfilled, (state, action) => {
         state.authorizationStatus = AuthorizationStatus.Auth;
+        state.isAuthorizationStatusLoading = false;
+        state.userData = action.payload;
       })
       .addCase(getAuthorizationStatusAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
+        state.isAuthorizationStatusLoading = false;
       })
-      .addCase(loginAction.fulfilled, (state) => {
+      .addCase(loginAction.fulfilled, (state, action) => {
         state.authorizationStatus = AuthorizationStatus.Auth;
+        state.userData = action.payload;
       })
       .addCase(logoutAction.fulfilled, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;

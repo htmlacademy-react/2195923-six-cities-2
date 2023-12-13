@@ -3,13 +3,14 @@ import Rating from '../rating/rating';
 import { UserReview } from '../../types/review';
 import { MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH } from '../../const';
 import { useAppSelector } from '../../hooks/use-app-selector';
+import { getReviews } from '../../store/review-data/review-data.selectors';
 
 type ReviewsFormProps = {
   onFormSubmit: (formData: UserReview) => void;
 }
 
 function ReviewsForm({onFormSubmit}: ReviewsFormProps) {
-  const reviews = useAppSelector((state) => state.reviews);
+  const reviews = useAppSelector(getReviews);
 
   const [formData, setFormData] = useState({
     comment: '',
