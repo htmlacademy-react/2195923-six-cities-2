@@ -17,7 +17,7 @@ import { getCity } from '../../store/city-process/city-process.selectors';
 import { getFullOffer, getNearByOffersDataLoading, getNearbyOffers, getOfferByIdDataLoading, getOffers } from '../../store/offer-data/offer-data.selectors';
 import { getReviews, getReviewsDataLoading } from '../../store/review-data/review-data.selectors';
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
-import { changeFavoriteStatus } from '../../store/offer-data/offer-data.slice';
+import { changeActiveCard, changeFavoriteStatus } from '../../store/offer-data/offer-data.slice';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 
 function OfferPage() : React.JSX.Element {
@@ -36,10 +36,13 @@ function OfferPage() : React.JSX.Element {
   const authStatus = useAppSelector(getAuthorizationStatus);
 
   useEffect(() => {
-    store.dispatch(loadOfferByIDAction(id as string));
-    store.dispatch(loadNearbyOffersAction(id as string));
-    store.dispatch(loadReviewsAction(id as string));
-  }, [id]);
+    if (id !== undefined) {
+      store.dispatch(loadOfferByIDAction(id));
+      store.dispatch(loadNearbyOffersAction(id));
+      store.dispatch(loadReviewsAction(id));
+      dispatch(changeActiveCard(id));
+    }
+  }, [dispatch, id]);
 
   function generatePhotos(images: string[]) {
     return Array.from({length: images.length > MAX_COUNT_IMAGES_OFFERS ? MAX_COUNT_IMAGES_OFFERS : images.length}, (_, index: number) => (

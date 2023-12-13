@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useAppSelector } from '../../hooks/use-app-selector';
@@ -39,6 +39,10 @@ function MainPage() : React.JSX.Element {
         return [...offersByCity];
     }
   }, [offersByCity, sortType]);
+
+  useEffect(() => {
+    dispatch(changeActiveCard(''));
+  });
 
   const handlePlaceCardMouseEnter = (evt : React.MouseEvent) => {
     evt.preventDefault();
