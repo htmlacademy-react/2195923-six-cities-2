@@ -10,4 +10,4 @@ export const getOffersDataLoading = (state: State): boolean => state[NameSpace.O
 export const getNearByOffersDataLoading = (state: State): boolean => state[NameSpace.Offer].isNearByOffersDataLoading;
 export const getOfferByIdDataLoading = (state: State): boolean => state[NameSpace.Offer].isOfferByIdDataLoading;
 export const getFavoriteOffersLoading = (state: State): boolean => state[NameSpace.Offer].isFavoriteOffersLoading;
-export const getFavotireOffers = (state: State): PreviewOffer[] => state[NameSpace.Offer].favoriteOffers;
+export const getFavoriteOffers = (state: State): PreviewOffer[] => state[NameSpace.Offer].favoriteOffers;
