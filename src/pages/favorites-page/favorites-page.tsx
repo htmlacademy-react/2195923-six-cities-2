@@ -5,11 +5,21 @@ import PlaceCard from '../../components/place-card/place-card';
 import { PlaceCardType } from '../../const';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
-import { getOffers } from '../../store/offer-data/offer-data.selectors';
+import { getFavoriteOffersLoading, getFavotireOffers, getOffers } from '../../store/offer-data/offer-data.selectors';
+import { store } from '../../store/stores';
+import { fetchFavoriteOffers } from '../../store/actions/api-actions';
+import { useEffect } from 'react';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 function FavoritesPage() : React.JSX.Element {
   const authStatus = useAppSelector(getAuthorizationStatus);
-  const offers = useAppSelector(getOffers).filter((offer : PreviewOffer) => offer.isFavorite);
+  const favoriteOffers = useAppSelector(getFavotireOffers);
+  const offers = useAppSelector(getOffers);
+  const isFavoriteOffersLoading = useAppSelector(getFavoriteOffersLoading);
+
+  useEffect(() => {
+    store.dispatch(fetchFavoriteOffers());
+  }, [offers]);
 
   function renderFavoritePlaceListByCity(offersByCities: {[key: string]: PreviewOffer[]}, city: string) {
     const favoritePlaceListByCity : React.JSX.Element[] = [];
@@ -41,13 +51,17 @@ function FavoritesPage() : React.JSX.Element {
     return favoriteList;
   }
 
-  const offersByCities = offers.reduce((group: {[key: string]: PreviewOffer[]}, offer) => {
+  const offersByCities = favoriteOffers.reduce((group: {[key: string]: PreviewOffer[]}, offer) => {
     if (!group[offer.city.name]) {
       group[offer.city.name] = [];
     }
     group[offer.city.name].push(offer);
     return group;
   }, {});
+
+  if (isFavoriteOffersLoading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <div className="page">

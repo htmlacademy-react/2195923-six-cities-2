@@ -47,12 +47,36 @@ export const loadNearbyOffersAction = createAsyncThunk<PreviewOffer[], string, {
   }
 );
 
+export const changeFavoriteStatusAction = createAsyncThunk<FullOffer, {id: string; favoriteStatus: number}, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'offerData/changeFavoriteStatus',
+  async ({id, favoriteStatus}, {extra: api}) => {
+    const {data} = await api.post<FullOffer>(`${APIRoute.Favorite}/${id}/${favoriteStatus}`);
+    return data;
+  }
+);
+
+export const fetchFavoriteOffers = createAsyncThunk<PreviewOffer[], undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'offerData/fetchFavotiteOffers',
+  async (_arg, {extra: api}) => {
+    const {data} = await api.get<PreviewOffer[]>(APIRoute.Favorite);
+    return data;
+  },
+);
+
 export const loadReviewsAction = createAsyncThunk<Review[], string, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
-  'data/getReviews',
+  'offerData/getReviews',
   async (id, {extra: api}) => {
     const {data} = await api.get<Review[]>(`${APIRoute.Reviews}/${id}`);
     return data;
@@ -64,7 +88,7 @@ export const createReviewAction = createAsyncThunk<Review, {userReview: UserRevi
   state: State;
   extra: AxiosInstance;
 }>(
-  'data/createReview',
+  'offerData/createReview',
   async ({userReview, id}, {extra: api}) => {
     try {
       const rating = userReview.rating;

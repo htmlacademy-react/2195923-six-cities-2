@@ -4,6 +4,10 @@ import { PreviewOffer } from '../../types/offer';
 import { PlaceCardType } from '../../const';
 import { NUMBER_PERCENT_IN_ONE_STAR } from '../../const';
 import { AppRoute } from '../../app-route';
+import { store } from '../../store/stores';
+import { changeFavoriteStatusAction } from '../../store/actions/api-actions';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
+import { changeFavoriteStatus } from '../../store/offer-data/offer-data.slice';
 
 type OfferProps = {
   offer: PreviewOffer;
@@ -13,6 +17,13 @@ type OfferProps = {
 };
 
 function PlaceCard({offer, type, onMouseEnter, onMouseLeave} : OfferProps): React.JSX.Element {
+  const dispatch = useAppDispatch();
+
+  const handleFavoriteButtonClick = () => {
+    store.dispatch(changeFavoriteStatusAction({id: offer.id, favoriteStatus: Number(!offer.isFavorite)}));
+    dispatch(changeFavoriteStatus(offer.id));
+  };
+
   return (
     <article className={`${type}__card place-card`} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} data-id={offer.id}>
       {offer.isPremium &&
@@ -30,7 +41,7 @@ function PlaceCard({offer, type, onMouseEnter, onMouseLeave} : OfferProps): Reac
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button ${offer.isFavorite ? 'place-card__bookmark-button--active' : ''} button`} type="button">
+          <button onClick={handleFavoriteButtonClick} className={`place-card__bookmark-button ${offer.isFavorite ? 'place-card__bookmark-button--active' : ''} button`} type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
