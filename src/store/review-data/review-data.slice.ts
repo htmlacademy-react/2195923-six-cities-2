@@ -6,6 +6,7 @@ import { ReviewData } from '../../types/state';
 const initialState: ReviewData = {
   reviews: [],
   isReviewsDataLoading: true,
+  isCreatingNewReview: false,
 };
 
 export const reviewData = createSlice({
@@ -24,8 +25,17 @@ export const reviewData = createSlice({
       .addCase(loadReviewsAction.rejected, (state) => {
         state.isReviewsDataLoading = false;
       })
+      .addCase(createReviewAction.pending, (state) => {
+        state.isCreatingNewReview = true;
+      })
       .addCase(createReviewAction.fulfilled, (state, action) => {
-        state.reviews.push(action.payload);
+        if (action.payload !== undefined) {
+          state.reviews.push(action.payload);
+        }
+        state.isCreatingNewReview = false;
+      })
+      .addCase(createReviewAction.rejected, (state) => {
+        state.isCreatingNewReview = false;
       });
   }
 });
