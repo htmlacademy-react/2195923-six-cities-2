@@ -25,7 +25,7 @@ function MainPage() : React.JSX.Element {
   const [sortType, setSortType] = useState<TSortingType>('POPULAR');
 
   const offersByCity = useMemo(() => offers.filter((offer) => offer.city.name === cityName), [cityName, offers]);
-  let sortingOffers = useMemo(() => {
+  const sortingOffers = useMemo(() => {
     switch(sortType) {
       case 'POPULAR':
         return [...offersByCity];

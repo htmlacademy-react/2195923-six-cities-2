@@ -5,7 +5,7 @@ import PlaceCard from '../../components/place-card/place-card';
 import { PlaceCardType } from '../../const';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
-import { getFavoriteOffersLoading, getFavoriteOffers, getOffers } from '../../store/offer-data/offer-data.selectors';
+import { getFavoriteOffersLoading, getFavoriteOffers } from '../../store/offer-data/offer-data.selectors';
 import { store } from '../../store/stores';
 import { fetchFavoriteOffers } from '../../store/actions/api-actions';
 import { useEffect } from 'react';
@@ -14,12 +14,11 @@ import LoadingScreen from '../loading-screen/loading-screen';
 function FavoritesPage() : React.JSX.Element {
   const authStatus = useAppSelector(getAuthorizationStatus);
   const favoriteOffers = useAppSelector(getFavoriteOffers);
-  const offers = useAppSelector(getOffers);
   const isFavoriteOffersLoading = useAppSelector(getFavoriteOffersLoading);
 
   useEffect(() => {
     store.dispatch(fetchFavoriteOffers());
-  }, [offers]);
+  }, []);
 
   function renderFavoritePlaceListByCity(offersByCities: {[key: string]: PreviewOffer[]}, city: string) {
     const favoritePlaceListByCity : React.JSX.Element[] = [];
