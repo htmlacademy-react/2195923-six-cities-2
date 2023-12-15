@@ -6,6 +6,7 @@ import { ReviewData } from '../../types/state';
 const initialState: ReviewData = {
   reviews: [],
   isReviewsDataLoading: true,
+  isCreatingNewReview: false,
 };
 
 export const reviewData = createSlice({
