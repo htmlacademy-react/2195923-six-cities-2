@@ -23,6 +23,7 @@ export type OfferData = {
 export type ReviewData = {
   reviews: Review[];
   isReviewsDataLoading: boolean;
+  isCreatingNewReview: boolean;
 }
 
 export type CityProcess = {
