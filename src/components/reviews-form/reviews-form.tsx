@@ -1,18 +1,28 @@
-import { useState } from 'react';
-import { toast } from 'react-toastify';
+import { useEffect, useState } from 'react';
 import Rating from '../rating/rating';
 import { UserReview } from '../../types/review';
 import { MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH } from '../../const';
+import { useAppSelector } from '../../hooks/use-app-selector';
+import { getReviews } from '../../store/review-data/review-data.selectors';
 
 type ReviewsFormProps = {
   onFormSubmit: (formData: UserReview) => void;
 }
 
 function ReviewsForm({onFormSubmit}: ReviewsFormProps) {
+  const reviews = useAppSelector(getReviews);
+
   const [formData, setFormData] = useState({
     comment: '',
     rating: 0,
   });
+
+  useEffect(() => {
+    setFormData({
+      comment: '',
+      rating: 0,
+    });
+  }, [reviews]);
 
   function isValidReview() {
     if ((formData.comment.length >= MIN_COMMENT_LENGTH && formData.comment.length <= MAX_COMMENT_LENGTH) &&
@@ -34,15 +44,7 @@ function ReviewsForm({onFormSubmit}: ReviewsFormProps) {
 
   const handleFormSubmit = (evt: React.FormEvent) => {
     evt.preventDefault();
-    try {
-      onFormSubmit(formData);
-      setFormData({
-        comment: '',
-        rating: 0,
-      });
-    } catch {
-      toast.warn('Не удалось сохранить комментарий');
-    }
+    onFormSubmit(formData);
   };
 
   return (

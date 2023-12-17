@@ -4,12 +4,13 @@ import { useRef, useEffect } from 'react';
 import { PreviewOffer, CityName, City } from '../../types/offer';
 import useMap from '../../hooks/use-map';
 import { MapIconURL, Cities } from '../../const';
+import { getActiveCard } from '../../store/offer-data/offer-data.selectors';
+import { useAppSelector } from '../../hooks/use-app-selector';
 
 type MapProps = {
   offers: PreviewOffer[];
   cityName: CityName;
   type: string;
-  activeCard?: string;
 }
 
 const passiveIcon = new Icon({
@@ -24,7 +25,8 @@ const activeIcon = new Icon({
   iconAnchor: [13.5, 39]
 });
 
-function Map({offers, cityName, type, activeCard} : MapProps) {
+function Map({offers, cityName, type} : MapProps) {
+  const activeCard = useAppSelector(getActiveCard);
   const cityLocation = (Cities.find((city) => city.name === cityName) as City).location;
 
   const mapRef = useRef(null);

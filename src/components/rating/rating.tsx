@@ -9,11 +9,11 @@ type RatingProps = {
 
 function Rating({rating, onChange} : RatingProps) : React.JSX.Element {
   function generateRatingList() {
-    return Object.entries(RatingLabel).map((label, index) => RatingItem({label, index, rating}));
+    return Object.entries(RatingLabel).map((label, index) => RatingItem({label, index, rating, onChange}));
   }
 
   return (
-    <div className="reviews__rating-form form__rating" onChange={onChange}>
+    <div className="reviews__rating-form form__rating">
       {generateRatingList()}
     </div>
   );

@@ -9,16 +9,19 @@ import CitiesList from '../../components/cities-list/cities-list';
 import Sorting from '../../components/sorting/sorting';
 import { PlaceCardType, SortingType } from '../../const';
 import { CityName} from '../../types/offer';
-import { changeCity } from '../../store/actions/action';
 import { SortingType as TSortingType } from '../../types/sorting';
+import { getCity } from '../../store/city-process/city-process.selectors';
+import { getOffers } from '../../store/offer-data/offer-data.selectors';
+import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
+import { changeCity } from '../../store/city-process/city-process.slice';
+import { changeActiveCard } from '../../store/offer-data/offer-data.slice';
 
 function MainPage() : React.JSX.Element {
-  const cityName = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.offers);
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const cityName = useAppSelector(getCity);
+  const offers = useAppSelector(getOffers);
+  const authStatus = useAppSelector(getAuthorizationStatus);
   const dispatch = useAppDispatch();
 
-  const [activeCard, setActiveCard] = useState(' ');
   const [sortType, setSortType] = useState<TSortingType>('POPULAR');
 
   const offersByCity = useMemo(() => offers.filter((offer) => offer.city.name === cityName), [cityName, offers]);
@@ -41,13 +44,13 @@ function MainPage() : React.JSX.Element {
     evt.preventDefault();
     const id = evt.currentTarget.getAttribute('data-id');
     if (id !== null) {
-      setActiveCard(id);
+      dispatch(changeActiveCard(id));
     }
   };
 
   const handlePlaceCardMouseLeave = (evt : React.MouseEvent) => {
     evt.preventDefault();
-    setActiveCard(' ');
+    dispatch(changeActiveCard(''));
   };
 
   const handleCityClick = (evt: React.MouseEvent) => {
@@ -78,7 +81,7 @@ function MainPage() : React.JSX.Element {
               <PlaceCardList offers={sortingOffers} type={PlaceCardType.City} onMouseEnter={handlePlaceCardMouseEnter} onMouseLeave={handlePlaceCardMouseLeave} />
             </section>
             <div className="cities__right-section">
-              <Map cityName={cityName} offers={sortingOffers} activeCard={activeCard} type={'cities'}/>
+              <Map cityName={cityName} offers={sortingOffers} type={'cities'}/>
             </div>
           </div>
         </div>
@@ -88,3 +91,4 @@ function MainPage() : React.JSX.Element {
 }
 
 export default MainPage;
+

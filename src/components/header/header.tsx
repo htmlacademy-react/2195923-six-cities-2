@@ -4,6 +4,7 @@ import { AuthorizationStatus } from '../../const';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { store } from '../../store/stores';
 import { logoutAction } from '../../store/actions/api-actions';
+import { getUserData } from '../../store/user-process/user-process.selectors';
 
 type HeaderProps = {
   isNavRequired: boolean;
@@ -11,7 +12,7 @@ type HeaderProps = {
 }
 
 function Header({isNavRequired, isAuth}: HeaderProps) : React.JSX.Element {
-  const userData = useAppSelector((state) => state.userData);
+  const userData = useAppSelector(getUserData);
 
   const onLogoutClick = () => {
     store.dispatch(logoutAction());

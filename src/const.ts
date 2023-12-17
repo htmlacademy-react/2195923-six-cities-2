@@ -1,4 +1,4 @@
-import { City, PreviewOffer } from './types/offer';
+import { City as TCity, PreviewOffer } from './types/offer';
 import { Sorting } from './types/sorting';
 
 export const PlaceCardType = {
@@ -18,7 +18,7 @@ export const MapIconURL = {
   passiveIcon: './../../public/img/pin.svg',
 };
 
-export const Cities: City[] = [
+export const Cities: TCity[] = [
   {
     name: 'Paris',
     location: {
@@ -108,5 +108,12 @@ export enum RatingLabel {
   NotBad = 'not bad',
   Badly = 'badly',
   Terribly = 'terribly',
+}
+
+export enum NameSpace {
+  User = 'USER',
+  Offer = 'OFFER',
+  Review = 'REVIEW',
+  City = 'CITY',
 }
 
