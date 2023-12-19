@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Rating from '../rating/rating';
 import { UserReview } from '../../types/review';
 import { MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH } from '../../const';
@@ -12,8 +12,6 @@ type ReviewsFormProps = {
 function ReviewsForm({onFormSubmit}: ReviewsFormProps) {
   const reviews = useAppSelector(getReviews);
   const isCreatingNewReview = useAppSelector(getIsCreatingNewReview);
-  const refFieldSet = useRef<HTMLFieldSetElement>(null);
-  const refForm = useRef<HTMLFormElement>(null);
 
   const [formData, setFormData] = useState({
     comment: '',
@@ -25,16 +23,7 @@ function ReviewsForm({onFormSubmit}: ReviewsFormProps) {
       comment: '',
       rating: 0,
     });
-    refForm.current?.reset();
   }, [reviews]);
-
-  useEffect(() => {
-    if (isCreatingNewReview) {
-      refFieldSet.current?.setAttribute('disabled', 'true');
-    } else {
-      refFieldSet.current?.removeAttribute('disabled');
-    }
-  }, [isCreatingNewReview]);
 
   function isValidReview() {
     if ((formData.comment.length >= MIN_COMMENT_LENGTH && formData.comment.length <= MAX_COMMENT_LENGTH) &&
@@ -60,8 +49,8 @@ function ReviewsForm({onFormSubmit}: ReviewsFormProps) {
   };
 
   return (
-    <form className="reviews__form form" action="#" method="post" onSubmit={handleFormSubmit} ref={refForm}>
-      <fieldset style={{padding: 0, borderStyle: 'none', margin: 0}} ref={refFieldSet}>
+    <form className="reviews__form form" action="#" method="post" onSubmit={handleFormSubmit}>
+      <fieldset style={{padding: 0, borderStyle: 'none', margin: 0}} disabled={isCreatingNewReview}>
         <label className="reviews__label form__label" htmlFor="review">Your review</label>
         <Rating rating={formData.rating} onChange={handleRatingChange}/>
         <textarea className="reviews__textarea form__textarea" id="review" name="review" value={formData.comment} onChange={handleReviewChange} placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
@@ -77,3 +66,4 @@ function ReviewsForm({onFormSubmit}: ReviewsFormProps) {
 }
 
 export default ReviewsForm;
+
