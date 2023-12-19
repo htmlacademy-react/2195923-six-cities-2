@@ -37,9 +37,9 @@ function OfferPage() : React.JSX.Element {
 
   useEffect(() => {
     if (id !== undefined) {
-      store.dispatch(loadOfferByIDAction(id));
-      store.dispatch(loadNearbyOffersAction(id));
-      store.dispatch(loadReviewsAction(id));
+      dispatch(loadOfferByIDAction(id));
+      dispatch(loadNearbyOffersAction(id));
+      dispatch(loadReviewsAction(id));
       dispatch(changeActiveCard(id));
     }
   }, [dispatch, id]);
@@ -78,7 +78,7 @@ function OfferPage() : React.JSX.Element {
   }
 
   const handleFormSubmit = (formData: UserReview) => {
-    store.dispatch(createReviewAction({userReview: formData, id: id as string}));
+    dispatch(createReviewAction({userReview: formData, id: id as string}));
   };
 
   const handleFavoriteButtonClick = () => {
@@ -87,7 +87,7 @@ function OfferPage() : React.JSX.Element {
       return;
     }
     if (offer !== undefined && id !== undefined) {
-      store.dispatch(changeFavoriteStatusAction({id: id, favoriteStatus: Number(!offer.isFavorite)}));
+      dispatch(changeFavoriteStatusAction({id: id, favoriteStatus: Number(!offer.isFavorite)}));
       dispatch(changeFavoriteStatus(id));
     }
   };

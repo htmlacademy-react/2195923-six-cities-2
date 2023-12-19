@@ -4,7 +4,6 @@ import { PreviewOffer } from '../../types/offer';
 import { AuthorizationStatus, PlaceCardType } from '../../const';
 import { NUMBER_PERCENT_IN_ONE_STAR } from '../../const';
 import { AppRoute } from '../../app-route';
-import { store } from '../../store/stores';
 import { changeFavoriteStatusAction } from '../../store/actions/api-actions';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { changeFavoriteStatus } from '../../store/offer-data/offer-data.slice';
@@ -28,7 +27,7 @@ function PlaceCard({offer, type, onMouseEnter, onMouseLeave} : OfferProps): Reac
       navigate(AppRoute.Login);
       return;
     }
-    store.dispatch(changeFavoriteStatusAction({id: offer.id, favoriteStatus: Number(!offer.isFavorite)}));
+    dispatch(changeFavoriteStatusAction({id: offer.id, favoriteStatus: Number(!offer.isFavorite)}));
     dispatch(changeFavoriteStatus(offer.id));
   };
 

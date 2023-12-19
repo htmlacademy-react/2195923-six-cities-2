@@ -2,19 +2,20 @@ import { Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header/header';
 import { AppRoute } from '../../app-route';
-import { store } from '../../store/stores';
 import { loginAction } from '../../store/actions/api-actions';
 import { AuthData } from '../../types/auth-data';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { AuthorizationStatus } from '../../const';
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
 import { useState } from 'react';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
 
 function LoginPage() : React.JSX.Element {
   const PASSWORD_PATTERN = /(?=.*[0-9])(?=.*[a-zA-Z])[0-9a-zA-Z]{2,}/;
   const EMAIL_PATTERN = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const dispatch = useAppDispatch();
   const [password, setPassword] = useState<string>();
   const [email, setEmail] = useState<string>();
 
@@ -29,7 +30,7 @@ function LoginPage() : React.JSX.Element {
         email: email,
         password: password
       };
-      store.dispatch(loginAction(authorizationData));
+      dispatch(loginAction(authorizationData));
     }
   };
 

@@ -6,19 +6,20 @@ import { PlaceCardType } from '../../const';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
 import { getFavoriteOffersLoading, getFavoriteOffers } from '../../store/offer-data/offer-data.selectors';
-import { store } from '../../store/stores';
 import { fetchFavoriteOffers } from '../../store/actions/api-actions';
 import { useEffect } from 'react';
 import LoadingScreen from '../loading-screen/loading-screen';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
 
 function FavoritesPage() : React.JSX.Element {
   const authStatus = useAppSelector(getAuthorizationStatus);
   const favoriteOffers = useAppSelector(getFavoriteOffers);
   const isFavoriteOffersLoading = useAppSelector(getFavoriteOffersLoading);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    store.dispatch(fetchFavoriteOffers());
-  }, []);
+    dispatch(fetchFavoriteOffers());
+  }, [dispatch]);
 
   function renderFavoritePlaceListByCity(offersByCities: {[key: string]: PreviewOffer[]}, city: string) {
     const favoritePlaceListByCity : React.JSX.Element[] = [];
