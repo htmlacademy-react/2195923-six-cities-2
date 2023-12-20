@@ -13,11 +13,14 @@ export type UserProcess = {
 export type OfferData = {
   fullOffer: FullOffer | undefined;
   offers: PreviewOffer[];
+  favoriteOffers: PreviewOffer[];
   nearbyOffers: PreviewOffer[];
   activeCard: string;
   isOffersDataLoading: boolean;
   isNearByOffersDataLoading: boolean;
   isOfferByIdDataLoading: boolean;
+  isAddingOfferToFavorite: boolean;
+  isFavoriteOffersLoading: boolean;
 }
 
 export type ReviewData = {

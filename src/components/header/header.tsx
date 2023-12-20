@@ -2,9 +2,10 @@ import {Link} from 'react-router-dom';
 import { AppRoute } from '../../app-route';
 import { AuthorizationStatus } from '../../const';
 import { useAppSelector } from '../../hooks/use-app-selector';
-import { store } from '../../store/stores';
 import { logoutAction } from '../../store/actions/api-actions';
 import { getUserData } from '../../store/user-process/user-process.selectors';
+import { getOffers } from '../../store/offer-data/offer-data.selectors';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
 
 type HeaderProps = {
   isNavRequired: boolean;
@@ -13,9 +14,11 @@ type HeaderProps = {
 
 function Header({isNavRequired, isAuth}: HeaderProps) : React.JSX.Element {
   const userData = useAppSelector(getUserData);
+  const dispatch = useAppDispatch();
+  const countFavoriteOffers = useAppSelector(getOffers).filter((offer) => offer.isFavorite).length;
 
   const onLogoutClick = () => {
-    store.dispatch(logoutAction());
+    dispatch(logoutAction());
   };
 
   return (
@@ -37,7 +40,7 @@ function Header({isNavRequired, isAuth}: HeaderProps) : React.JSX.Element {
                         <img src={userData.avatarUrl} />
                       </div>
                       <span className="header__user-name user__name">{userData.email}</span>
-                      <span className="header__favorite-count">3</span>
+                      <span className="header__favorite-count">{countFavoriteOffers}</span>
                     </Link>
                   </li>
                   <li className="header__nav-item">

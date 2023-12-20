@@ -1,4 +1,4 @@
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header/header';
 import Map from '../../components/map/map';
@@ -9,17 +9,20 @@ import { AuthorizationStatus, NUMBER_PERCENT_IN_ONE_STAR, PlaceCardType, MAX_COU
 import { AppRoute } from '../../app-route';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { Review, UserReview } from '../../types/review';
-import { store } from '../../store/stores';
-import { createReviewAction, loadNearbyOffersAction, loadOfferByIDAction, loadReviewsAction } from '../../store/actions/api-actions';
+import { changeFavoriteStatusAction, createReviewAction, loadNearbyOffersAction, loadOfferByIDAction, loadReviewsAction } from '../../store/actions/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { useEffect } from 'react';
 import { getCity } from '../../store/city-process/city-process.selectors';
 import { getFullOffer, getNearByOffersDataLoading, getNearbyOffers, getOfferByIdDataLoading, getOffers } from '../../store/offer-data/offer-data.selectors';
 import { getReviews, getReviewsDataLoading } from '../../store/review-data/review-data.selectors';
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
+import { changeActiveCard, changeFavoriteStatus } from '../../store/offer-data/offer-data.slice';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
 
 function OfferPage() : React.JSX.Element {
   const {id} = useParams();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const cityName = useAppSelector(getCity);
   const offers = useAppSelector(getOffers);
   const offer = useAppSelector(getFullOffer);
@@ -29,12 +32,16 @@ function OfferPage() : React.JSX.Element {
   const isNearByOffersDataLoadingStatus = useAppSelector(getNearByOffersDataLoading);
   const isOfferByIdDataLoadingStatus = useAppSelector(getOfferByIdDataLoading);
   const isReviewsDataLoadingStatus = useAppSelector(getReviewsDataLoading);
+  const authStatus = useAppSelector(getAuthorizationStatus);
 
   useEffect(() => {
-    store.dispatch(loadOfferByIDAction(id as string));
-    store.dispatch(loadNearbyOffersAction(id as string));
-    store.dispatch(loadReviewsAction(id as string));
-  }, [id]);
+    if (id !== undefined) {
+      dispatch(loadOfferByIDAction(id));
+      dispatch(loadNearbyOffersAction(id));
+      dispatch(loadReviewsAction(id));
+      dispatch(changeActiveCard(id));
+    }
+  }, [dispatch, id]);
 
   function generatePhotos(images: string[]) {
     return Array.from({length: images.length > MAX_COUNT_IMAGES_OFFERS ? MAX_COUNT_IMAGES_OFFERS : images.length}, (_, index: number) => (
@@ -70,7 +77,18 @@ function OfferPage() : React.JSX.Element {
   }
 
   const handleFormSubmit = (formData: UserReview) => {
-    store.dispatch(createReviewAction({userReview: formData, id: id as string}));
+    dispatch(createReviewAction({userReview: formData, id: id as string}));
+  };
+
+  const handleFavoriteButtonClick = () => {
+    if (authStatus === AuthorizationStatus.NoAuth) {
+      navigate(AppRoute.Login);
+      return;
+    }
+    if (offer !== undefined && id !== undefined) {
+      dispatch(changeFavoriteStatusAction({id: id, favoriteStatus: Number(!offer.isFavorite)}));
+      dispatch(changeFavoriteStatus(id));
+    }
   };
 
   if (isNearByOffersDataLoadingStatus || isOfferByIdDataLoadingStatus || isReviewsDataLoadingStatus) {
@@ -107,7 +125,7 @@ function OfferPage() : React.JSX.Element {
                 <h1 className="offer__name">
                   {offer.title}
                 </h1>
-                <button className={`offer__bookmark-button ${offer.isFavorite ? 'offer__bookmark-button--active' : ''} button`} type="button">
+                <button onClick={handleFavoriteButtonClick} className={`offer__bookmark-button ${offer.isFavorite ? 'offer__bookmark-button--active' : ''} button`} type="button">
                   <svg className="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -169,7 +187,7 @@ function OfferPage() : React.JSX.Element {
               </section>
             </div>
           </div>
-          <Map cityName={cityName} offers={threeNearOffers.concat(currentPreviewOffer)} type={'offer'} activeCard={offer.id} />
+          <Map cityName={cityName} offers={threeNearOffers.concat(currentPreviewOffer)} type={'offer'} />
         </section>
         <div className="container">
           <section className="near-places places">

@@ -3,7 +3,7 @@ import Rating from '../rating/rating';
 import { UserReview } from '../../types/review';
 import { MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH } from '../../const';
 import { useAppSelector } from '../../hooks/use-app-selector';
-import { getReviews } from '../../store/review-data/review-data.selectors';
+import { getIsCreatingNewReview, getReviews } from '../../store/review-data/review-data.selectors';
 
 type ReviewsFormProps = {
   onFormSubmit: (formData: UserReview) => void;
@@ -11,6 +11,7 @@ type ReviewsFormProps = {
 
 function ReviewsForm({onFormSubmit}: ReviewsFormProps) {
   const reviews = useAppSelector(getReviews);
+  const isCreatingNewReview = useAppSelector(getIsCreatingNewReview);
 
   const [formData, setFormData] = useState({
     comment: '',
@@ -49,17 +50,20 @@ function ReviewsForm({onFormSubmit}: ReviewsFormProps) {
 
   return (
     <form className="reviews__form form" action="#" method="post" onSubmit={handleFormSubmit}>
-      <label className="reviews__label form__label" htmlFor="review">Your review</label>
-      <Rating rating={formData.rating} onChange={handleRatingChange}/>
-      <textarea className="reviews__textarea form__textarea" id="review" name="review" value={formData.comment} onChange={handleReviewChange} placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
-      <div className="reviews__button-wrapper">
-        <p className="reviews__help">
-          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
-        </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={isValidReview()}>Submit</button>
-      </div>
+      <fieldset style={{padding: 0, borderStyle: 'none', margin: 0}} disabled={isCreatingNewReview}>
+        <label className="reviews__label form__label" htmlFor="review">Your review</label>
+        <Rating rating={formData.rating} onChange={handleRatingChange}/>
+        <textarea className="reviews__textarea form__textarea" id="review" name="review" value={formData.comment} onChange={handleReviewChange} placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
+        <div className="reviews__button-wrapper">
+          <p className="reviews__help">
+            To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
+          </p>
+          <button className="reviews__submit form__submit button" type="submit" disabled={isValidReview()}>Submit</button>
+        </div>
+      </fieldset>
     </form>
   );
 }
 
 export default ReviewsForm;
+
