@@ -1,6 +1,7 @@
 import { Cities } from '../const';
 import { City, FullOffer, PreviewOffer } from '../types/offer';
 import { datatype, lorem, random, name, image } from 'faker';
+import { Review } from '../types/review';
 
 function createRandomCity(): City {
   return random.arrayElement(Cities);
@@ -56,3 +57,16 @@ export const makeFakePreviewOffer = (): PreviewOffer => {
     previewImage: image.image(),
   } as PreviewOffer;
 };
+
+
+export const makeFakeReview = (): Review => ({
+  id: datatype.uuid(),
+  date: datatype.datetime() as unknown as string,
+  user: {
+    name: `${name.firstName()} ${name.lastName()}`,
+    avatarUrl: image.avatar(),
+    isPro: datatype.boolean(),
+  },
+  comment: lorem.sentence(12),
+  rating: datatype.number({min: 0, max: 5, precision: 0.01}),
+});
