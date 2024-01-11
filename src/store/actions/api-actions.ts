@@ -1,6 +1,5 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
-import { toast } from 'react-toastify';
 import { AppDispatch, State } from '../../types/state';
 import { FullOffer, PreviewOffer } from '../../types/offer';
 import { APIRoute } from '../../const';

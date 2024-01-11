@@ -9,7 +9,7 @@ import { changeFavoriteStatusAction, createReviewAction, fetchFavoriteOffersActi
 import { APIRoute } from '../../const';
 import { AuthData } from '../../types/auth-data';
 import { redirectToRoute } from './action';
-import * as tokenStorage from '../services/token';
+import * as tokenStorage from '../../services/token';
 
 describe('Async actions', () => {
   const axios = createAPI();
@@ -293,18 +293,17 @@ describe('Async actions', () => {
       ]);
     });
 
-    // it('should call "saveToken" once with the received token', async () => {
-    //   const fakeUser: AuthData = { email: 'test@test.ru', password: '123456' };
-    //   const fakeServerReplay = { token: 'secret' };
-    //   mockAxiosAdapter.onPost(APIRoute.Login).reply(200, fakeServerReplay);
-    //   const mockSaveToken = vi.spyOn(tokenStorage, 'saveToken');
+    it('should call "saveToken" once with the received token', async () => {
+      const fakeUser: AuthData = { email: 'test@test.ru', password: '123456' };
+      const fakeServerReplay = { token: 'secret' };
+      mockAxiosAdapter.onPost(APIRoute.Login).reply(200, fakeServerReplay);
+      const mockSaveToken = vi.spyOn(tokenStorage, 'saveToken');
 
-    //   await store.dispatch(loginAction(fakeUser));
+      await store.dispatch(loginAction(fakeUser));
 
-    //   expect(mockSaveToken).toBeCalledTimes(1);
-    //   expect(mockSaveToken).toBeCalledWith(fakeServerReplay.token);
-    // });
-
+      expect(mockSaveToken).toBeCalledTimes(1);
+      expect(mockSaveToken).toBeCalledWith(fakeServerReplay.token);
+    });
   });
 
   describe('logoutAction', () => {
@@ -320,13 +319,13 @@ describe('Async actions', () => {
       ]);
     });
 
-    // it('should one call "dropToken" with "logoutAction"', async () => {
-    //   mockAxiosAdapter.onDelete(APIRoute.Logout).reply(204);
-    //   const mockDropToken = vi.spyOn(tokenStorage, 'dropToken');
+    it('should one call "dropToken" with "logoutAction"', async () => {
+      mockAxiosAdapter.onDelete(APIRoute.Logout).reply(204);
+      const mockDropToken = vi.spyOn(tokenStorage, 'dropToken');
 
-    //   await store.dispatch(logoutAction());
+      await store.dispatch(logoutAction());
 
-    //   expect(mockDropToken).toBeCalledTimes(1);
-    // });
+      expect(mockDropToken).toBeCalledTimes(1);
+    });
   });
 });
