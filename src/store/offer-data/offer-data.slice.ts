@@ -1,7 +1,7 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { OfferData } from '../../types/state';
-import { changeFavoriteStatusAction, fetchFavoriteOffers, fetchOffersAction, loadNearbyOffersAction, loadOfferByIDAction } from '../actions/api-actions';
+import { changeFavoriteStatusAction, fetchFavoriteOffersActions, fetchOffersAction, loadNearbyOffersAction, loadOfferByIDAction } from '../actions/api-actions';
 
 const initialState: OfferData = {
   offers: [],
@@ -71,14 +71,14 @@ export const offerData = createSlice({
       .addCase(changeFavoriteStatusAction.rejected, (state) => {
         state.isAddingOfferToFavorite = false;
       })
-      .addCase(fetchFavoriteOffers.pending, (state) => {
+      .addCase(fetchFavoriteOffersActions.pending, (state) => {
         state.isFavoriteOffersLoading = true;
       })
-      .addCase(fetchFavoriteOffers.fulfilled, (state, action) => {
+      .addCase(fetchFavoriteOffersActions.fulfilled, (state, action) => {
         state.isFavoriteOffersLoading = false;
         state.favoriteOffers = action.payload;
       })
-      .addCase(fetchFavoriteOffers.rejected, (state) => {
+      .addCase(fetchFavoriteOffersActions.rejected, (state) => {
         state.isFavoriteOffersLoading = false;
       });
   }

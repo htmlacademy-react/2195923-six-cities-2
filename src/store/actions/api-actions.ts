@@ -59,7 +59,7 @@ export const changeFavoriteStatusAction = createAsyncThunk<FullOffer, {id: strin
   }
 );
 
-export const fetchFavoriteOffers = createAsyncThunk<PreviewOffer[], undefined, {
+export const fetchFavoriteOffersActions = createAsyncThunk<PreviewOffer[], undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -90,14 +90,10 @@ export const createReviewAction = createAsyncThunk<Review, {userReview: UserRevi
 }>(
   'offerData/createReview',
   async ({userReview, id}, {extra: api}) => {
-    try {
-      const rating = userReview.rating;
-      const comment = userReview.comment;
-      const {data} = await api.post<Review>(`${APIRoute.Reviews}/${id}`, {rating, comment});
-      return data;
-    } catch {
-      toast.warn('Failed to load comment');
-    }
+    const rating = userReview.rating;
+    const comment = userReview.comment;
+    const {data} = await api.post<Review>(`${APIRoute.Reviews}/${id}`, {rating, comment});
+    return data;
   },
 );
 

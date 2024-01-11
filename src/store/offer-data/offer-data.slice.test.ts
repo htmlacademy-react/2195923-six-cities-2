@@ -1,4 +1,4 @@
-import { changeFavoriteStatusAction, fetchFavoriteOffers, fetchOffersAction, loadNearbyOffersAction, loadOfferByIDAction } from '../actions/api-actions';
+import { changeFavoriteStatusAction, fetchFavoriteOffersActions, fetchOffersAction, loadNearbyOffersAction, loadOfferByIDAction } from '../actions/api-actions';
 import { image, name, datatype, lorem, random } from 'faker';
 import { makeFakeFullOffer, makeFakePreviewOffer } from '../../utils/mocks';
 import { changeActiveCard, changeFavoriteStatus, offerData } from './offer-data.slice';
@@ -395,7 +395,7 @@ describe('OfferData Slice', () => {
     expect(result).toEqual(expectedState);
   });
 
-  it('should set "isFavoriteOffersLoading" to "true" with "fetchFavoriteOffers.pending" action', () => {
+  it('should set "isFavoriteOffersLoading" to "true" with "fetchFavoriteOffersActions.pending" action', () => {
     const expectedState = {
       offers: [],
       fullOffer: undefined,
@@ -409,12 +409,12 @@ describe('OfferData Slice', () => {
       isFavoriteOffersLoading: true,
     };
 
-    const result = offerData.reducer(undefined, fetchFavoriteOffers.pending);
+    const result = offerData.reducer(undefined, fetchFavoriteOffersActions.pending);
 
     expect(result).toEqual(expectedState);
   });
 
-  it('should set "isFavoriteOffersLoading" to "false", "favoriteOffers" to favorite offer with "fetchFavoriteOffers.fulfilled" action', () => {
+  it('should set "isFavoriteOffersLoading" to "false", "favoriteOffers" to favorite offer with "fetchFavoriteOffersActions.fulfilled" action', () => {
     const favoriteOffers = new Array(12).fill(null).map(() => makeFakePreviewOffer()).filter((offer) => offer.isFavorite) as unknown as PreviewOffer[];
 
     const expectedState = {
@@ -430,12 +430,12 @@ describe('OfferData Slice', () => {
       isFavoriteOffersLoading: false,
     };
 
-    const result = offerData.reducer(undefined, fetchFavoriteOffers.fulfilled(favoriteOffers, '', undefined));
+    const result = offerData.reducer(undefined, fetchFavoriteOffersActions.fulfilled(favoriteOffers, '', undefined));
 
     expect(result).toEqual(expectedState);
   });
 
-  it('should set "isFavoriteOffersLoading" to "false" with "fetchFavoriteOffers.rejected"', () => {
+  it('should set "isFavoriteOffersLoading" to "false" with "fetchFavoriteOffersActions.rejected"', () => {
     const expectedState = {
       offers: [],
       fullOffer: undefined,
@@ -449,7 +449,7 @@ describe('OfferData Slice', () => {
       isFavoriteOffersLoading: false,
     };
 
-    const result = offerData.reducer(undefined, fetchFavoriteOffers.rejected);
+    const result = offerData.reducer(undefined, fetchFavoriteOffersActions.rejected);
 
     expect(result).toEqual(expectedState);
   });

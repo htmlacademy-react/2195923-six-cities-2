@@ -2,6 +2,12 @@ import { Cities } from '../const';
 import { City, FullOffer, PreviewOffer } from '../types/offer';
 import { datatype, lorem, random, name, image } from 'faker';
 import { Review } from '../types/review';
+import { Action } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { createAPI } from '../services/api';
+import { State } from '../types/state';
+
+export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>;
 
 function createRandomCity(): City {
   return random.arrayElement(Cities);
@@ -31,9 +37,10 @@ export const makeFakeFullOffer = (): FullOffer => {
       avatarUrl: image.avatar(),
       isPro: datatype.boolean(),
     },
-    images: new Array<string>(datatype.number({ min: 1, max: 8, precision: 1 })).fill('').map(() => {
-      image.image();
-    }) as unknown as string[],
+    images: [image.image(), image.image(), image.image()],
+    // new Array<string>(datatype.number({ min: 1, max: 8, precision: 1 })).map(() => {
+    //   image.image();
+    // }) as unknown as string[],
     maxAdults: datatype.number({min: 1, max: 5, precision: 1}),
   } as FullOffer;
 };
@@ -61,7 +68,7 @@ export const makeFakePreviewOffer = (): PreviewOffer => {
 
 export const makeFakeReview = (): Review => ({
   id: datatype.uuid(),
-  date: datatype.datetime() as unknown as string,
+  date: datatype.datetime().toString(),
   user: {
     name: `${name.firstName()} ${name.lastName()}`,
     avatarUrl: image.avatar(),
@@ -70,3 +77,6 @@ export const makeFakeReview = (): Review => ({
   comment: lorem.sentence(12),
   rating: datatype.number({min: 0, max: 5, precision: 0.01}),
 });
+
+
+export const extractActionsTypes = (actions: Action<string>[]) => actions.map(({type}) => type);
