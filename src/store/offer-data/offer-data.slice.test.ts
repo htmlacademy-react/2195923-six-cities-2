@@ -1,5 +1,5 @@
 import { changeFavoriteStatusAction, fetchFavoriteOffersActions, fetchOffersAction, loadNearbyOffersAction, loadOfferByIDAction } from '../actions/api-actions';
-import { image, name, datatype, lorem, random } from 'faker';
+import { datatype} from 'faker';
 import { makeFakeFullOffer, makeFakePreviewOffer } from '../../utils/mocks';
 import { changeActiveCard, changeFavoriteStatus, offerData } from './offer-data.slice';
 import { PreviewOffer } from '../../types/offer';
