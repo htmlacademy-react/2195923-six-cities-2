@@ -40,9 +40,9 @@ function MainPage() : React.JSX.Element {
     }
   }, [offersByCity, sortType]);
 
-  // useEffect(() => {
-  //   dispatch(changeActiveCard(''));
-  // });
+  useEffect(() => {
+    dispatch(changeActiveCard(''));
+  }, [dispatch]);
 
   const handlePlaceCardMouseEnter = (evt : React.MouseEvent) => {
     evt.preventDefault();
