@@ -2,7 +2,7 @@ import {Link} from 'react-router-dom';
 import { AppRoute } from '../../app-route';
 import { AuthorizationStatus } from '../../const';
 import { useAppSelector } from '../../hooks/use-app-selector';
-import { logoutAction } from '../../store/actions/api-actions';
+import { fetchOffersAction, logoutAction } from '../../store/actions/api-actions';
 import { getUserData } from '../../store/user-process/user-process.selectors';
 import { getOffers } from '../../store/offer-data/offer-data.selectors';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
@@ -17,8 +17,9 @@ function Header({isNavRequired, isAuth}: HeaderProps) : React.JSX.Element {
   const dispatch = useAppDispatch();
   const countFavoriteOffers = useAppSelector(getOffers).filter((offer) => offer.isFavorite).length;
 
-  const onLogoutClick = () => {
-    dispatch(logoutAction());
+  const onLogoutClick = async () => {
+    await dispatch(logoutAction());
+    await dispatch(fetchOffersAction());
   };
 
   return (

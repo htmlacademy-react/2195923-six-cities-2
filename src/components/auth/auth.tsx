@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
-import { loginAction } from '../../store/actions/api-actions';
+import { fetchOffersAction, loginAction } from '../../store/actions/api-actions';
 import { AuthData } from '../../types/auth-data';
 
 function Auth() {
@@ -10,14 +10,15 @@ function Auth() {
   const [password, setPassword] = useState<string>();
   const [email, setEmail] = useState<string>();
 
-  const onFormSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
+  const onFormSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     if (email && password) {
       const authorizationData: AuthData = {
         email: email,
         password: password
       };
-      dispatch(loginAction(authorizationData));
+      await dispatch(loginAction(authorizationData));
+      await dispatch(fetchOffersAction());
     }
   };
 
