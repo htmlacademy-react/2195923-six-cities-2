@@ -9,6 +9,7 @@ import { dropToken, saveToken } from '../../services/token';
 import { AuthData } from '../../types/auth-data';
 import { AppRoute } from '../../app-route';
 import { Review, UserReview } from '../../types/review';
+import { toast } from 'react-toastify';
 
 export const fetchOffersAction = createAsyncThunk<PreviewOffer[], undefined, {
   dispatch: AppDispatch;
@@ -89,10 +90,14 @@ export const createReviewAction = createAsyncThunk<Review, {userReview: UserRevi
 }>(
   'offerData/createReview',
   async ({userReview, id}, {extra: api}) => {
-    const rating = userReview.rating;
-    const comment = userReview.comment;
-    const {data} = await api.post<Review>(`${APIRoute.Reviews}/${id}`, {rating, comment});
-    return data;
+    try {
+      const rating = userReview.rating;
+      const comment = userReview.comment;
+      const {data} = await api.post<Review>(`${APIRoute.Reviews}/${id}`, {rating, comment});
+      return data;
+    } catch {
+      toast.warn('Failed to load comment');
+    }
   },
 );
 

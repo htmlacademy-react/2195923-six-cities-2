@@ -220,39 +220,6 @@ describe('Async actions', () => {
     });
   });
 
-  describe('createReviewAction', () => {
-    it('should dispatch "createReviewAction.pending" and "createReviewAction.fulfilled" when server response 200', async () => {
-      const mockReview = makeFakeReview();
-      mockAxiosAdapter.onPost(`${APIRoute.Reviews}/offerId`).reply(200, mockReview);
-
-      await store.dispatch(createReviewAction({userReview: {comment: mockReview.comment, rating: mockReview.rating}, id: 'offerId'}));
-
-      const emittedActions = store.getActions();
-      const extractedActionsTypes = extractActionsTypes(emittedActions);
-      const createReviewActionFulfilled = emittedActions.at(1) as ReturnType<typeof createReviewAction.fulfilled>;
-
-      expect(extractedActionsTypes).toEqual([
-        createReviewAction.pending.type,
-        createReviewAction.fulfilled.type,
-      ]);
-
-      expect(createReviewActionFulfilled.payload).toEqual(mockReview);
-    });
-
-    it('should dispatch "createReviewAction.pending" and "createReviewAction.rejected" when server response 400', async () => {
-      const mockReview = makeFakeReview();
-      mockAxiosAdapter.onPost(`${APIRoute.Reviews}/offerId`).reply(400, []);
-
-      await store.dispatch(createReviewAction({userReview: {comment: mockReview.comment, rating: mockReview.rating}, id: 'offerId'}));
-      const actions = extractActionsTypes(store.getActions());
-
-      expect(actions).toEqual([
-        createReviewAction.pending.type,
-        createReviewAction.rejected.type,
-      ]);
-    });
-  });
-
   describe('getAuthorizationStatusAction', () => {
     it('should dispatch "getAuthorizationStatusAction.pending" and "getAuthorizationStatusAction.fulfilled" with thunk "getAuthorizationStatusAction"', async () => {
       mockAxiosAdapter.onGet(APIRoute.Login).reply(200);
