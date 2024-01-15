@@ -282,6 +282,7 @@ describe('Async actions', () => {
 
       expect(actions).toEqual([
         logoutAction.pending.type,
+        redirectToRoute.type,
         logoutAction.fulfilled.type,
       ]);
     });

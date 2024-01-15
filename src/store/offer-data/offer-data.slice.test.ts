@@ -360,7 +360,7 @@ describe('OfferData Slice', () => {
 
     const expectedState = {
       offers: [],
-      fullOffer: fullOffer,
+      fullOffer: undefined,
       nearbyOffers: [],
       favoriteOffers: [],
       activeCard: '',
