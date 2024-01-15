@@ -10,15 +10,15 @@ function Auth() {
   const [password, setPassword] = useState<string>();
   const [email, setEmail] = useState<string>();
 
-  const onFormSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
+  const onFormSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     if (email && password) {
       const authorizationData: AuthData = {
         email: email,
         password: password
       };
-      await dispatch(loginAction(authorizationData));
-      await dispatch(fetchOffersAction());
+      dispatch(loginAction(authorizationData));
+      dispatch(fetchOffersAction());
     }
   };
 

@@ -17,9 +17,13 @@ function Header({isNavRequired, isAuth}: HeaderProps) : React.JSX.Element {
   const dispatch = useAppDispatch();
   const countFavoriteOffers = useAppSelector(getOffers).filter((offer) => offer.isFavorite).length;
 
-  const onLogoutClick = async () => {
+  const logout = async () => {
     await dispatch(logoutAction());
     await dispatch(fetchOffersAction());
+  };
+
+  const onLogoutClick = () => {
+    logout();
   };
 
   return (
