@@ -3,7 +3,7 @@ import PlaceCard from '../place-card/place-card';
 import { PlaceCardType } from '../../const';
 
 type PlaceCardListProps = {
-  offers: PreviewOffer[];
+  offers: PreviewOffer[] | undefined;
   type: string;
   onMouseEnter?: React.MouseEventHandler<HTMLElement>;
   onMouseLeave?: React.MouseEventHandler<HTMLElement>;
@@ -11,8 +11,10 @@ type PlaceCardListProps = {
 
 function PlaceCardList({offers,type, onMouseEnter, onMouseLeave} : PlaceCardListProps) {
 
-  function getPlaceCards(cards: PreviewOffer[]) {
-    return Array.from({length: offers.length}, (_, index : number) => <PlaceCard onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} offer={cards[index]} type={type} key={cards[index].id}/>);
+  function getPlaceCards(cards: PreviewOffer[] | undefined) {
+    if (offers !== undefined) {
+      return Array.from({length: offers.length}, (_, index : number) => <PlaceCard onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} offer={cards[index]} type={type} key={cards[index].id}/>);
+    }
   }
 
   function getPlaceCardListClass(typeCardList: string) {

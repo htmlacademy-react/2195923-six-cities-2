@@ -5,7 +5,7 @@ import thunk from 'redux-thunk';
 import { State } from '../../types/state';
 import { Action } from 'redux';
 import { AppThunkDispatch, extractActionsTypes, makeFakeFullOffer, makeFakePreviewOffer, makeFakeReview } from '../../utils/mocks';
-import { changeFavoriteStatusAction, createReviewAction, fetchFavoriteOffersActions, fetchOffersAction, getAuthorizationStatusAction, loadNearbyOffersAction, loadOfferByIDAction, loadReviewsAction, loginAction, logoutAction } from './api-actions';
+import { changeFavoriteStatusAction, fetchFavoriteOffersActions, fetchOffersAction, getAuthorizationStatusAction, loadNearbyOffersAction, loadOfferByIDAction, loadReviewsAction, loginAction, logoutAction } from './api-actions';
 import { APIRoute } from '../../const';
 import { AuthData } from '../../types/auth-data';
 import { redirectToRoute } from './action';

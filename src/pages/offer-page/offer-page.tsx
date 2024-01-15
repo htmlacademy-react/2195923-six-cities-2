@@ -11,13 +11,14 @@ import { useAppSelector } from '../../hooks/use-app-selector';
 import { Review, UserReview } from '../../types/review';
 import { changeFavoriteStatusAction, createReviewAction, loadNearbyOffersAction, loadOfferByIDAction, loadReviewsAction } from '../../store/actions/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { getCity } from '../../store/city-process/city-process.selectors';
 import { getFullOffer, getNearByOffersDataLoading, getNearbyOffers, getOfferByIdDataLoading, getOffers } from '../../store/offer-data/offer-data.selectors';
 import { getReviews, getReviewsDataLoading } from '../../store/review-data/review-data.selectors';
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
 import { changeActiveCard, changeFavoriteStatus } from '../../store/offer-data/offer-data.slice';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
+import { PreviewOffer } from '../../types/offer';
 
 function OfferPage() : React.JSX.Element {
   const {id} = useParams();
@@ -33,6 +34,7 @@ function OfferPage() : React.JSX.Element {
   const isOfferByIdDataLoadingStatus = useAppSelector(getOfferByIdDataLoading);
   const isReviewsDataLoadingStatus = useAppSelector(getReviewsDataLoading);
   const authStatus = useAppSelector(getAuthorizationStatus);
+  let threeNearOffers: (PreviewOffer | undefined)[] = [];
 
   useEffect(() => {
     if (id !== undefined) {
@@ -42,6 +44,17 @@ function OfferPage() : React.JSX.Element {
       dispatch(changeActiveCard(id));
     }
   }, [dispatch, id]);
+
+  const randomNearOffersIds = useMemo(() => {
+    if (!isNearByOffersDataLoadingStatus) {
+      const temp = [...nearOffers];
+      const randomNearOffers = [];
+      for (let i = 0; i < 3; i++) {
+        randomNearOffers.push(temp.splice(Math.random() * temp.length, 1)[0].id);
+      }
+      return randomNearOffers;
+    }
+  }, [isNearByOffersDataLoadingStatus]);
 
   function generatePhotos(images: string[]) {
     return Array.from({length: images.length > MAX_COUNT_IMAGES_OFFERS ? MAX_COUNT_IMAGES_OFFERS : images.length}, (_, index: number) => (
@@ -65,15 +78,6 @@ function OfferPage() : React.JSX.Element {
     } else {
       return [...fullReviewsList].sort((a: Review, b: Review) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, MAX_COMMENTS_COUNT);
     }
-  }
-
-  function getRandomNearOffers() {
-    const temp = [...nearOffers];
-    const randomNearOffers = [];
-    for (let i = 0; i < 3; i++) {
-      randomNearOffers.push(temp.splice(Math.random() * temp.length, 1)[0]);
-    }
-    return randomNearOffers;
   }
 
   const handleFormSubmit = (formData: UserReview) => {
@@ -100,7 +104,9 @@ function OfferPage() : React.JSX.Element {
   }
 
   const currentPreviewOffer = offers.find((previewOffer) => previewOffer.id === offer.id) || [];
-  const threeNearOffers = getRandomNearOffers();
+  if (randomNearOffersIds !== undefined) {
+    threeNearOffers = randomNearOffersIds.map((randomNearOffersId) => nearOffers.find((nearOffer) => nearOffer.id === randomNearOffersId));
+  }
 
   return (
     <div className="page">
