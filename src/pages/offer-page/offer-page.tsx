@@ -12,7 +12,6 @@ import { Review, UserReview } from '../../types/review';
 import { changeFavoriteStatusAction, createReviewAction, loadNearbyOffersAction, loadOfferByIDAction, loadReviewsAction } from '../../store/actions/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { useEffect, useMemo } from 'react';
-import { getCity } from '../../store/city-process/city-process.selectors';
 import { getFullOffer, getNearByOffersDataLoading, getNearbyOffers, getOfferByIdDataLoading, getOffers } from '../../store/offer-data/offer-data.selectors';
 import { getReviews, getReviewsDataLoading } from '../../store/review-data/review-data.selectors';
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
@@ -24,7 +23,6 @@ function OfferPage() : React.JSX.Element {
   const {id} = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const cityName = useAppSelector(getCity);
   const offers = useAppSelector(getOffers);
   const offer = useAppSelector(getFullOffer);
   const reviews = useAppSelector(getReviews);
@@ -107,6 +105,7 @@ function OfferPage() : React.JSX.Element {
   if (randomNearOffersIds !== undefined) {
     threeNearOffers = randomNearOffersIds.map((randomNearOffersId) => nearOffers.find((nearOffer) => nearOffer.id === randomNearOffersId));
   }
+  const cityName = offer?.city.name;
 
   return (
     <div className="page">
