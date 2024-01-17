@@ -2,7 +2,7 @@ import {Link} from 'react-router-dom';
 import { AppRoute } from '../../app-route';
 import { AuthorizationStatus } from '../../const';
 import { useAppSelector } from '../../hooks/use-app-selector';
-import { logoutAction } from '../../store/actions/api-actions';
+import { fetchOffersAction, logoutAction } from '../../store/actions/api-actions';
 import { getUserData } from '../../store/user-process/user-process.selectors';
 import { getOffers } from '../../store/offer-data/offer-data.selectors';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
@@ -17,8 +17,13 @@ function Header({isNavRequired, isAuth}: HeaderProps) : React.JSX.Element {
   const dispatch = useAppDispatch();
   const countFavoriteOffers = useAppSelector(getOffers).filter((offer) => offer.isFavorite).length;
 
+  const logout = async () => {
+    await dispatch(logoutAction());
+    await dispatch(fetchOffersAction());
+  };
+
   const onLogoutClick = () => {
-    dispatch(logoutAction());
+    logout();
   };
 
   return (
@@ -37,7 +42,7 @@ function Header({isNavRequired, isAuth}: HeaderProps) : React.JSX.Element {
                   <li className="header__nav-item user">
                     <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorite}>
                       <div className="header__avatar-wrapper user__avatar-wrapper">
-                        <img src={userData.avatarUrl} />
+                        <img src={userData.avatarUrl} style={{ borderRadius: '50%'}}/>
                       </div>
                       <span className="header__user-name user__name">{userData.email}</span>
                       <span className="header__favorite-count">{countFavoriteOffers}</span>

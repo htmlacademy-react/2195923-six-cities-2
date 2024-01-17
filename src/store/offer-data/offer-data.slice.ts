@@ -1,7 +1,7 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { OfferData } from '../../types/state';
-import { changeFavoriteStatusAction, fetchFavoriteOffers, fetchOffersAction, loadNearbyOffersAction, loadOfferByIDAction } from '../actions/api-actions';
+import { changeFavoriteStatusAction, fetchFavoriteOffersActions, fetchOffersAction, loadNearbyOffersAction, loadOfferByIDAction } from '../actions/api-actions';
 
 const initialState: OfferData = {
   offers: [],
@@ -26,7 +26,18 @@ export const offerData = createSlice({
     changeFavoriteStatus: (state, action: PayloadAction<string>) => {
       const offerIndex = state.offers.findIndex((offer) => offer.id === action.payload);
       state.offers[offerIndex].isFavorite = !state.offers[offerIndex].isFavorite;
+
+      if (state.fullOffer && action.payload === state.fullOffer.id) {
+        state.fullOffer.isFavorite = !state.fullOffer?.isFavorite;
+      }
+
+      const nearbyIndex = state.nearbyOffers.findIndex((nearbyOffer) => nearbyOffer.id === action.payload);
+      if (nearbyIndex !== -1) {
+        state.nearbyOffers[nearbyIndex].isFavorite = !state.nearbyOffers[nearbyIndex].isFavorite;
+      }
+
       state.favoriteOffers = state.favoriteOffers.filter((favoriteOffer) => favoriteOffer.id !== state.offers[offerIndex].id);
+
     }
   },
   extraReducers(builder) {
@@ -64,21 +75,20 @@ export const offerData = createSlice({
       .addCase(changeFavoriteStatusAction.pending, (state) => {
         state.isAddingOfferToFavorite = true;
       })
-      .addCase(changeFavoriteStatusAction.fulfilled, (state, action) => {
+      .addCase(changeFavoriteStatusAction.fulfilled, (state) => {
         state.isAddingOfferToFavorite = false;
-        state.fullOffer = action.payload;
       })
       .addCase(changeFavoriteStatusAction.rejected, (state) => {
         state.isAddingOfferToFavorite = false;
       })
-      .addCase(fetchFavoriteOffers.pending, (state) => {
+      .addCase(fetchFavoriteOffersActions.pending, (state) => {
         state.isFavoriteOffersLoading = true;
       })
-      .addCase(fetchFavoriteOffers.fulfilled, (state, action) => {
+      .addCase(fetchFavoriteOffersActions.fulfilled, (state, action) => {
         state.isFavoriteOffersLoading = false;
         state.favoriteOffers = action.payload;
       })
-      .addCase(fetchFavoriteOffers.rejected, (state) => {
+      .addCase(fetchFavoriteOffersActions.rejected, (state) => {
         state.isFavoriteOffersLoading = false;
       });
   }

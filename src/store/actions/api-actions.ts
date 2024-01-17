@@ -1,6 +1,5 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
-import { toast } from 'react-toastify';
 import { AppDispatch, State } from '../../types/state';
 import { FullOffer, PreviewOffer } from '../../types/offer';
 import { APIRoute } from '../../const';
@@ -10,6 +9,7 @@ import { dropToken, saveToken } from '../../services/token';
 import { AuthData } from '../../types/auth-data';
 import { AppRoute } from '../../app-route';
 import { Review, UserReview } from '../../types/review';
+import { toast } from 'react-toastify';
 
 export const fetchOffersAction = createAsyncThunk<PreviewOffer[], undefined, {
   dispatch: AppDispatch;
@@ -59,7 +59,7 @@ export const changeFavoriteStatusAction = createAsyncThunk<FullOffer, {id: strin
   }
 );
 
-export const fetchFavoriteOffers = createAsyncThunk<PreviewOffer[], undefined, {
+export const fetchFavoriteOffersActions = createAsyncThunk<PreviewOffer[], undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;

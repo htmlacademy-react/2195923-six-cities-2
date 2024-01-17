@@ -12,11 +12,12 @@ import { useAppSelector } from '../../hooks/use-app-selector';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 import { getOffersDataLoading } from '../../store/offer-data/offer-data.selectors';
-import { getAuthorizationStatusLoading } from '../../store/user-process/user-process.selectors';
+import { getAuthorizationStatus, getAuthorizationStatusLoading } from '../../store/user-process/user-process.selectors';
 
 function App() : React.JSX.Element {
   const isOffersDataLoadingStatus = useAppSelector(getOffersDataLoading);
   const isAuthorizationLoadingStatus = useAppSelector(getAuthorizationStatusLoading);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   if (isOffersDataLoadingStatus ||
     isAuthorizationLoadingStatus) {
@@ -29,7 +30,7 @@ function App() : React.JSX.Element {
         <Routes>
           <Route path={AppRoute.Main} element={<MainPage/>} />
           <Route path={AppRoute.Login} element={<LoginPage />}/>
-          <Route path={AppRoute.Favorite} element={<PrivateRoute><FavoritesPage /></PrivateRoute>} />
+          <Route path={AppRoute.Favorite} element={<PrivateRoute authorizationStatus = {authorizationStatus}><FavoritesPage /></PrivateRoute>} />
           <Route
             path={`${AppRoute.Offer}/:id`}
             element={<OfferPage />}

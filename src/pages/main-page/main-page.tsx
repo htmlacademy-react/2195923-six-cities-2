@@ -42,7 +42,7 @@ function MainPage() : React.JSX.Element {
 
   useEffect(() => {
     dispatch(changeActiveCard(''));
-  });
+  }, [dispatch]);
 
   const handlePlaceCardMouseEnter = (evt : React.MouseEvent) => {
     evt.preventDefault();
