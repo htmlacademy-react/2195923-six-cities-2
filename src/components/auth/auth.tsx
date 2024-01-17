@@ -10,6 +10,11 @@ function Auth() {
   const [password, setPassword] = useState<string>();
   const [email, setEmail] = useState<string>();
 
+  const sendRequestsToServer = async (authorizationData: AuthData) => {
+    await dispatch(loginAction(authorizationData));
+    await dispatch(fetchOffersAction());
+  };
+
   const onFormSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     if (email && password) {
@@ -17,8 +22,7 @@ function Auth() {
         email: email,
         password: password
       };
-      dispatch(loginAction(authorizationData));
-      dispatch(fetchOffersAction());
+      sendRequestsToServer(authorizationData);
     }
   };
 
