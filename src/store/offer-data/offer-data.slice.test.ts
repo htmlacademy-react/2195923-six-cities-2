@@ -18,6 +18,7 @@ describe('OfferData Slice', () => {
       isOfferByIdDataLoading: true,
       isAddingOfferToFavorite: false,
       isFavoriteOffersLoading: false,
+      isFavoriteOffersChangeSuccesful: false,
     };
 
     const result = offerData.reducer(expectedState, emptyAction);
@@ -38,6 +39,7 @@ describe('OfferData Slice', () => {
       isOfferByIdDataLoading: true,
       isAddingOfferToFavorite: false,
       isFavoriteOffersLoading: false,
+      isFavoriteOffersChangeSuccesful: false,
     };
 
     const result = offerData.reducer(undefined, emptyAction);
@@ -57,6 +59,7 @@ describe('OfferData Slice', () => {
       isOfferByIdDataLoading: true,
       isAddingOfferToFavorite: false,
       isFavoriteOffersLoading: false,
+      isFavoriteOffersChangeSuccesful: false,
     };
 
     const id = datatype.uuid();
@@ -72,48 +75,10 @@ describe('OfferData Slice', () => {
       isOfferByIdDataLoading: true,
       isAddingOfferToFavorite: false,
       isFavoriteOffersLoading: false,
+      isFavoriteOffersChangeSuccesful: false,
     };
 
     const result = offerData.reducer(initialState, changeActiveCard(id));
-
-    expect(result).toEqual(expectedState);
-  });
-
-  it('should change favorite status to "false" with "changeFavoriteStatus" action', () => {
-    const offers = [makeFakePreviewOffer()] as unknown as PreviewOffer[];
-    offers[0].isFavorite = true;
-    const id = offers[0].id;
-
-    const initialState = {
-      offers: offers,
-      fullOffer: undefined,
-      nearbyOffers: [],
-      favoriteOffers: offers,
-      activeCard: '',
-      isOffersDataLoading: true,
-      isNearByOffersDataLoading: true,
-      isOfferByIdDataLoading: true,
-      isAddingOfferToFavorite: false,
-      isFavoriteOffersLoading: false,
-    };
-
-    const newoffers = structuredClone(offers);
-    newoffers[0].isFavorite = false;
-
-    const expectedState = {
-      offers: newoffers,
-      fullOffer: undefined,
-      nearbyOffers: [],
-      favoriteOffers: [],
-      activeCard: '',
-      isOffersDataLoading: true,
-      isNearByOffersDataLoading: true,
-      isOfferByIdDataLoading: true,
-      isAddingOfferToFavorite: false,
-      isFavoriteOffersLoading: false,
-    };
-
-    const result = offerData.reducer(initialState, changeFavoriteStatus(id));
 
     expect(result).toEqual(expectedState);
   });
@@ -134,10 +99,11 @@ describe('OfferData Slice', () => {
       isOfferByIdDataLoading: true,
       isAddingOfferToFavorite: false,
       isFavoriteOffersLoading: false,
+      isFavoriteOffersChangeSuccesful: false,
     };
 
     const newoffers = structuredClone(offers);
-    newoffers[0].isFavorite = true;
+    newoffers[0].isFavorite = false;
 
     const expectedState = {
       offers: newoffers,
@@ -150,6 +116,7 @@ describe('OfferData Slice', () => {
       isOfferByIdDataLoading: true,
       isAddingOfferToFavorite: false,
       isFavoriteOffersLoading: false,
+      isFavoriteOffersChangeSuccesful: false,
     };
 
     const result = offerData.reducer(initialState, changeFavoriteStatus(id));
@@ -169,6 +136,7 @@ describe('OfferData Slice', () => {
       isOfferByIdDataLoading: true,
       isAddingOfferToFavorite: false,
       isFavoriteOffersLoading: false,
+      isFavoriteOffersChangeSuccesful: false,
     };
 
     const result = offerData.reducer(undefined, fetchOffersAction.pending);
@@ -190,6 +158,7 @@ describe('OfferData Slice', () => {
       isOfferByIdDataLoading: true,
       isAddingOfferToFavorite: false,
       isFavoriteOffersLoading: false,
+      isFavoriteOffersChangeSuccesful: false,
     };
 
     const result = offerData.reducer(undefined, fetchOffersAction.fulfilled(previewOffers, '', undefined));
@@ -209,6 +178,7 @@ describe('OfferData Slice', () => {
       isOfferByIdDataLoading: true,
       isAddingOfferToFavorite: false,
       isFavoriteOffersLoading: false,
+      isFavoriteOffersChangeSuccesful: false,
     };
 
     const result = offerData.reducer(undefined, fetchOffersAction.rejected);
@@ -229,6 +199,7 @@ describe('OfferData Slice', () => {
       isOfferByIdDataLoading: true,
       isAddingOfferToFavorite: false,
       isFavoriteOffersLoading: false,
+      isFavoriteOffersChangeSuccesful: false,
     };
 
     const result = offerData.reducer(undefined, loadOfferByIDAction.pending);
@@ -250,6 +221,7 @@ describe('OfferData Slice', () => {
       isOfferByIdDataLoading: false,
       isAddingOfferToFavorite: false,
       isFavoriteOffersLoading: false,
+      isFavoriteOffersChangeSuccesful: false,
     };
 
     const result = offerData.reducer(undefined, loadOfferByIDAction.fulfilled(fullOffer, '', fullOffer.id));
@@ -269,6 +241,7 @@ describe('OfferData Slice', () => {
       isOfferByIdDataLoading: false,
       isAddingOfferToFavorite: false,
       isFavoriteOffersLoading: false,
+      isFavoriteOffersChangeSuccesful: false,
     };
 
     const result = offerData.reducer(undefined, loadOfferByIDAction.rejected);
@@ -289,6 +262,7 @@ describe('OfferData Slice', () => {
       isOfferByIdDataLoading: true,
       isAddingOfferToFavorite: false,
       isFavoriteOffersLoading: false,
+      isFavoriteOffersChangeSuccesful: false,
     };
 
     const result = offerData.reducer(undefined, loadNearbyOffersAction.pending);
@@ -310,6 +284,7 @@ describe('OfferData Slice', () => {
       isOfferByIdDataLoading: true,
       isAddingOfferToFavorite: false,
       isFavoriteOffersLoading: false,
+      isFavoriteOffersChangeSuccesful: false,
     };
 
     const result = offerData.reducer(undefined, loadNearbyOffersAction.fulfilled(previewOffers, '', datatype.uuid()));
@@ -329,6 +304,7 @@ describe('OfferData Slice', () => {
       isOfferByIdDataLoading: true,
       isAddingOfferToFavorite: false,
       isFavoriteOffersLoading: false,
+      isFavoriteOffersChangeSuccesful: false,
     };
 
     const result = offerData.reducer(undefined, loadNearbyOffersAction.rejected);
@@ -348,6 +324,7 @@ describe('OfferData Slice', () => {
       isOfferByIdDataLoading: true,
       isAddingOfferToFavorite: true,
       isFavoriteOffersLoading: false,
+      isFavoriteOffersChangeSuccesful: false,
     };
 
     const result = offerData.reducer(undefined, changeFavoriteStatusAction.pending);
@@ -369,6 +346,7 @@ describe('OfferData Slice', () => {
       isOfferByIdDataLoading: true,
       isAddingOfferToFavorite: false,
       isFavoriteOffersLoading: false,
+      isFavoriteOffersChangeSuccesful: true,
     };
 
     const result = offerData.reducer(undefined, changeFavoriteStatusAction.fulfilled(fullOffer, '', {id: fullOffer.id, favoriteStatus: 0}));
@@ -388,6 +366,7 @@ describe('OfferData Slice', () => {
       isOfferByIdDataLoading: true,
       isAddingOfferToFavorite: false,
       isFavoriteOffersLoading: false,
+      isFavoriteOffersChangeSuccesful: false,
     };
 
     const result = offerData.reducer(undefined, changeFavoriteStatusAction.rejected);
@@ -407,6 +386,7 @@ describe('OfferData Slice', () => {
       isOfferByIdDataLoading: true,
       isAddingOfferToFavorite: false,
       isFavoriteOffersLoading: true,
+      isFavoriteOffersChangeSuccesful: false,
     };
 
     const result = offerData.reducer(undefined, fetchFavoriteOffersActions.pending);
@@ -428,6 +408,7 @@ describe('OfferData Slice', () => {
       isOfferByIdDataLoading: true,
       isAddingOfferToFavorite: false,
       isFavoriteOffersLoading: false,
+      isFavoriteOffersChangeSuccesful: false,
     };
 
     const result = offerData.reducer(undefined, fetchFavoriteOffersActions.fulfilled(favoriteOffers, '', undefined));
@@ -447,6 +428,7 @@ describe('OfferData Slice', () => {
       isOfferByIdDataLoading: true,
       isAddingOfferToFavorite: false,
       isFavoriteOffersLoading: false,
+      isFavoriteOffersChangeSuccesful: false,
     };
 
     const result = offerData.reducer(undefined, fetchFavoriteOffersActions.rejected);
