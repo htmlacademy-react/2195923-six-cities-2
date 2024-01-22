@@ -38,9 +38,6 @@ export const makeFakeFullOffer = (): FullOffer => {
       isPro: datatype.boolean(),
     },
     images: [image.image(), image.image(), image.image()],
-    // new Array<string>(datatype.number({ min: 1, max: 8, precision: 1 })).map(() => {
-    //   image.image();
-    // }) as unknown as string[],
     maxAdults: datatype.number({min: 1, max: 5, precision: 1}),
   } as FullOffer;
 };
