@@ -27,13 +27,13 @@ function MainPage() : React.JSX.Element {
   const offersByCity = useMemo(() => offers.filter((offer) => offer.city.name === cityName), [cityName, offers]);
   const sortingOffers = useMemo(() => {
     switch(sortType) {
-      case 'POPULAR':
+      case SortingType.POPULAR.type:
         return [...offersByCity];
-      case 'PRICE_HIGH_TO_LOW':
+      case SortingType.PRICE_HIGH_TO_LOW.type:
         return [...offersByCity].sort(SortingType.PRICE_HIGH_TO_LOW.algorithm);
-      case 'PRICE_LOW_TO_HIGH':
+      case SortingType.PRICE_LOW_TO_HIGH.type:
         return [...offersByCity].sort(SortingType.PRICE_LOW_TO_HIGH.algorithm);
-      case 'TOP_RATED_FIRST':
+      case SortingType.TOP_RATED_FIRST.type:
         return [...offersByCity].sort(SortingType.TOP_RATED_FIRST.algorithm);
       default:
         return [...offersByCity];
@@ -44,9 +44,8 @@ function MainPage() : React.JSX.Element {
     dispatch(changeActiveCard(''));
   }, [dispatch]);
 
-  const handlePlaceCardMouseEnter = (evt : React.MouseEvent) => {
-    evt.preventDefault();
-    const id = evt.currentTarget.getAttribute('data-id');
+  const handlePlaceCardMouseEnter = (offerId: string) => {
+    const id = offerId;
     if (id !== null) {
       dispatch(changeActiveCard(id));
     }

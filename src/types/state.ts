@@ -21,6 +21,7 @@ export type OfferData = {
   isOfferByIdDataLoading: boolean;
   isAddingOfferToFavorite: boolean;
   isFavoriteOffersLoading: boolean;
+  isFavoriteOffersChangeSuccesful: boolean;
 }
 
 export type ReviewData = {

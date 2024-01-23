@@ -12,3 +12,4 @@ export const getOfferByIdDataLoading = (state: Pick<State, NameSpace.Offer>): bo
 export const getFavoriteOffersLoading = (state: Pick<State, NameSpace.Offer>): boolean => state[NameSpace.Offer].isFavoriteOffersLoading;
 export const getAddingOfferToFavoriteLoading = (state: Pick<State, NameSpace.Offer>): boolean => state[NameSpace.Offer].isAddingOfferToFavorite;
 export const getFavoriteOffers = (state: Pick<State, NameSpace.Offer>): PreviewOffer[] => state[NameSpace.Offer].favoriteOffers;
+export const getChangeFavoriteStatusSuccesful = (state: Pick<State, NameSpace.Offer>): boolean => state[NameSpace.Offer].isFavoriteOffersChangeSuccesful;

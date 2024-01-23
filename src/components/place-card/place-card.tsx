@@ -13,7 +13,7 @@ import { getAuthorizationStatus } from '../../store/user-process/user-process.se
 type OfferProps = {
   offer: PreviewOffer;
   type: string;
-  onMouseEnter?: React.MouseEventHandler<HTMLElement>;
+  onMouseEnter?: (offerId: string) => void;
   onMouseLeave?: React.MouseEventHandler<HTMLElement>;
 };
 
@@ -22,17 +22,27 @@ function PlaceCard({offer, type, onMouseEnter, onMouseLeave} : OfferProps): Reac
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const changeFavoriteStatusCard = async () => {
+    await dispatch(changeFavoriteStatusAction({id: offer.id, favoriteStatus: Number(!offer.isFavorite)}));
+    dispatch(changeFavoriteStatus(offer.id));
+  };
+
   const handleFavoriteButtonClick = () => {
     if (authStatus === AuthorizationStatus.NoAuth) {
       navigate(AppRoute.Login);
       return;
     }
-    dispatch(changeFavoriteStatusAction({id: offer.id, favoriteStatus: Number(!offer.isFavorite)}));
-    dispatch(changeFavoriteStatus(offer.id));
+    changeFavoriteStatusCard();
+  };
+
+  const handleCardMouseEnter = () => {
+    if (onMouseEnter) {
+      onMouseEnter(offer.id);
+    }
   };
 
   return (
-    <article className={`${type}__card place-card`} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} data-id={offer.id}>
+    <article className={`${type}__card place-card`} onMouseEnter={handleCardMouseEnter} onMouseLeave={onMouseLeave} data-id={offer.id}>
       {offer.isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>

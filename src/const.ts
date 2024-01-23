@@ -8,6 +8,7 @@ export const PlaceCardType = {
 };
 
 export const NUMBER_PERCENT_IN_ONE_STAR = 20;
+export const MAX_RATING = 5;
 export const MAX_COUNT_IMAGES_OFFERS = 6;
 export const MIN_COMMENT_LENGTH = 50;
 export const MAX_COMMENT_LENGTH = 300;
@@ -71,18 +72,22 @@ export const Cities: TCity[] = [
 
 export const SortingType: Sorting = {
   POPULAR: {
+    type: 'POPULAR',
     message:  'Popular',
     algorithm: () => 1,
   },
   PRICE_LOW_TO_HIGH: {
+    type: 'PRICE_LOW_TO_HIGH',
     message: 'Price: low to high',
     algorithm: (a: PreviewOffer, b: PreviewOffer) => a.price - b.price,
   },
   PRICE_HIGH_TO_LOW: {
+    type: 'PRICE_HIGH_TO_LOW',
     message: 'Price: high to low',
     algorithm: (a: PreviewOffer, b: PreviewOffer) => b.price - a.price,
   },
   TOP_RATED_FIRST: {
+    type: 'TOP_RATED_FIRST',
     message: 'Top rated first',
     algorithm: (a: PreviewOffer, b: PreviewOffer) => b.rating - a.rating,
   }

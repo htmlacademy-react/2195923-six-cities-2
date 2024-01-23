@@ -20,7 +20,7 @@ describe('Async actions', () => {
   let store: ReturnType<typeof mockStoreCreator>;
 
   beforeEach(() => {
-    store = mockStoreCreator({DATA: {}});
+    store = mockStoreCreator();
   });
 
   describe('fetchOffersAction', () => {

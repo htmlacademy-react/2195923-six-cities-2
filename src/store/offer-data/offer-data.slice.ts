@@ -2,6 +2,7 @@ import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { OfferData } from '../../types/state';
 import { changeFavoriteStatusAction, fetchFavoriteOffersActions, fetchOffersAction, loadNearbyOffersAction, loadOfferByIDAction } from '../actions/api-actions';
+import { toast } from 'react-toastify';
 
 const initialState: OfferData = {
   offers: [],
@@ -14,6 +15,7 @@ const initialState: OfferData = {
   isOfferByIdDataLoading: true,
   isAddingOfferToFavorite: false,
   isFavoriteOffersLoading: false,
+  isFavoriteOffersChangeSuccesful: false,
 };
 
 export const offerData = createSlice({
@@ -24,6 +26,11 @@ export const offerData = createSlice({
       state.activeCard = action.payload;
     },
     changeFavoriteStatus: (state, action: PayloadAction<string>) => {
+      if (!state.isFavoriteOffersChangeSuccesful) {
+        toast.warn('Favorite status change failed');
+        return;
+      }
+
       const offerIndex = state.offers.findIndex((offer) => offer.id === action.payload);
       state.offers[offerIndex].isFavorite = !state.offers[offerIndex].isFavorite;
 
@@ -37,7 +44,6 @@ export const offerData = createSlice({
       }
 
       state.favoriteOffers = state.favoriteOffers.filter((favoriteOffer) => favoriteOffer.id !== state.offers[offerIndex].id);
-
     }
   },
   extraReducers(builder) {
@@ -74,12 +80,15 @@ export const offerData = createSlice({
       })
       .addCase(changeFavoriteStatusAction.pending, (state) => {
         state.isAddingOfferToFavorite = true;
+        state.isFavoriteOffersChangeSuccesful = false;
       })
       .addCase(changeFavoriteStatusAction.fulfilled, (state) => {
         state.isAddingOfferToFavorite = false;
+        state.isFavoriteOffersChangeSuccesful = true;
       })
       .addCase(changeFavoriteStatusAction.rejected, (state) => {
         state.isAddingOfferToFavorite = false;
+        state.isFavoriteOffersChangeSuccesful = false;
       })
       .addCase(fetchFavoriteOffersActions.pending, (state) => {
         state.isFavoriteOffersLoading = true;
