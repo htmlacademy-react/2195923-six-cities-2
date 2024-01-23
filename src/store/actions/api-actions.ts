@@ -9,7 +9,6 @@ import { dropToken, saveToken } from '../../services/token';
 import { AuthData } from '../../types/auth-data';
 import { AppRoute } from '../../app-route';
 import { Review, UserReview } from '../../types/review';
-import { toast } from 'react-toastify';
 
 export const fetchOffersAction = createAsyncThunk<PreviewOffer[], undefined, {
   dispatch: AppDispatch;
