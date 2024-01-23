@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { createReviewAction, loadReviewsAction } from '../actions/api-actions';
 import { ReviewData } from '../../types/state';
+import { toast } from 'react-toastify';
 
 const initialState: ReviewData = {
   reviews: [],
@@ -36,6 +37,7 @@ export const reviewData = createSlice({
       })
       .addCase(createReviewAction.rejected, (state) => {
         state.isCreatingNewReview = false;
+        toast.warn('Failed to load comment');
       });
   }
 });
