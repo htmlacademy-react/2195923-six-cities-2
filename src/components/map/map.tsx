@@ -8,7 +8,7 @@ import { getActiveCard } from '../../store/offer-data/offer-data.selectors';
 import { useAppSelector } from '../../hooks/use-app-selector';
 
 type MapProps = {
-  offers: PreviewOffer[];
+  offers: (PreviewOffer | undefined)[];
   cityName: CityName;
   type: string;
 }
@@ -36,14 +36,15 @@ function Map({offers, cityName, type} : MapProps) {
     if (map) {
       const markerLayer = layerGroup().addTo(map);
       offers.forEach((offer) => {
-        const marker = new Marker({
-          lat: offer.location.latitude,
-          lng: offer.location.longitude
-        });
-
-        marker
-          .setIcon(offer.id === activeCard ? activeIcon : passiveIcon)
-          .addTo(markerLayer);
+        if (offer) {
+          const marker = new Marker({
+            lat: offer.location.latitude,
+            lng: offer.location.longitude
+          });
+          marker
+            .setIcon(offer.id === activeCard ? activeIcon : passiveIcon)
+            .addTo(markerLayer);
+        }
       });
 
       return () => {

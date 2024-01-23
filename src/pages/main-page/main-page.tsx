@@ -44,9 +44,8 @@ function MainPage() : React.JSX.Element {
     dispatch(changeActiveCard(''));
   }, [dispatch]);
 
-  const handlePlaceCardMouseEnter = (evt : React.MouseEvent) => {
-    evt.preventDefault();
-    const id = evt.currentTarget.getAttribute('data-id');
+  const handlePlaceCardMouseEnter = (offerId: string) => {
+    const id = offerId;
     if (id !== null) {
       dispatch(changeActiveCard(id));
     }
